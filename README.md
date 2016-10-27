@@ -9,7 +9,7 @@ Everything you need to know to play the game is explained there.
 
 ## Building nKaruga
 
-nKaruga uses its own graphics engine, n2DLib, built on top of SDL2. It also uses SDL2_mixer to handle sound, thus, those two libraries are necessary. In this repository, I have included everything one should need to build nKaruga out of the box, including the SDL2 and SDL2_mixer binaries for Windows and Linux systems, regardless of their platform (i686 or x86_64). **However**, this means that the licences in this repository are not uniform : the SDL2 and SDL2_mixer binaries, SO and include files are subject to their own licences (check the SDL2 and SDL2_mixer websites for more info). The entirety of the nKaruga source files, apart from the aforementionned files, is under the CC-BY-NC licence.
+nKaruga uses its own graphics engine, n2DLib, built on top of SDL2. It also uses SDL2_mixer to handle sound, thus, those two libraries are necessary. In this repository, I have included everything one should need to build nKaruga out of the box, including the SDL2 and SDL2_mixer binaries for Windows and Linux systems, regardless of their platform (i686 or x86_64). **However**, this means that the licences in this repository are not uniform : the SDL2 and SDL2_mixer binaries, SO and include files are subject to their own licences (check the SDL2 and SDL2_mixer websites for more info). The entirety of the nKaruga source files, apart from the aforementionned files, is under the MIT licence.
 
 ### Building on Linux
 
