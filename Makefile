@@ -44,7 +44,7 @@ $(OBJ_DIR)/%.o: %.rc | $(OBJ_DIR)
 	windres $< $@
 	@echo
 
-$(OBJ_DIR)/%.o: src/%.c* | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c* | $(OBJ_DIR)
 	@echo Building $< to $@ ...
 	$(CC) -c $< $(INCLUDE_DIRS) -o $@ $(FLAGS_$(PLATFORM)) $(WARNINGS) -std=c++11
 	@echo
