@@ -53,6 +53,7 @@ extern int interpolatePathFloat(int, float[], float[], int[], int, Rect*);
 
 extern void initBuffering();
 extern void constrainFrameRate(int);
+extern void displayFrameRate();
 extern void updateScreen();
 extern void updateKeys();
 extern void deinitBuffering();

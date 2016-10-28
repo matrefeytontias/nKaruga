@@ -552,6 +552,7 @@ void playGame()
 		Level::updateBg();
 		
 		constrainFrameRate(FPS);
+		displayFrameRate();
 		
 		// handle chaining
 		if(!Level::fightingBoss)
