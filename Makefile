@@ -31,6 +31,12 @@ linux: build
 	[ -e $(OUT_DIR)/lib ] || mkdir $(OUT_DIR)/lib
 	cp */nix/lib/$(ARCH)/*.so.* $(OUT_DIR)/lib
 
+mac: PLATFORM := mac
+mac: ARCH := $(shell arch)
+mac: build
+	[ -e $(OUT_DIR)/lib ] || mkdir $(OUT_DIR)/lib
+	cp */mac/lib/$(ARCH)/*.dylib $(OUT_DIR)/lib
+
 build: $(OBJS)
 	@echo Assembling into $(OUT_DIR)/$(OUT_NAME) ...
 	$(CC) $(OBJ_DIR)/*.o $(INCLUDE_DIRS) $(LIB_DIRS) $(LINKER_FILES_$(PLATFORM)) -o$(OUT_DIR)/$(OUT_NAME) $(FLAGS_$(PLATFORM)) $(WARNINGS) -std=c++11
