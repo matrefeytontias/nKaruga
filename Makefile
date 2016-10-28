@@ -53,11 +53,13 @@ $(OBJ_DIR):
 clean:
 	-rm -r $(BUILD_DIR)
 
-deploy: PWD := $(shell pwd)
+deploy: DIR := $(shell pwd)/$(RELEASE_DIR)
 deploy:
-	cd $(OUT_DIR) ; zip -r $(PWD)/$(RELEASE_DIR)/$(OUT_NAME) ./* -xobj/*
+	@[ -e $(DIR) ] || mkdir -p $(DIR)
+	cd $(OUT_DIR) ; zip -r $(DIR)/$(OUT_NAME) ./* -xobj/*
 
 deploy-linux: PLATFORM := nix
-deploy-linux: PWD := $(shell pwd)
+deploy-linux: DIR := $(shell pwd)/$(RELEASE_DIR)
 deploy-linux:
-	cd $(OUT_DIR) ; zip -r $(PWD)/$(RELEASE_DIR)/$(OUT_NAME) ./* -xobj/*
+	@[ -e $(DIR) ] || mkdir -p $(DIR)
+	cd $(OUT_DIR) ; zip -r $(DIR)/$(OUT_NAME) ./* -xobj/*
