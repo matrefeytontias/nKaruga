@@ -37,7 +37,7 @@ linux: $(FINAL_EXE)
 
 mac: PLATFORM := mac
 mac: ARCH := $(shell arch)
-mac: build
+mac: $(FINAL_EXE)
 	[ -e $(OUT_DIR)/lib ] || mkdir $(OUT_DIR)/lib
 	cp */mac/lib/$(ARCH)/*.dylib $(OUT_DIR)/lib
 
