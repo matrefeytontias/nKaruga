@@ -20,8 +20,10 @@ LIB_DIRS = -L./SDL2/$(PLATFORM)/lib/$(ARCH) -L./SDL2_mixer/$(PLATFORM)/lib/$(ARC
 
 LINKER_FILES_win := -lmsys-2.0 -lSDL2main -lSDL2 -lSDL2_mixer
 LINKER_FILES_nix := -lSDL2 -lSDL2_mixer
+LINKER_FILES_mac := -lSDL2main -lSDL2 -lSDL2_mixer
 FLAGS_win := -fpermissive
 FLAGS_nix := -Wl,-rpath,'$$ORIGIN/lib' -fpermissive
+FLAGS_mac := -Wl,-framework,Cocoa -fpermissive
 WARNINGS := -Wno-write-strings -Wno-pointer-arith -Wno-overflow
 
 windows: $(OBJ_DIR)/icon.o $(FINAL_EXE)
@@ -32,6 +34,12 @@ linux: ARCH := $(shell arch)
 linux: $(FINAL_EXE)
 	[ -e $(OUT_DIR)/lib ] || mkdir $(OUT_DIR)/lib
 	cp */nix/lib/$(ARCH)/*.so.* $(OUT_DIR)/lib
+
+mac: PLATFORM := mac
+mac: ARCH := $(shell arch)
+mac: build
+	[ -e $(OUT_DIR)/lib ] || mkdir $(OUT_DIR)/lib
+	cp */mac/lib/$(ARCH)/*.dylib $(OUT_DIR)/lib
 
 $(FINAL_EXE): $(OBJS)
 	@echo Assembling into $@ ...
