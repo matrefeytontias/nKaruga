@@ -31,5 +31,6 @@ Once all of this is installed, you can build nKaruga by running `make windows` o
 
 - `make` or `make windows` : build nKaruga for Windows platforms (works on all platforms that support MSYS2, ie Windows XP excluded onwards)
 - `make linux` : build nKaruga for Linux platforms (should work on all platforms where SDL2 and SDL2_mixer work ; tested with Ubuntu 32 bits and KDE 64 bits)
-- `make deploy` : package a build as `releases/nKaruga.zip` (change `RELEASE_DIR` and `OUT_NAME` in the makefile to change this)
+- `make deploy` : on Windows, package a build as `releases/nKaruga.zip` (change `RELEASE_DIR` and `OUT_NAME` in the makefile to change this)
+- `make deploy-linux` : on Linux, same as above
 - `make clean` : cleanup build files (includes executable, dependencies and .o obj files)

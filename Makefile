@@ -25,7 +25,7 @@ WARNINGS := -Wno-write-strings -Wno-pointer-arith -Wno-overflow
 windows: icon.o build
 	cp */win/bin/*.dll $(OUT_DIR)
 
-linux: PLATFORM = nix
+linux: PLATFORM := nix
 linux: ARCH := $(shell arch)
 linux: build
 	[ -e $(OUT_DIR)/lib ] || mkdir $(OUT_DIR)/lib
@@ -55,4 +55,9 @@ clean:
 
 deploy: PWD := $(shell pwd)
 deploy:
+	cd $(OUT_DIR) ; zip -r $(PWD)/$(RELEASE_DIR)/$(OUT_NAME) ./* -xobj/*
+
+deploy-linux: PLATFORM := nix
+deploy-linux: PWD := $(shell pwd)
+deploy-linux:
 	cd $(OUT_DIR) ; zip -r $(PWD)/$(RELEASE_DIR)/$(OUT_NAME) ./* -xobj/*
