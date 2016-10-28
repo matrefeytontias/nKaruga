@@ -16,12 +16,11 @@ SDL_Texture *MAIN_SCREEN;
 
 Uint32 baseFPS;
 
-//#define DISP_RATIO 2
-
 void initBuffering()
 {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-	SDL_CreateWindowAndRenderer(320 * 2, 240 * 2, SDL_WINDOW_BORDERLESS, &sdlWindow, &sdlRenderer);
+	SDL_CreateWindowAndRenderer(320, 240, SDL_WINDOW_BORDERLESS, &sdlWindow, &sdlRenderer);
+	SDL_RenderSetLogicalSize(sdlRenderer, 320, 240);
 	if(!sdlWindow || !sdlRenderer)
 	{
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Initialisation error", "Error when initialising SDL2, check stdout.txt for details.", NULL);
@@ -29,7 +28,7 @@ void initBuffering()
 		SDL_Quit();
 		exit(1);
 	}
-	MAIN_SCREEN = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STREAMING, 320 * 2, 240 * 2);
+	MAIN_SCREEN = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STREAMING, 320, 240);
 
 	BUFF_BASE_ADDRESS = (unsigned short*)malloc(320 * 240 * sizeof(unsigned short));
 	memset(BUFF_BASE_ADDRESS, 0, sizeof(BUFF_BASE_ADDRESS));
@@ -48,8 +47,13 @@ void constrainFrameRate(int fps)
 	if(elapsed < d)
 		SDL_Delay(d - elapsed);
 	baseFPS = SDL_GetTicks();
+}
+
+void displayFrameRate()
+{
+	static Uint32 secondCount = 1001, secondBase = 0, FPScount = 0, FPSdisp = 0;
 	FPScount++;
-	
+	int x, y;
 	secondCount = SDL_GetTicks();
 	if (secondCount - secondBase > 1000)
 	{
@@ -64,21 +68,13 @@ void constrainFrameRate(int fps)
 
 void updateScreen()
 {
-	int i, j;
-	unsigned int c;
+	int di;
 	void *pixels;
+	void *buf = BUFF_BASE_ADDRESS; // cast to void*
 	int pitch;
 	SDL_LockTexture(MAIN_SCREEN, NULL, &pixels, &pitch);
-	for (i = 0; i < 320; i++)
-	{
-		for (j = 0; j < 240; j++)
-		{
-			c = BUFF_BASE_ADDRESS[j * 320 + i];
-			c |= c << 16;
-			*(unsigned int*)(pixels + j * pitch * 2 + i * 4) = c;
-			*(unsigned int*)(pixels + (j * 2 + 1) * pitch + i * 4) = c;
-		}
-	}
+	for (di = 0; di < 320 * 240 * sizeof(unsigned short); di += sizeof(unsigned int))
+		*(unsigned int*)(pixels + di) = *(unsigned int*)(buf + di);
 	SDL_UnlockTexture(MAIN_SCREEN);
 	SDL_RenderCopy(sdlRenderer, MAIN_SCREEN, NULL, NULL);
 	SDL_RenderPresent(sdlRenderer);
