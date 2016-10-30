@@ -19,7 +19,7 @@ Uint32 baseFPS;
 void initBuffering()
 {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-	SDL_CreateWindowAndRenderer(320, 240, SDL_WINDOW_BORDERLESS, &sdlWindow, &sdlRenderer);
+	SDL_CreateWindowAndRenderer(320 * 2, 240 * 2, SDL_WINDOW_BORDERLESS, &sdlWindow, &sdlRenderer);
 	SDL_RenderSetLogicalSize(sdlRenderer, 320, 240);
 	if(!sdlWindow || !sdlRenderer)
 	{
@@ -36,6 +36,13 @@ void initBuffering()
 	baseFPS = SDL_GetTicks();
 	SDL_PumpEvents();
 	G_keys = SDL_GetKeyboardState(NULL);
+}
+void toggleFullscreen()
+{
+	if(SDL_GetWindowFlags(sdlWindow) & SDL_WINDOW_MAXIMIZED)
+		SDL_RestoreWindow(sdlWindow);
+	else
+		SDL_MaximizeWindow(sdlWindow);
 }
 
 void constrainFrameRate(int fps)
@@ -68,14 +75,27 @@ void displayFrameRate()
 
 void updateScreen()
 {
+	static int toggled = 0;
 	int di;
-	void *pixels;
-	void *buf = BUFF_BASE_ADDRESS; // cast to void*
+	uint8_t *pixels;
+	uint8_t *buf = (uint8_t*)BUFF_BASE_ADDRESS;
 	int pitch;
-	SDL_LockTexture(MAIN_SCREEN, NULL, &pixels, &pitch);
+	SDL_LockTexture(MAIN_SCREEN, NULL, (void**)&pixels, &pitch);
 	for (di = 0; di < 320 * 240 * sizeof(unsigned short); di += sizeof(unsigned int))
 		*(unsigned int*)(pixels + di) = *(unsigned int*)(buf + di);
 	SDL_UnlockTexture(MAIN_SCREEN);
+	
+	if(G_keys[SDL_SCANCODE_F])
+	{
+		if(!toggled)
+		{
+			toggled = 1;
+			// toggleFullscreen(); // broken, bad SDL2 build ?
+		}
+	}
+	else
+		toggled = 0;
+	
 	SDL_RenderCopy(sdlRenderer, MAIN_SCREEN, NULL, NULL);
 	SDL_RenderPresent(sdlRenderer);
 	updateKeys();
