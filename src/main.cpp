@@ -116,12 +116,9 @@ int main(int argc, char **argv)
 		G_upKey = SDL_SCANCODE_W;
 	}
 	
-	Level::init(1);
-	
 	G_particles = new Particles;
 	DC = new DrawingCandidates;
 
-	printf("Bleh 5");
 	// Mix_Volume(-1, 0);
 	// Mix_VolumeMusic(0);
 	
@@ -134,7 +131,6 @@ int main(int argc, char **argv)
 	clearBufferW();
 	initExplosionEngine();
 	timer_load(1, 0);
-	
 	Level::init(1);
 
 	while(!donePlaying)
