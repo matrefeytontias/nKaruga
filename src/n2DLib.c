@@ -19,6 +19,10 @@ Uint32 baseFPS;
 void initBuffering()
 {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+	
+	// This fixes the fullscreen/resize crash, see line 97
+	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
+	
 	SDL_CreateWindowAndRenderer(320 * 2, 240 * 2, SDL_WINDOW_BORDERLESS, &sdlWindow, &sdlRenderer);
 	SDL_RenderSetLogicalSize(sdlRenderer, 320, 240);
 	if(!sdlWindow || !sdlRenderer)
@@ -90,7 +94,7 @@ void updateScreen()
 		if(!toggled)
 		{
 			toggled = 1;
-			// toggleFullscreen(); // broken, bad SDL2 build ?
+			toggleFullscreen(); // broken, bad SDL2 build ? 31/10/2016 : yes indeed, see line 23
 		}
 	}
 	else
@@ -254,7 +258,7 @@ void clearBuffer(unsigned short c)
 			*((unsigned int*)BUFF_BASE_ADDRESS + i) = ci;
 }
 
-inline unsigned short getPixelUnsafe(const unsigned short *src, unsigned int x, unsigned int y)
+unsigned short getPixelUnsafe(const unsigned short *src, unsigned int x, unsigned int y)
 {
 	return src[x + y * src[0] + 3];
 }
@@ -267,7 +271,7 @@ unsigned short getPixel(const unsigned short *src, unsigned int x, unsigned int 
 		return src[2];
 }
 
- inline void setPixelUnsafe(unsigned int x, unsigned int y, unsigned short c)
+void setPixelUnsafe(unsigned int x, unsigned int y, unsigned short c)
 {
 	*((unsigned short*)BUFF_BASE_ADDRESS + x + y * 320) = c;
 }
