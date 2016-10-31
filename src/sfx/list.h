@@ -25,8 +25,8 @@ const char* sfxList[] = {
 
 const char* musicList[] = {
 	"sfx/music/Ideal_main.ogg",
-	"sfx/music/Ideal_loop.wav",
-	"sfx/music/Butsutekkai.wav",
-	"sfx/music/Trial_main.wav",
-	"sfx/music/Trial_loop.wav"
+	"sfx/music/Ideal_loop.ogg",
+	"sfx/music/Butsutekkai.ogg",
+	"sfx/music/Trial_main.ogg",
+	"sfx/music/Trial_loop.ogg"
 };
