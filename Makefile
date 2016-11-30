@@ -62,7 +62,7 @@ $(OBJ_DIR):
 
 .PHONY: clean
 clean:
-	-rm -r $(BUILD_DIR)
+	-rm -rf $(BUILD_DIR)
 
 deploy: DIR := $(shell pwd)/$(RELEASE_DIR)
 deploy:
