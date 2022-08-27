@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 #if defined(__cplusplus) && !defined(min) && !defined(max)
 inline int min(int a, int b)

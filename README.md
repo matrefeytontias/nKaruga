@@ -9,29 +9,14 @@ Everything you need to know to play the game is explained there.
 
 ## Building nKaruga
 
-nKaruga uses its own graphics engine, n2DLib, built on top of SDL2. It also uses SDL2_mixer to handle sound, thus, those two libraries are necessary. In this repository, I have included everything one should need to build nKaruga out of the box, including the SDL2 and SDL2_mixer binaries for Windows and Linux systems, regardless of their platform (i686 or x86_64). **However**, this means that the licences in this repository are not uniform : the SDL2 and SDL2_mixer binaries, SO and include files are subject to their own licences (check the SDL2 and SDL2_mixer websites for more info). The entirety of the nKaruga source files, apart from the aforementionned files, is under the MIT licence.
+nKaruga uses its own graphics engine, n2DLib, built on top of SDL2. It also uses SDL2_mixer to handle sound, thus, those two libraries are necessary.
 
-### Building on Linux
+~In this repository, I have included everything one should need to build nKaruga out of the box, including the SDL2 and SDL2_mixer binaries for Windows and Linux systems, regardless of their platform (i686 or x86_64). **However**, this means that the licences in this repository are not uniform : the SDL2 and SDL2_mixer binaries, SO and include files are subject to their own licences (check the SDL2 and SDL2_mixer websites for more info).~
 
-nKaruga should be buildable on Linux out of the box. Simply clone the repository in a new folder, and run `make linux`. **Building nKaruga does not require to install SDL2, SDL2-dev, SDL2_mixer or SDL2_mixer-dev.** The necessary files are included in the repository.
+The entirety of the nKaruga source files, apart from the aforementionned files, is under the MIT licence.
 
-You will need `zip` in order to run `make deploy`.
+*27/08/2022* : I have revamped the build system to use CMake with SDL2 2.24.0 and SDL2_mixer 2.6.2. For now, everything will be Windows-only until I get around to trying things out with the other platforms.
 
 ### Building on Windows
 
-In order to build nKaruga on Windows, you will need a functionning installation of MSYS2. Such an installation can be acquired by following the steps on the [main website](http://msys2.github.io/). Once MSYS2 is installed, you will need the following dependencies :
-
-- gcc : `pacman -S gcc`
-- make : `pacman -S make`
-- Optionally, zip (to run `make deploy`) : `pacman -S zip`
-
-Once all of this is installed, you can build nKaruga by running `make windows` or `make` in the repository's directory.
-
-### Build targets
-
-- `make` or `make windows` : build nKaruga for Windows platforms (works on all platforms that support MSYS2, ie Windows XP excluded onwards)
-- `make linux` : build nKaruga for Linux platforms (should work on all platforms where SDL2 and SDL2_mixer work ; tested with Ubuntu 32 bits and KDE 64 bits)
-- `make mac` : build nKaruga for macOS platforms (should work on all platforms where SDL2 and SDL2_mixer work ; tested with macOS 10.12 Sierra)
-- `make deploy` : on Windows, package a build as `releases/nKaruga.zip` (change `RELEASE_DIR` and `OUT_NAME` in the makefile to change this)
-- `make deploy-linux` : on Linux, same as above
-- `make clean` : cleanup build files (includes executable, dependencies and .o obj files)
+In order to build nKaruga on Windows, you will need CMake and the generator of your choice (I use Microsoft Visual Studio 2019). Building should be as simple as running CMake in the root directory and following the usual steps.

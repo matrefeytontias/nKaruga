@@ -1,7 +1,2 @@
-bin/*
-ost
-releases
-screenshots
-*.db
-/.Rhistory
-/.directory
+Build/
+*.rc

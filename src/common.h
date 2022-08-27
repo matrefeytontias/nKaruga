@@ -8,7 +8,7 @@
 #include <string.h>
 #include <vector>
 #include <stack>
-#include <SDL_mixer.h>
+#include <SDL2/SDL_mixer.h>
 
 #include "n2DLib.h"
 
