@@ -82,7 +82,11 @@ set(SOURCES ${SOURCES}
 # TODO : get rid of these - misc
     src/bossData.h
     src/common.h
+    src/globals.h
+    src/fixmath.cpp
+    src/fixmath.h
     src/misc_data.h
+    src/types.h
     src/utils.hpp
     src/utils.cpp
 )

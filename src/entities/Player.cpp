@@ -1,4 +1,10 @@
-#include "common.h"
+#include "entities/Player.hpp"
+
+#include "fixmath.h"
+#include "globals.h"
+#include "graphics/Particles.hpp"
+#include "handlers/DrawingCandidates.hpp"
+#include "handlers/Level.hpp"
 
 Player::Player() : Entity()
 {

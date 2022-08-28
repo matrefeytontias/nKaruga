@@ -1,6 +1,10 @@
 #pragma once
 
 #include "common.h"
+#include "fixmath.h"
+#include "utils.hpp"
+#include "handlers/Level.hpp"
+#include "n2DLib/n2DLib.h"
 
 #define cb_args Enemy *e
 
@@ -42,8 +46,8 @@ void cb_Pattern_1_2(cb_args)
 void cb_Pattern_1_3(cb_args)
 {
 	Rect screenRect;
-	e->setAX(3, 320.0, 160.0 + e->waveIndex * e->img[0] / 2.0, 320.0);
-	e->setAY(3, 0.0, 120.0, 240.0);
+	e->setAX(3, 320.0f, 160.0f + static_cast<float>(e->waveIndex * e->img[0]) / 2.0f, 320.0);
+	e->setAY(3, 0.0f, 120.0f, 240.0f);
 	e->internal[1] = (5 - e->waveIndex) * 16 * 2 + 120;
 	e->setAT(3, 0, (5 - e->waveIndex) * 16 + 60, e->internal[1]);
 	e->internal[0] = interpolatePathFloat(e->internal[0], e->ax, e->ay, e->at, 3, &screenRect);
@@ -56,8 +60,8 @@ void cb_Pattern_1_3(cb_args)
 void cb_Pattern_1_4(cb_args)
 {
 	Rect screenRect;
-	e->setAX(3, 0.0, 160.0 - (e->waveIndex - 6) * e->img[0] / 2.0, 0.0);
-	e->setAY(3, 0.0, 120.0, 240.0);
+	e->setAX(3, 0.0f, 160.0f - static_cast<float>((e->waveIndex - 6) * e->img[0]) / 2.0f, 0.0f);
+	e->setAY(3, 0.0f, 120.0f, 240.0f);
 	e->internal[1] = (5 - (e->waveIndex - 6)) * 16 * 2 + 120;
 	e->setAT(3, 0, (5 - (e->waveIndex - 6)) * 16 + 60, e->internal[1]);
 	e->internal[0] = interpolatePathFloat(e->internal[0], e->ax, e->ay, e->at, 3, &screenRect);
@@ -1180,7 +1184,7 @@ void cb_Pattern_2_bossShield(cb_args)
 	}
 }
 
-EnemyCallback enemyCallbacks[] = { cb_Pattern_null, cb_Pattern_box, cb_Pattern_prop, cb_Pattern_1_1, cb_Pattern_1_2, cb_Pattern_1_3, cb_Pattern_1_4, cb_Pattern_1_5, cb_Pattern_1_6,
+enemy_callback enemyCallbacks[] = { cb_Pattern_null, cb_Pattern_box, cb_Pattern_prop, cb_Pattern_1_1, cb_Pattern_1_2, cb_Pattern_1_3, cb_Pattern_1_4, cb_Pattern_1_5, cb_Pattern_1_6,
 	cb_Pattern_1_7, cb_Pattern_1_8, cb_Pattern_1_9, cb_Pattern_1_10, cb_Pattern_1_11, cb_Pattern_1_12, cb_Pattern_1_13, cb_Pattern_1_14, cb_Pattern_1_15, cb_Pattern_1_16,
 	cb_Pattern_1_17, cb_Pattern_1_18, cb_Pattern_1_19, cb_Pattern_1_20, cb_Pattern_1_21, cb_Pattern_1_boss, cb_Pattern_1_bossGrenade,
 	cb_Pattern_2_1, cb_Pattern_2_2, cb_Pattern_2_3, cb_Pattern_2_4, cb_Pattern_2_5, cb_Pattern_2_6, cb_Pattern_2_7, cb_Pattern_2_leftDoor, cb_Pattern_2_rightDoor,

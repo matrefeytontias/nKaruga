@@ -1,5 +1,12 @@
-#include "common.h"
+#include "entities/Enemy.hpp"
+
+#include <cstdlib>
+
+#include "fixmath.h"
 #include "patterns.h"
+#include "types.h"
+#include "handlers/DrawingCandidates.hpp"
+#include "helpers/Joint.hpp"
 
 Enemy::Enemy() : Entity()
 {
@@ -235,7 +242,7 @@ void Enemy::setAX(int nb, ...)
 	va_start(args, nb);
 	for (int i = 0; i < nb; i++)
 	{
-		float f = va_arg(args, double);
+		float f = va_arg(args, float);
 		ax[i] = f;
 	}
 	va_end(args);
@@ -249,7 +256,7 @@ void Enemy::setAY(int nb, ...)
 	va_start(args, nb);
 	for (int i = 0; i < nb; i++)
 	{
-		float f = va_arg(args, double);
+		float f = va_arg(args, float);
 		ay[i] = f;
 	}
 	va_end(args);

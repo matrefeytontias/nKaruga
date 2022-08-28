@@ -1,4 +1,7 @@
-#include "common.h"
+#include "handlers/EnemiesArray.hpp"
+
+#include "fixmath.h"
+#include "utils.hpp"
 
 EnemiesArray::EnemiesArray()
 {

@@ -1,4 +1,8 @@
-﻿#include "common.h"
+﻿#include "handlers/DrawingCandidates.hpp"
+
+#include "globals.h"
+#include "utils.hpp"
+#include "n2DLib/n2DLib.h"
 
 //
 // Camera travelling handlers
@@ -50,7 +54,7 @@ void cthChap2_boss(Camera *cam)
 	}
 }
 
-cameraTravelling camTrav[] = { cthIntro1, cthChap1, cthIntro2, cthChap2, cthChap2_2, cthChap2_boss };
+camera_travelling camTrav[] = { cthIntro1, cthChap1, cthIntro2, cthChap2, cthChap2_2, cthChap2_boss };
 
 // 
 // DrawingCandidates class

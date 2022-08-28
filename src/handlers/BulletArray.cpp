@@ -1,4 +1,10 @@
-#include "common.h"
+#include "handlers/BulletArray.hpp"
+
+#include "fixmath.h"
+#include "utils.hpp"
+#include "graphics/Particles.hpp"
+#include "handlers/Level.hpp"
+#include "n2DLib/n2DLib.h"
 
 BulletArray::BulletArray()
 {

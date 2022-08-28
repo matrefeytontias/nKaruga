@@ -1,5 +1,10 @@
 #include "graphics/ExplosionEffect.hpp"
 
+#include <cstdlib>
+
+#include "fixmath.h"
+#include "n2DLib/n2DLib.h"
+
 typedef struct
 {
 	unsigned char r, g, b;

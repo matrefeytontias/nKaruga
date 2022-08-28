@@ -1,4 +1,10 @@
-#include "common.h"
+#include "entities/PowerFragment.hpp"
+
+#include "fixmath.h"
+#include "globals.h"
+#include "utils.hpp"
+#include "handlers/DrawingCandidates.hpp"
+#include "handlers/Level.hpp"
 
 PowerFragment::PowerFragment() : Bullet()
 {

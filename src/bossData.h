@@ -1,7 +1,14 @@
 #pragma once
 
 #include "common.h"
+#include "fixmath.h"
+#include "globals.h"
+#include "utils.hpp"
+#include "entities/BossEnemy.hpp"
 #include "graphics/ExplosionEffect.hpp"
+#include "handlers/DrawingCandidates.hpp"
+#include "handlers/Level.hpp"
+#include "n2DLib/n2DLib.h"
 
 #define BOSS_NB 2
 #define MAX_PATTERNS_PER_BOSS 3

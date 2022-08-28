@@ -1,4 +1,10 @@
-#include "common.h"
+#include "entities/Homing.hpp"
+
+#include "fixmath.h"
+#include "globals.h"
+#include "entities/Player.hpp"
+#include "handlers/DrawingCandidates.hpp"
+#include "n2DLib/n2DLib.h"
 
 Homing::Homing() : Bullet()
 {
@@ -32,7 +38,7 @@ void Homing::activate(Fixed _x, Fixed _y, Fixed initialAngle, Player *_target, b
 
 bool Homing::handle()
 {
-	for(int i = FRAGMENT_TRAILING - 1; i > 0; i--)
+	for(int i = HOMING_TRAILING - 1; i > 0; i--)
 	{
 		previousX[i] = previousX[i - 1];
 		previousY[i] = previousY[i - 1];
@@ -66,7 +72,7 @@ void Homing::draw()
 	
 	DC->add(image_entries[polarity ? image_LUT_enemy_homing_bullet_shadow : image_LUT_enemy_homing_bullet_light], &r, false, CAMREL_NONE);
 	
-	for(int i = 0; i < FRAGMENT_TRAILING; i++)
+	for(int i = 0; i < HOMING_TRAILING; i++)
 	{
 		r.x = fixtoi(previousX[i]);
 		r.y = fixtoi(previousY[i]);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common.h"
+#include "types.h"
 
 class ExpParticle
 {
@@ -17,8 +17,8 @@ private:
 	bool active;
 };
 
-extern void initExplosionEngine();
-extern void initExplosionEffect(int x, int y, int coef, Fixed g);
-extern bool updateExplosionEffect();
-extern void renderExplosionEffect();
-extern void deinitExplosionEngine();
+void initExplosionEngine();
+void initExplosionEffect(int x, int y, int coef, Fixed g);
+bool updateExplosionEffect();
+void renderExplosionEffect();
+void deinitExplosionEngine();

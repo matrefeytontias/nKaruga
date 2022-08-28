@@ -1,4 +1,12 @@
-#include "common.h"
+#include "entities/Laser.hpp"
+
+#include <cstdlib>
+
+#include "fixmath.h"
+#include "globals.h"
+#include "entities/Enemy.hpp"
+#include "graphics/Particles.hpp"
+#include "n2DLib/n2DLib.h"
 
 Laser::Laser() : Bullet()
 {

@@ -1,4 +1,8 @@
-#include "common.h"
+#include "handlers/SoundHandler.hpp"
+
+#include <iostream>
+
+#include <SDL2/SDL_mixer.h>
 
 bool SoundHandler::launchLoop;
 
@@ -7,7 +11,7 @@ SoundHandler::SoundHandler()
 	Mix_Init(MIX_INIT_OGG);
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
 	{
-		printf("Can't initialize audio : %s\n", Mix_GetError());
+		std::cout << "Can't initialize audio : " << Mix_GetError() << std::endl;
 		exit(1);
 	}
 	Mix_AllocateChannels(32);

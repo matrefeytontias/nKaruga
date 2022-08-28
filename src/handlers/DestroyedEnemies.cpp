@@ -1,4 +1,8 @@
-#include "common.h"
+#include "handlers/DestroyedEnemies.hpp"
+
+#include "fixmath.h"
+#include "utils.hpp"
+#include "entities/Enemy.hpp"
 
 DestroyedEnemies::DestroyedEnemies()
 {

@@ -1,4 +1,9 @@
-#include "common.h"
+#include "helpers/Joint.hpp"
+
+#include "fixmath.h"
+#include "entities/BossEnemy.hpp"
+#include "entities/Enemy.hpp"
+#include "entities/Entity.hpp"
 
 Joint::Joint()
 {

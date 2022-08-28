@@ -1,4 +1,12 @@
-#include "common.h"
+#include "utils.hpp"
+
+#include <SDL2/SDL.h>
+
+#include "fixmath.h"
+#include "globals.h"
+#include "handlers/DrawingCandidates.hpp"
+#include "handlers/Level.hpp"
+#include "n2DLib/n2DLib.h"
 
 int distance(int x1, int y1, int x2, int y2)
 {

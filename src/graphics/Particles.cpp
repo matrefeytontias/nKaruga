@@ -1,4 +1,8 @@
-#include "common.h"
+#include "graphics/Particles.hpp"
+
+#include "fixmath.h"
+#include "globals.h"
+#include "n2DLib/n2DLib.h"
 
 Particles::Particles()
 {
@@ -44,7 +48,6 @@ void Particles::handle()
 			y[i] += dy[i];
 			
 			fillCircle(fixtoi(x[i]), fixtoi(y[i]), time[i] / dt[i], polarity[i] ? 0 : 0xffff);
-			
 		}
 	}
 }

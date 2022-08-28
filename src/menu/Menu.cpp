@@ -1,4 +1,11 @@
-#include "common.h"
+#include "menu/Menu.hpp"
+
+#include <varargs.h>
+
+#include "fixmath.h"
+#include "utils.hpp"
+#include "handlers/Level.hpp"
+#include "n2DLib/n2DLib.h"
 
 #define VSPACE 9
 

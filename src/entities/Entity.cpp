@@ -1,4 +1,9 @@
+#include "entities/Entity.hpp"
+
 #include "common.h"
+#include "fixmath.h"
+#include "globals.h"
+#include "utils.hpp"
 
 Entity::Entity()
 {
@@ -102,6 +107,7 @@ Fixed Entity::distance2ToXY(Fixed _x, Fixed _y)
 }
 
 // Returns true when the waiting is done
+// TODO : that straight up doesn't work
 bool Entity::waitFrames(int frames)
 {
 	static int base = -1;

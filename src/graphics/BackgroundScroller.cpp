@@ -1,4 +1,7 @@
-#include "common.h"
+#include "graphics/BackgroundScroller.hpp"
+
+#include "fixmath.h"
+#include "n2DLib/n2DLib.h"
 
 void cb_bgHandle_default(BackgroundScroller *bg)
 {
@@ -15,7 +18,7 @@ void cb_bgHandle_2_2(BackgroundScroller *bg)
 		bg->dy = 0;
 }
 
-backgroundHandle bgHandle[] = { cb_bgHandle_default, cb_bgHandle_2_2 };
+background_handler bgHandle[] = { cb_bgHandle_default, cb_bgHandle_2_2 };
 
 BackgroundScroller::BackgroundScroller(unsigned short *bg, Fixed _x, Fixed _y, Fixed sscale, Fixed dscale, int bgHandleID) // x is left-top corner, y is center (ugly but purpose-built)
 {

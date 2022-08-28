@@ -1,5 +1,15 @@
 #include "common.h"
+#include "fixmath.h"
+#include "globals.h"
+#include "utils.hpp"
+#include "graphics/ChainNotif.hpp"
 #include "graphics/ExplosionEffect.hpp"
+#include "graphics/Particles.hpp"
+#include "handlers/DrawingCandidates.hpp"
+#include "handlers/Level.hpp"
+#include "menu/Menu.hpp"
+
+#include "buildGameLUTs.hpp"
 #include "levels.h" 
 #include "gfx/kanji.h"
 #include "misc_data.h"
@@ -23,6 +33,8 @@ t_key G_downKey, G_leftKey, G_rightKey, G_upKey, G_fireKey, G_polarityKey, G_fra
 
 DrawingCandidates *DC;
 Particles *G_particles;
+
+t_key* G_keys;
 
 void playGame();
 

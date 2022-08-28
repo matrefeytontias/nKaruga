@@ -1,4 +1,9 @@
-#include "common.h"
+#include "entities/Bullet.hpp"
+
+#include "fixmath.h"
+#include "globals.h"
+#include "utils.hpp"
+#include "handlers/DrawingCandidates.hpp"
 
 Bullet::Bullet() : Entity()
 {
