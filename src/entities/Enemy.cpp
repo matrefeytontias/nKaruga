@@ -242,7 +242,9 @@ void Enemy::setAX(int nb, ...)
 	va_start(args, nb);
 	for (int i = 0; i < nb; i++)
 	{
-		float f = va_arg(args, float);
+		// va_arg does not take float
+		// https://stackoverflow.com/questions/11270588/variadic-function-va-arg-doesnt-work-with-float
+		float f = static_cast<float>(va_arg(args, double));
 		ax[i] = f;
 	}
 	va_end(args);
@@ -256,7 +258,7 @@ void Enemy::setAY(int nb, ...)
 	va_start(args, nb);
 	for (int i = 0; i < nb; i++)
 	{
-		float f = va_arg(args, float);
+		float f = static_cast<float>(va_arg(args, double));
 		ay[i] = f;
 	}
 	va_end(args);

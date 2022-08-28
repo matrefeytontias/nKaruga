@@ -46,7 +46,7 @@ void cb_Pattern_1_2(cb_args)
 void cb_Pattern_1_3(cb_args)
 {
 	Rect screenRect;
-	e->setAX(3, 320.0f, 160.0f + static_cast<float>(e->waveIndex * e->img[0]) / 2.0f, 320.0);
+	e->setAX(3, 320.0f, 160.0f + static_cast<float>(e->waveIndex * e->img[0]) / 2.0f, 320.0f);
 	e->setAY(3, 0.0f, 120.0f, 240.0f);
 	e->internal[1] = (5 - e->waveIndex) * 16 * 2 + 120;
 	e->setAT(3, 0, (5 - e->waveIndex) * 16 + 60, e->internal[1]);
