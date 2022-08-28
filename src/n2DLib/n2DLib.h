@@ -1,5 +1,4 @@
-#ifndef INCLUDE_GRAFX
-#define INCLUDE_GRAFX
+#pragma once
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -98,6 +97,4 @@ extern SDL_Texture *MAIN_SCREEN;
 extern const t_key *G_keys;
 #ifdef __cplusplus
 }
-#endif
-
 #endif

@@ -1,3 +1,5 @@
+#pragma once
+
 // Empty image for ghost entities
 static unsigned short image_null[] = { 1, 1, 0xf81f, 0xf81f };
 

@@ -1,3 +1,5 @@
+#pragma once
+
 static unsigned short image_bg1_0[] = {
 1, 1, 0xf81f,
 0xc512
