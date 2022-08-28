@@ -4,7 +4,7 @@
 #include "utils.hpp"
 #include "graphics/Particles.hpp"
 #include "handlers/Level.hpp"
-#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib.hpp"
 
 BulletArray::BulletArray()
 {

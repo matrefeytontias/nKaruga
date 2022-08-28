@@ -4,7 +4,7 @@
 #include "globals.h"
 #include "entities/Player.hpp"
 #include "handlers/DrawingCandidates.hpp"
-#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib.hpp"
 
 Homing::Homing() : Bullet()
 {

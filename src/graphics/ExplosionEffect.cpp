@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 #include "fixmath.h"
-#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib.hpp"
 
 typedef struct
 {

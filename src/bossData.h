@@ -8,7 +8,7 @@
 #include "graphics/ExplosionEffect.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "handlers/Level.hpp"
-#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib.hpp"
 
 #define BOSS_NB 2
 #define MAX_PATTERNS_PER_BOSS 3

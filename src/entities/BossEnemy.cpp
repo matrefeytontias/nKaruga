@@ -2,7 +2,7 @@
 
 #include "bossData.h"
 #include "handlers/Level.hpp"
-#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib.hpp"
 
 BossData createBossData(int bossID)
 {

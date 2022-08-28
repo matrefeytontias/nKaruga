@@ -6,7 +6,7 @@
 #include "globals.h"
 #include "entities/Enemy.hpp"
 #include "graphics/Particles.hpp"
-#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib.hpp"
 
 Laser::Laser() : Bullet()
 {

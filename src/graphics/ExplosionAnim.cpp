@@ -1,7 +1,7 @@
 #include "graphics/ExplosionAnim.hpp"
 
 #include "globals.h"
-#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib.hpp"
 
 #define FRAME_DELAY 4
 #define EXPLOSION_W image_entries[image_LUT_explosion_light_0][0]

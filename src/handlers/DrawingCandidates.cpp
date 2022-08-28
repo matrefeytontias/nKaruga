@@ -2,7 +2,7 @@
 
 #include "globals.h"
 #include "utils.hpp"
-#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib.hpp"
 
 //
 // Camera travelling handlers

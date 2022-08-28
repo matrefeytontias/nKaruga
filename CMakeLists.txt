@@ -66,9 +66,9 @@ set(SOURCES ${SOURCES}
     src/buildGameLUTs.cpp
     src/main.cpp
 # n2DLib
-    src/n2DLib/n2DLib.h
-    src/n2DLib/n2DLib.c
-    src/n2DLib/n2DLib_font.h
+    src/n2DLib/n2DLib.hpp
+    src/n2DLib/n2DLib.cpp
+    src/n2DLib/n2DLib_font.hpp
 # TODO : get rid of these - gfx
     src/gfx/bg.h
     src/gfx/bossgfx.h

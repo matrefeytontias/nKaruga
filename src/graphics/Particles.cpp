@@ -2,7 +2,7 @@
 
 #include "fixmath.h"
 #include "globals.h"
-#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib.hpp"
 
 Particles::Particles()
 {

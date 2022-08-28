@@ -1,6 +1,7 @@
 #include "handlers/Level.hpp"
 
 #include "fixmath.h"
+#include "utils.hpp"
 #include "entities/BossEnemy.hpp"
 #include "entities/Player.hpp"
 #include "graphics/BackgroundScroller.hpp"
@@ -9,7 +10,6 @@
 #include "handlers/EnemiesArray.hpp"
 #include "handlers/DrawingCandidates.hpp"
 
-#include "bossData.h"
 #include "levels.h"
 #include "gfx/kanji.h"
 #include "gfx/end_of_demo.h"

@@ -1,13 +1,9 @@
-#include "n2DLib.h"
-#include "n2DLib_font.h"
+#include "n2DLib.hpp"
+#include "n2DLib_font.hpp"
 
 #include "fixmath.h"
 #include "globals.h"
 #include "types.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*             *
  *  Buffering  *
@@ -754,7 +750,3 @@ unsigned short *loadBMP(const char *path, unsigned short transparency)
 	fclose(temp);
 	return returnValue;
 }
-
-#ifdef __cplusplus
-}
-#endif

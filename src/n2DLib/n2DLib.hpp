@@ -7,10 +7,6 @@
 
 #include "types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #define MAX_TIMER 2
 
 void rotate(int x, int y, int cx, int cy, Fixed angle, Rect* out);
@@ -59,9 +55,5 @@ int isKey(t_key, t_key);
 unsigned short * loadBMP(const char*, unsigned short);
 
 #define BUFF_BYTES_SIZE (320*240*2)
-unsigned short *BUFF_BASE_ADDRESS;
-SDL_Texture *MAIN_SCREEN;
-
-#ifdef __cplusplus
-}
-#endif
+extern unsigned short *BUFF_BASE_ADDRESS;
+extern SDL_Texture *MAIN_SCREEN;

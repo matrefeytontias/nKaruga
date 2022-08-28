@@ -4,7 +4,7 @@
 #include "fixmath.h"
 #include "utils.hpp"
 #include "handlers/Level.hpp"
-#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib.hpp"
 
 #define cb_args Enemy *e
 

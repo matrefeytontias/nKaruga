@@ -6,7 +6,7 @@
 #include "globals.h"
 #include "handlers/DrawingCandidates.hpp"
 #include "handlers/Level.hpp"
-#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib.hpp"
 
 int distance(int x1, int y1, int x2, int y2)
 {

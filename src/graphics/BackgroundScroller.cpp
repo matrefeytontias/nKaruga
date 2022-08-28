@@ -1,7 +1,7 @@
 #include "graphics/BackgroundScroller.hpp"
 
 #include "fixmath.h"
-#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib.hpp"
 
 void cb_bgHandle_default(BackgroundScroller *bg)
 {

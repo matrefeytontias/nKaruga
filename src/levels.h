@@ -1,7 +1,7 @@
 #pragma once
 
 #include "common.h"
-#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib.hpp"
 
 const static int levelStream[] = {
 	cmd_newChapter(0),
