@@ -1,5 +1,4 @@
-#ifndef INC_MISC
-#define INC_MISC
+#pragma once
 
 static const char string_nKaruga_config[] = "nKaruga.cfg";
 
@@ -41,4 +40,3 @@ const static char *string_results[6] = {
 };
 
 const static int power_fill_offsets[] = { 1, 2, 1, 5, 1, 8, 1, 10, 1, 10, 1, 10, 1, 10, 3, 10, 6, 10, 9, 10 };
-#endif

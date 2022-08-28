@@ -52,7 +52,6 @@ void toggleFullscreen()
 void constrainFrameRate(int fps)
 {
 	static Uint32 secondCount = 1001, secondBase = 0, FPScount = 0, FPSdisp = 0;
-	int x, y;
 	Uint32 d = 1000 / fps;
 	Uint32 elapsed = SDL_GetTicks() - baseFPS;
 	if(elapsed < d)

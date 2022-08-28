@@ -1,5 +1,7 @@
+#pragma once
+
 #include "common.h"
-#include "ExplosionEffect.h"
+#include "graphics/ExplosionEffect.hpp"
 
 #define BOSS_NB 2
 #define MAX_PATTERNS_PER_BOSS 3

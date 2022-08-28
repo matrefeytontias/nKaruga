@@ -1,10 +1,8 @@
 #include "common.h"
-#include "ExplosionEffect.h"
+#include "graphics/ExplosionEffect.hpp"
 #include "levels.h" 
 #include "gfx/kanji.h"
 #include "misc_data.h"
-
-#include <stack>
 
 #define ENEMY_W(i) Level::enemiesArray->data[i].img[0]
 #define ENEMY_H(i) Level::enemiesArray->data[i].img[1]
@@ -247,7 +245,7 @@ void playGame()
 	int pauseTimer = 0;
 	int x = 0, y = 0;
 	
-	Rect statsRect, levelRect;
+	Rect statsRect;
 	int chainColor[3] = { 0 };
 	
 	// Game phase

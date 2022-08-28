@@ -4,44 +4,72 @@ project(nKarugaProject LANGUAGES C CXX)
 
 set(SOURCES ${SOURCES}
 # Game source - headers
-    src/bossData.h
-    src/common.h
-    src/ExplosionEffect.h
+    src/entities/BossEnemy.hpp
+    src/entities/Bullet.hpp
+    src/entities/Enemy.hpp
+    src/entities/Entity.hpp
+    src/entities/Homing.hpp
+    src/entities/Laser.hpp
+    src/entities/Player.hpp
+    src/entities/PowerFragment.hpp
+
+    src/graphics/BackgroundScroller.hpp
+    src/graphics/ChainNotif.hpp
+    src/graphics/DrawingCandidate.hpp
+    src/graphics/ExplosionAnim.hpp
+    src/graphics/ExplosionEffect.hpp
+    src/graphics/Particles.hpp
+
+    src/handlers/BulletArray.hpp
+    src/handlers/DestroyedEnemies.hpp
+    src/handlers/DrawingCandidates.hpp
+    src/handlers/EnemiesArray.hpp
+    src/handlers/Level.hpp
+    src/handlers/SoundHandler.hpp
+
+    src/helpers/Joint.hpp
+
+    src/menu/Menu.hpp
+
+# Game source - sources
+    src/entities/BossEnemy.cpp
+    src/entities/Bullet.cpp
+    src/entities/Enemy.cpp
+    src/entities/Entity.cpp
+    src/entities/Homing.cpp
+    src/entities/Laser.cpp
+    src/entities/Player.cpp
+    src/entities/PowerFragment.cpp
+
+    src/graphics/BackgroundScroller.cpp
+    src/graphics/ChainNotif.cpp
+    src/graphics/DrawingCandidate.cpp
+    src/graphics/ExplosionAnim.cpp
+    src/graphics/ExplosionEffect.cpp
+    src/graphics/Particles.cpp
+
+    src/handlers/BulletArray.cpp
+    src/handlers/DestroyedEnemies.cpp
+    src/handlers/DrawingCandidates.cpp
+    src/handlers/EnemiesArray.cpp
+    src/handlers/Level.cpp
+    src/handlers/SoundHandler.cpp
+
+    src/helpers/Joint.cpp
+
+    src/menu/Menu.cpp
+
+# TODO : refactor - Ad-hoc and data
     src/levels.h
-    src/misc_data.h
     src/patterns.h
-# Game source - source files
-    src/BackgroundScroller.cpp
-    src/BossEnemy.cpp
-    src/Bullet.cpp
-    src/BulletArray.cpp
-    src/ChainNotif.cpp
-    src/DestroyedEnemies.cpp
-    src/DrawingCandidate.cpp
-    src/DrawingCandidates.cpp
-    src/EnemiesArray.cpp
-    src/Enemy.cpp
-    src/Entity.cpp
-    src/ExplosionAnim.cpp
-    src/ExplosionEffect.cpp
-    src/Homing.cpp
-    src/Joint.cpp
-    src/Laser.cpp
-    src/Level.cpp
-    src/Menu.cpp
-    src/Particles.cpp
-    src/Player.cpp
-    src/PowerFragment.cpp
-    src/SoundHandle.cpp
-# Ad-hoc and miscellaneous
+    src/buildGameLUTs.hpp
     src/buildGameLUTs.cpp
     src/main.cpp
-    src/utils.cpp
 # n2DLib
-    src/n2DLib.h
-    src/n2DLib.c
-    src/n2DLib_font.h
-# gfx
+    src/n2DLib/n2DLib.h
+    src/n2DLib/n2DLib.c
+    src/n2DLib/n2DLib_font.h
+# TODO : get rid of these - gfx
     src/gfx/bg.h
     src/gfx/bossgfx.h
     src/gfx/bossWarning.h
@@ -51,7 +79,15 @@ set(SOURCES ${SOURCES}
     src/gfx/titleScreen.h
 # sfx
     src/sfx/list.h
+# TODO : get rid of these - misc
+    src/bossData.h
+    src/common.h
+    src/misc_data.h
+    src/utils.hpp
+    src/utils.cpp
 )
+
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src PREFIX "Source Files" FILES ${SOURCES})
 
 add_executable(nKaruga ${SOURCES} icon.rc)
 

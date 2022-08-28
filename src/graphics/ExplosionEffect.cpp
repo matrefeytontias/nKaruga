@@ -1,4 +1,4 @@
-#include "ExplosionEffect.h"
+#include "graphics/ExplosionEffect.hpp"
 
 typedef struct
 {

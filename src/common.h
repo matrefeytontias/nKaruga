@@ -1,5 +1,4 @@
-#ifndef INCLUDE_COMMON
-#define INCLUDE_COMMON
+#pragma once
 
 #define M_PI 3.1415926535897932384626433832795
 
@@ -10,7 +9,7 @@
 #include <stack>
 #include <SDL2/SDL_mixer.h>
 
-#include "n2DLib.h"
+#include "n2DLib/n2DLib.h"
 
 #define UNUSED(var) (void)var
 
@@ -683,11 +682,11 @@ enum
 };
 
 // Sound handler
-class SoundHandle
+class SoundHandler
 {
 public:
-	SoundHandle();
-	~SoundHandle();
+	SoundHandler();
+	~SoundHandler();
 	void update();
 	int quickPlaySFX(Mix_Chunk *sfx);
 	int playBgMusic(Mix_Music *mainM, Mix_Music *loopM);
@@ -719,7 +718,7 @@ public:
 	static BulletArray *bArray;
 	static EnemiesArray *enemiesArray;
 	static BossEnemy *be;
-	static SoundHandle *soundSystem;
+	static SoundHandler *soundSystem;
 private:
 	static int chapterNum;
 	static Enemy *currentWaveEnemies[MAX_ENEMY]; // current wave's set of enemies (for 'killed' commands)
@@ -1142,5 +1141,3 @@ extern Fixed fToScreenX(Fixed x, int camRel);
 extern Fixed fToScreenY(Fixed y, int camRel);
 extern BossData createBossData(int bossID);
 extern int isKeyPressed(t_key);
-
-#endif

@@ -12,7 +12,7 @@ Player* Level::p;
 BulletArray* Level::bArray;
 EnemiesArray* Level::enemiesArray;
 BossEnemy* Level::be;
-SoundHandle* Level::soundSystem;
+SoundHandler* Level::soundSystem;
 int Level::chapterNum;
 Enemy* Level::currentWaveEnemies[MAX_ENEMY]; // current wave's set of enemies (for 'killed' commands)
 int Level::skipCommand; // skip offset (for skip commands)
@@ -27,7 +27,7 @@ void Level::init(int n)
 	bArray = new BulletArray();
 	enemiesArray = new EnemiesArray();
 	be = new BossEnemy();
-	soundSystem = new SoundHandle();
+	soundSystem = new SoundHandler();
 	counter = 0;
 	reinit(n);
 }

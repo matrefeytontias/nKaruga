@@ -1,3 +1,5 @@
+#pragma once
+
 const char* sfxList[] = {
 	/* TODO */
 	"sfx/bullet/fire_enemy_0.wav",
