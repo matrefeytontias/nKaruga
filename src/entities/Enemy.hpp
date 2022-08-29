@@ -18,7 +18,7 @@ public:
 	Enemy();
 	~Enemy();
 	void handle();
-	void activate(int x, int y, int HP, int shipImgID, int callbackID, int waveIndex, bool polarity, bool hasRotation, int firebackAmount, bool ghost, int type);
+	void activate(int x, int y, int HP, int shipImgId, int callbackID, int waveIndex, bool polarity, bool hasRotation, int firebackAmount, bool ghost, int type);
 	bool damage(bool polarity, int amount);
 	void joint(Entity* target, int targetX, int targetY, int jointX, int jointY, int jointCX, int jointCY, unsigned short* timg, unsigned short* jimg, bool diesWithJoint);
 	void joint(Entity* target, int targetX, int targetY, int targetCX, int targetCY, int jointX, int jointY, int jointCX, int jointCY, unsigned short* timg, unsigned short* jimg, bool diesWithJoint);
@@ -66,7 +66,7 @@ public:
 	Joint* jointObj;
 	bool isJointed;
 private:
-	int shipImgID;
+	int shipImgId; // TODO : LUTs::BaseImageId shipImgId
 	// Ghost enemies have no interaction with anything
 	bool ghost;
 	// Props follow the absolute camera

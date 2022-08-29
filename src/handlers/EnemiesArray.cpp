@@ -1,7 +1,8 @@
 #include "handlers/EnemiesArray.hpp"
 
-#include "fixmath.h"
 #include "utils.hpp"
+#include "helpers/Constants.hpp"
+#include "helpers/math.hpp"
 
 EnemiesArray::EnemiesArray()
 {
@@ -14,24 +15,25 @@ EnemiesArray::~EnemiesArray()
 	
 }
 
-Enemy* EnemiesArray::add(int x, int y, int HP, int shipImgID, int callbackID, int waveIndex, bool polarity, bool hasRotation, int firebackAmount, bool ghost, int type)
+// TODO : LUTs::BaseImageId shipImgId
+Enemy* EnemiesArray::add(int x, int y, int HP, int shipImgId, int callbackId, int waveIndex, bool polarity, bool hasRotation, int firebackAmount, bool ghost, int type)
 {
 	// Keep props active
 	while (data[currentEnemy].isActive() && data[currentEnemy].isProp())
 	{
 		currentEnemy++;
-		currentEnemy %= MAX_ENEMY;
+		currentEnemy %= Constants::MAX_ENEMY;
 	}
-	data[currentEnemy].activate(x, y, HP, shipImgID, callbackID, waveIndex, polarity, hasRotation, firebackAmount, ghost, type);
+	data[currentEnemy].activate(x, y, HP, shipImgId, callbackId, waveIndex, polarity, hasRotation, firebackAmount, ghost, type);
 	Enemy *r = &data[currentEnemy];
 	currentEnemy++;
-	currentEnemy %= MAX_ENEMY;
+	currentEnemy %= Constants::MAX_ENEMY;
 	return r;
 }
 
 void EnemiesArray::handle()
 {
-	for(int i = 0; i < MAX_ENEMY; i++)
+	for(int i = 0; i < Constants::MAX_ENEMY; i++)
 	{
 		G_killedThisFrame[i] = -1;
 		if(data[i].diedThisFrame)
@@ -42,7 +44,7 @@ void EnemiesArray::handle()
 													   iToScreenY(fixtoi(data[i].gety()), data[i].getCamRel()),
 													   data[i].getPolarity());
 			currentExplosion++;
-			currentExplosion %= MAX_ENEMY;
+			currentExplosion %= Constants::MAX_ENEMY;
 		}
 		data[i].handle();
 	}
@@ -50,7 +52,7 @@ void EnemiesArray::handle()
 
 void EnemiesArray::handleExplosions()
 {
-	for(int i = 0; i < MAX_ENEMY; i++)
+	for(int i = 0; i < Constants::MAX_ENEMY; i++)
 		explosionsAnims[i].handle();
 }
 
@@ -61,14 +63,14 @@ void EnemiesArray::resetEnemyCounter()
 
 void EnemiesArray::destroyAllEnemies()
 {
-	for(int i = 0; i < MAX_ENEMY; i++)
+	for(int i = 0; i < Constants::MAX_ENEMY; i++)
 		if(data[i].isActive())
 			data[i].damage(data[i].getPolarity(), 9999);
 }
 
 bool EnemiesArray::enemiesKilled()
 {
-	for (int i = 0; i < MAX_ENEMY; i++)
+	for (int i = 0; i < Constants::MAX_ENEMY; i++)
 	{
 		if (data[i].isActive() && !data[i].isProp())
 			return false;

@@ -4,14 +4,10 @@
 #include "entities/Homing.hpp"
 #include "entities/Laser.hpp"
 #include "entities/PowerFragment.hpp"
+#include "helpers/Constants.hpp"
 
 class Enemy;
 class Player;
-
-#define MAX_BULLET 1000
-#define MAX_HOMING 100
-#define MAX_FRAGMENT 12
-#define MAX_LASER 12
 
 // BulletArray
 class BulletArray
@@ -30,10 +26,10 @@ private:
 	void deactivate(int offset, bool playSound);
 	void deactivate_fragment(int offset);
 	void deactivate_homing(int offset);
-	Bullet data[MAX_BULLET];
-	PowerFragment data_fragment[MAX_FRAGMENT];
-	Homing data_homing[MAX_HOMING];
-	Laser data_laser[MAX_LASER];
+	Bullet data[Constants::MAX_BULLET];
+	PowerFragment data_fragment[Constants::MAX_FRAGMENT];
+	Homing data_homing[Constants::MAX_HOMING];
+	Laser data_laser[Constants::MAX_LASER];
 	// keep track of current bullet ...
 	int bulletCount;
 	// ... power fragment ...

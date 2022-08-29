@@ -27,7 +27,9 @@ set(SOURCES ${SOURCES}
     src/handlers/Level.hpp
     src/handlers/SoundHandler.hpp
 
+    src/helpers/Constants.hpp
     src/helpers/Joint.hpp
+    src/helpers/math.hpp
 
     src/menu/Menu.hpp
 
@@ -55,15 +57,15 @@ set(SOURCES ${SOURCES}
     src/handlers/Level.cpp
     src/handlers/SoundHandler.cpp
 
+    src/helpers/Constants.cpp
     src/helpers/Joint.cpp
+    src/helpers/math.cpp
 
     src/menu/Menu.cpp
 
 # TODO : refactor - Ad-hoc and data
     src/levels.h
     src/patterns.h
-    src/buildGameLUTs.hpp
-    src/buildGameLUTs.cpp
     src/main.cpp
 # n2DLib
     src/n2DLib/n2DLib.hpp
@@ -83,8 +85,6 @@ set(SOURCES ${SOURCES}
     src/bossData.h
     src/common.h
     src/globals.h
-    src/fixmath.cpp
-    src/fixmath.h
     src/misc_data.h
     src/types.h
     src/utils.hpp

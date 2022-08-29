@@ -1,7 +1,7 @@
 #include "n2DLib.hpp"
 #include "n2DLib_font.hpp"
 
-#include "fixmath.h"
+#include "helpers/math.hpp"
 #include "globals.h"
 #include "types.h"
 
@@ -136,75 +136,6 @@ void timer_load(unsigned timer, Uint32 value) // milliseconds
 Uint32 timer_read(unsigned timer) // returns milliseconds
 {
 	return timerValue[timer] - min(SDL_GetTicks() - timerBase[timer], timerValue[timer]);
-}
-
-/*         *
- *  Maths  *
- *         */
-
- /*
-Example:
-2.5 * 3.5 :
-	xdec = 128
-	ydec = 128
-	xint = 2
-	yint = 3
-2.5 * 3 = 8.75 :
-	rdec = 192
-	rint = 8
-*/
-
- void rotate(int x, int y, int cx, int cy, Fixed angle, Rect *out)
-{
-	x -= cx;
-	y -= cy;
-	out->x = fixtoi(fixmul(itofix(x), fixcos(angle)) + fixmul(itofix(y), fixsin(angle))) + cx;
-	out->y = fixtoi(fixmul(itofix(x), -fixsin(angle)) + fixmul(itofix(y), fixcos(angle))) + cy;
-}
-
-void getBoundingBox(int x, int y, int w, int h, int cx, int cy, Fixed angle, Rect *out)
-{
-	Rect tl, tr, bl, br;
-	rotate(x, y, cx, cy, angle, &tl);
-	rotate(x + w, y, cx, cy, angle, &tr);
-	rotate(x, y + h, cx, cy, angle, &bl);
-	rotate(x + w, y + h, cx, cy, angle, &br);
-	out->x = min(min(min(tl.x, tr.x), bl.x), br.x);
-	out->y = min(min(min(tl.y, tr.y), bl.y), br.y);
-	out->w = max(max(max(tl.x, tr.x), bl.x), br.x) - out->x;
-	out->h = max(max(max(tl.y, tr.y), bl.y), br.y) - out->y;
-}
-
- int sq(int x)
-{
-	return x * x;
-}
-
- int cube(int x)
-{
-	return x * x * x;
-}
-
-// Uses Lagrange's interpolation polynomial
-// Returns the next t parameter so it can be fed back to the function the next call
-int interpolatePathFloat(int curT, float _x[], float _y[], int _t[], int nb, Rect *out)
-{
-	float factor, rx = 0., ry = 0.;
-	int i, j;
-	
-	for(i = 0; i < nb; i++)
-	{
-		factor = 1.;
-		for(j = 0; j < nb; j++)
-			if(i != j)
-				factor *= (float)(curT - _t[j]) / (_t[i] - _t[j]);
-		rx += _x[i] * factor;
-		ry += _y[i] * factor;
-	}
-	
-	out->x = (int)rx;
-	out->y = (int)ry;
-	return curT + 1;
 }
 
 /*            *
@@ -474,13 +405,14 @@ void drawPolygon(unsigned short c, int pointsNb, ...)
 	free(pointsList);
 }
 
+// TODO : do better than that
 void fillCircle(int x, int y, int radius, unsigned short c)
 {
 	int i,j;
 	for(j=-radius; j<=radius; j++)
 		for(i=-radius; i<=radius; i++)
 			if(i*i+j*j <= radius*radius)
-				setPixel(x + i, y + j, c);               
+				setPixel(x + i, y + j, c);
 }
 
 /*  /!\ for circle and ellispe, the x and y must be the center of the shape, not the top-left point   /!\  */

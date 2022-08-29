@@ -4,6 +4,7 @@
 
 #include "types.h"
 #include "entities/Entity.hpp"
+#include "helpers/Constants.hpp"
 
 class BossEnemy;
 class Bullet;
@@ -95,7 +96,7 @@ public:
 	Fixed getDistance(PowerFragment*);
 	Fixed getAngle(PowerFragment*);
 	int id;
-	int body; // image LUT offset to body image
+	uint16_t *bodyImg; // image of the boss' body
 	Fixed angle;
 	bool flash;
 	int HP;

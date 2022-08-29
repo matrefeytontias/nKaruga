@@ -1,6 +1,6 @@
 #include "handlers/Level.hpp"
 
-#include "fixmath.h"
+#include "helpers/math.hpp"
 #include "utils.hpp"
 #include "entities/BossEnemy.hpp"
 #include "entities/Player.hpp"
@@ -9,6 +9,8 @@
 #include "handlers/BulletArray.hpp"
 #include "handlers/EnemiesArray.hpp"
 #include "handlers/DrawingCandidates.hpp"
+#include "helpers/Constants.hpp"
+#include "n2DLib/n2DLib.hpp"
 
 #include "levels.h"
 #include "gfx/kanji.h"
@@ -25,7 +27,7 @@ EnemiesArray* Level::enemiesArray;
 BossEnemy* Level::be;
 SoundHandler* Level::soundSystem;
 int Level::chapterNum;
-Enemy* Level::currentWaveEnemies[MAX_ENEMY]; // current wave's set of enemies (for 'killed' commands)
+Enemy* Level::currentWaveEnemies[Constants::MAX_ENEMY]; // current wave's set of enemies (for 'killed' commands)
 int Level::skipCommand; // skip offset (for skip commands)
 bool Level::continueParsing;
 std::vector<BackgroundScroller> Level::bgStack; // needs an iterator
@@ -163,7 +165,7 @@ void Level::advanceLevel()
 					}
 					else if (currentLevelByte == LVLSTR_REPEATABS)
 					{
-						printf("Global timer : %d\n", G_gpTimer / FPS);
+						printf("Global timer : %d\n", G_gpTimer / Constants::FPS);
 						if (G_gpTimer < levelStream[counter + 1])
 						{
 							int amount = levelStream[counter + 2];
@@ -182,8 +184,9 @@ void Level::advanceLevel()
 					}
 					else if (currentLevelByte == LVLSTR_BACKGROUND)
 					{
-						BackgroundScroller bg(bgImage_entries[levelStream[counter + 1]], levelStream[counter + 2], levelStream[counter + 3],
-							levelStream[counter + 4], levelStream[counter + 5], levelStream[counter + 6]);
+						BackgroundScroller bg(LUTs::backgroundImage(static_cast<LUTs::BgImageId>(levelStream[counter + 1])),
+											  levelStream[counter + 2], levelStream[counter + 3], levelStream[counter + 4],
+											  levelStream[counter + 5], levelStream[counter + 6]);
 						bgStack.push_back(bg);
 						counter += 7;
 						continueParsing = true;
@@ -195,7 +198,8 @@ void Level::advanceLevel()
 					}
 					else if (currentLevelByte == LVLSTR_MUSIC)
 					{
-						soundSystem->playBgMusic(music_entries[levelStream[counter + 1]], music_entries[levelStream[counter + 2]]);
+						soundSystem->playBgMusic(LUTs::music(static_cast<LUTs::MusicId>(levelStream[counter + 1])),
+												 LUTs::music(static_cast<LUTs::MusicId>(levelStream[counter + 2])));
 						counter += 3;
 					}
 					else if (currentLevelByte == LVLSTR_REINIT)
@@ -233,7 +237,8 @@ void Level::advanceLevel()
 					{
 						// Constrain an enemy to another
 						currentWaveEnemies[levelStream[counter + 1]]->joint(currentWaveEnemies[levelStream[counter + 2]],
-							levelStream[counter + 3],levelStream[counter + 4], 0, 0, -1, -1, image_entries[image_LUT_null], image_entries[image_LUT_null],
+							levelStream[counter + 3],levelStream[counter + 4], 0, 0, -1, -1,
+							LUTs::baseImage(LUTs::BaseImageId::NONE), LUTs::baseImage(LUTs::BaseImageId::NONE),
 							levelStream[counter + 5]);
 						counter += 6;
 					}
@@ -257,7 +262,7 @@ void Level::advanceLevel()
 						// Debug stuff
 						printf("Current wave timer : %d\nGlobal timer : %d\nCurrent wave index : %d\n",
 							waveTimer, G_gpTimer, waveIndex);
-						for (int i = 0; i < MAX_ENEMY; i++)
+						for (int i = 0; i < Constants::MAX_ENEMY; i++)
 						{
 							Enemy *e = &(enemiesArray->data[i]);
 							if (e->isActive())
@@ -375,10 +380,10 @@ void Level::intro2()
 	
 	if(!currentW)
 	{
-		ld1 = enemiesArray->add(itofix(-166 + 83), itofix(120), 1, image_LUT_door_left, Pattern_2_leftDoor, 0, LIGHT, false, 0, true, TYPE_ENEMY);
-		ld2 = enemiesArray->add(itofix(-166 + 83), itofix(-120), 1, image_LUT_door_left, Pattern_2_leftDoor, 0, LIGHT, false, 0, true, TYPE_ENEMY);
-		rd1 = enemiesArray->add(itofix(320 + 83), itofix(120), 1, image_LUT_door_right, Pattern_2_rightDoor, 0, LIGHT, false, 0, true, TYPE_ENEMY);
-		rd2 = enemiesArray->add(itofix(320 + 83), itofix(-120), 1, image_LUT_door_right, Pattern_2_rightDoor, 0, LIGHT, false, 0, true, TYPE_ENEMY);
+		ld1 = enemiesArray->add(itofix(-166 + 83), itofix(120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_LEFT), Pattern_2_leftDoor, 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
+		ld2 = enemiesArray->add(itofix(-166 + 83), itofix(-120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_LEFT), Pattern_2_leftDoor, 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
+		rd1 = enemiesArray->add(itofix(320 + 83), itofix(120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_RIGHT), Pattern_2_rightDoor, 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
+		rd2 = enemiesArray->add(itofix(320 + 83), itofix(-120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_RIGHT), Pattern_2_rightDoor, 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
 	}
 	else if(currentW >= 120 && G_gpTimer == currentW + 1)
 	{
@@ -394,7 +399,7 @@ void Level::intro2()
 	{
 		for(int i = 0; i < 4; i++)
 		{
-			G_particles->add(p->getx(), p->gety() + itofix(14), (rand() % 32) + 48, (rand() % itofix(2)) + itofix(2), p->getPolarity(), FPS);
+			G_particles->add(p->getx(), p->gety() + itofix(14), (rand() % 32) + 48, (rand() % itofix(2)) + itofix(2), p->getPolarity(), Constants::FPS);
 		}
 	}
 }

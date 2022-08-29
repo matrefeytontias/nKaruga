@@ -17,3 +17,9 @@ Fixed fixcos(Fixed angle);
 Fixed fixsin(Fixed angle);
 Fixed fixsq(Fixed x);
 Fixed fixcube(Fixed x);
+
+void rotate(int x, int y, int cx, int cy, Fixed angle, Rect* out);
+void getBoundingBox(int x, int y, int w, int h, int cx, int cy, Fixed angle, Rect* out);
+int sq(int);
+int cube(int);
+int interpolatePathFloat(int, float[], float[], int[], int, Rect*);

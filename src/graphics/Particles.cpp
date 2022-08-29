@@ -1,7 +1,8 @@
 #include "graphics/Particles.hpp"
 
-#include "fixmath.h"
 #include "globals.h"
+#include "helpers/Constants.hpp"
+#include "helpers/math.hpp"
 #include "n2DLib/n2DLib.hpp"
 
 Particles::Particles()
@@ -33,7 +34,7 @@ void Particles::pulse(Fixed _x, Fixed _y, bool _p)
 {
 	for (int i = 0; i < 256; i++)
 	{
-		add(_x, _y, i, itofix(3), _p, FPS);
+		add(_x, _y, i, itofix(3), _p, Constants::FPS);
 	}
 }
 

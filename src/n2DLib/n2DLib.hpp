@@ -9,12 +9,6 @@
 
 #define MAX_TIMER 2
 
-void rotate(int x, int y, int cx, int cy, Fixed angle, Rect* out);
-void getBoundingBox(int x, int y, int w, int h, int cx, int cy, Fixed angle, Rect *out);
-int sq(int);
-int cube(int);
-int interpolatePathFloat(int, float[], float[], int[], int, Rect*);
-
 void initBuffering();
 void constrainFrameRate(int);
 void displayFrameRate();

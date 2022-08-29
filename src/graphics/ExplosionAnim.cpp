@@ -1,11 +1,13 @@
 #include "graphics/ExplosionAnim.hpp"
 
 #include "globals.h"
+#include "helpers/Constants.hpp"
 #include "n2DLib/n2DLib.hpp"
 
 #define FRAME_DELAY 4
-#define EXPLOSION_W image_entries[image_LUT_explosion_light_0][0]
-#define EXPLOSION_H image_entries[image_LUT_explosion_light_0][1]
+// TODO : cache this once and for all
+#define EXPLOSION_W LUTs::baseImage(LUTs::BaseImageId::EXPLOSION_LIGHT_0)[0]
+#define EXPLOSION_H LUTs::baseImage(LUTs::BaseImageId::EXPLOSION_LIGHT_0)[1]
 
 ExplosionAnim::ExplosionAnim() : Entity()
 {
@@ -30,7 +32,9 @@ void ExplosionAnim::handle()
 	if(counter)
 	{
 		// Isn't a drawing candidate
-		drawSprite(image_entries[(polarity ? image_LUT_explosion_shadow_0 : image_LUT_explosion_light_0) + (6 * FRAME_DELAY - counter) / FRAME_DELAY], x, y, 0, 0);
+		drawSprite(LUTs::baseImage(polarity ? LUTs::BaseImageId::EXPLOSION_SHADOW_0 : LUTs::BaseImageId::EXPLOSION_LIGHT_0,
+								   (6 * FRAME_DELAY - counter) / FRAME_DELAY),
+				   x, y, 0, 0);
 		counter--;
 	}
 }

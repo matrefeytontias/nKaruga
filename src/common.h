@@ -4,8 +4,6 @@
 #define M_PI 3.1415926535897932384626433832795
 #endif
 
-#define FPS 60
-
 // KeyEvent
 #define KDOWN(x) (x & 1)
 #define KLEFT(x) (x & 2)
@@ -17,63 +15,11 @@
 #define KQUIT(x) (x & 128)
 #define KPAUSE(x) (x & 256)
 
-// Bullets
-
-#define LIGHT 0
-#define SHADOW 1
-#define SWITCHING0 2
-#define SWITCHING1 4
-
-// 12*10
-#define MAX_POWER 120
-
-#define LASER_SPEED 6
-#define LASER_THICKNESS 25
-
 /* UTILS */
-
-// SFX
-// Sounds
-enum
-{
-	/* TODO */
-	SD_BULLET_FIRE_ENEMY_0,
-	SD_BULLET_FIRE_ENEMY_1,
-	SD_BULLET_FIRE_ENEMY_2,
-	SD_BULLET_FIRE_ENEMY_HOMING,
-	SD_BULLET_FIRE_PLAYER_BULLET,
-	SD_BULLET_FIRE_FRAGMENT,
-	SD_BULLET_IMPACT,
-	SD_ENEMY_EXP_BIG,
-	SD_ENEMY_EXP_SMALL,
-	SD_ENEMY_LASER_CHARGE,
-	SD_ENEMY_LASER_RELEASE,
-	SD_PLAYER_CHAIN,
-	SD_PLAYER_DEATH,
-	SD_PLAYER_SWITCH,
-	/* END TODO */
-	SD_MENU_ACCEPT,
-	SD_MENU_BACK,
-	SD_MENU_CURSOR,
-	SD_MENU_SELECT,
-	SD_MENU_START,
-	SD_BOSS_ALERT,
-	NB_SOUNDS
-};
-// Musics
-enum
-{
-	BGM_CHAPTER1_MAIN,
-	BGM_CHAPTER1_LOOP,
-	BGM_CHAPTER1_BOSS,
-	BGM_CHAPTER2_MAIN,
-	BGM_CHAPTER2_LOOP,
-	NB_MUSICS
-};
 
 // Level streams
 // x, y, HP, image ID, callback ID, polarity, has rotation ?, fireback amount, type ?
-#define enemy(x, y, HP, iID, cbID, p, hR, f, type) x, y, HP, iID, cbID, p, hR, f, type
+#define enemy(x, y, HP, iID, cbID, p, hR, f, type) x, y, HP, static_cast<int>(iID), cbID, p, hR, f, type
 
 // IMPORTANT
 // PROPS ARE NOT CONSIDERED PARTS OF A WAVE, THUS THEIR waveIndex VARIABLE MUST NOT BE USED
@@ -136,11 +82,11 @@ enum
 // Waits for all enemies to be killed (includes props)
 #define cmd_killed LVLSTR_CMD, 1, LVLSTR_KILLED
 // Pushes the given background to the background rendering stack
-#define cmd_useBackground(id, x, y, scrollScale, displayScale, handleID) LVLSTR_CMD, 7, LVLSTR_BACKGROUND, id, x, y, scrollScale, displayScale, handleID
+#define cmd_useBackground(id, x, y, scrollScale, displayScale, handleID) LVLSTR_CMD, 7, LVLSTR_BACKGROUND, static_cast<int>(id), x, y, scrollScale, displayScale, handleID
 // Empties the background rendering stack
 #define cmd_resetBackgrounds LVLSTR_CMD, 1, LVLSTR_RESETBG
 // Plays the chapter's music
-#define cmd_playMusic(mainM, loopM) LVLSTR_CMD, 3, LVLSTR_MUSIC, mainM, loopM
+#define cmd_playMusic(mainM, loopM) LVLSTR_CMD, 3, LVLSTR_MUSIC, static_cast<int>(mainM), static_cast<int>(loopM)
 // Loads a new chapter
 #define cmd_newChapter(n) LVLSTR_CMD, 2, LVLSTR_REINIT, n
 // Starts a new chapter (call it after its introduction is done)
@@ -154,178 +100,6 @@ enum
 #define cmd_fightBoss(n) LVLSTR_CMD, 2, LVLSTR_BOSS, n
 
 // LUT-related
-
-// Base images LUT
-enum
-{
-	image_LUT_null,
-	image_LUT_player_ship_light,
-	image_LUT_player_ship_shadow,
-	image_LUT_player_ship_polarityswitch_0_light,
-	image_LUT_player_ship_polarityswitch_0_shadow,
-	image_LUT_player_ship_polarityswitch_1_light,
-	image_LUT_player_ship_polarityswitch_1_shadow,
-	image_LUT_player_ship_invincible_light,
-	image_LUT_player_ship_invincible_shadow,
-	image_LUT_player_bullet_light,
-	image_LUT_player_bullet_shadow,
-	image_LUT_player_homing_bullet_light_0,
-	image_LUT_player_homing_bullet_light_1,
-	image_LUT_player_homing_bullet_light_2,
-	image_LUT_player_homing_bullet_shadow_0,
-	image_LUT_player_homing_bullet_shadow_1,
-	image_LUT_player_homing_bullet_shadow_2,
-	image_LUT_player_explosion_0,
-	image_LUT_player_explosion_1,
-	image_LUT_player_explosion_2,
-	image_LUT_player_explosion_3,
-	image_LUT_player_explosion_4,
-	image_LUT_player_explosion_5,
-	image_LUT_player_explosion_6,
-	image_LUT_player_explosion_7,
-	image_LUT_player_explosion_8,
-	image_LUT_player_explosion_9,
-	image_LUT_player_explosion_10,
-	image_LUT_player_explosion_11,
-	image_LUT_enemy_bullet_0_light,
-	image_LUT_enemy_bullet_0_shadow,
-	image_LUT_enemy_bullet_1_light,
-	image_LUT_enemy_bullet_1_shadow,
-	image_LUT_enemy_bullet_2_light,
-	image_LUT_enemy_bullet_2_shadow,
-	image_LUT_enemy_homing_bullet_light,
-	image_LUT_enemy_homing_bullet_shadow,
-	image_LUT_enemy_laser_light,
-	image_LUT_enemy_laser_shadow,
-	image_LUT_enemy_generator_light,
-	image_LUT_enemy_generator_shadow,
-	image_LUT_enemy_wall_light,
-	image_LUT_enemy_wall_shadow,
-	image_LUT_enemy_ship_0_light,
-	image_LUT_enemy_ship_0_shadow,
-	image_LUT_enemy_ship_1_light,
-	image_LUT_enemy_ship_1_shadow,
-	image_LUT_enemy_ship_2_light,
-	image_LUT_enemy_ship_2_shadow,
-	image_LUT_enemy_ship_3_light,
-	image_LUT_enemy_ship_3_shadow,
-	image_LUT_enemy_ship_4_light,
-	image_LUT_enemy_ship_4_shadow,
-	image_LUT_enemy_ship_4_lightball,
-	image_LUT_enemy_ship_4_shadowball,
-	image_LUT_enemy_ship_5_light,
-	image_LUT_enemy_ship_5_shadow,
-	image_LUT_enemy_ship_6_light,
-	image_LUT_enemy_ship_6_shadow,
-	image_LUT_door_left,
-	image_LUT_door_right,
-	image_LUT_box_light_1,
-	image_LUT_box_light_2,
-	image_LUT_box_light_3,
-	image_LUT_box_light_4,
-	image_LUT_box_light_5,
-	image_LUT_box_light_6,
-	image_LUT_box_shadow_1,
-	image_LUT_box_shadow_2,
-	image_LUT_box_shadow_3,
-	image_LUT_box_shadow_4,
-	image_LUT_box_shadow_5,
-	image_LUT_box_shadow_6,
-	image_LUT_box_solid_1,
-	image_LUT_box_solid_2,
-	image_LUT_box_solid_3,
-	image_LUT_box_solid_4,
-	image_LUT_box_solid_5,
-	image_LUT_box_solid_6,
-	image_LUT_prop_wall_left,
-	image_LUT_prop_wall_right,
-	image_LUT_chain_hit_light,
-	image_LUT_chain_hit_shadow,
-	image_LUT_explosion_light_0,
-	image_LUT_explosion_light_1,
-	image_LUT_explosion_light_2,
-	image_LUT_explosion_light_3,
-	image_LUT_explosion_light_4,
-	image_LUT_explosion_light_5,
-	image_LUT_explosion_shadow_0,
-	image_LUT_explosion_shadow_1,
-	image_LUT_explosion_shadow_2,
-	image_LUT_explosion_shadow_3,
-	image_LUT_explosion_shadow_4,
-	image_LUT_explosion_shadow_5,
-	image_LUT_powerslot,
-	image_LUT_lives,
-	image_LUT_titleScreen,
-	image_LUT_bossWarning,
-	image_LUT_boss1_enemy_ship_light,
-	image_LUT_boss1_enemy_ship_shadow,
-	image_LUT_boss1_grenade_light,
-	image_LUT_boss1_grenade_shadow,
-	image_LUT_boss2_leftShield,
-	image_LUT_boss2_rightShield,
-	image_LUT_boss2_leftUpperArm,
-	image_LUT_boss2_rightUpperArm,
-	NB_IMAGES
-};
-
-// Boss images LUT
-enum
-{
-	bossImage_LUT_1_body,
-	bossImage_LUT_1_leftarm_armed,
-	bossImage_LUT_1_rightarm_armed1,
-	bossImage_LUT_1_rightarm_armed2,
-	bossImage_LUT_1_leftarm_nonarmed,
-	bossImage_LUT_1_rightarm_nonarmed,
-	bossImage_LUT_2_body,
-	bossImage_LUT_2_leftShield,
-	bossImage_LUT_2_rightShield,
-	bossImage_LUT_2_leftArm,
-	bossImage_LUT_2_rightArm,
-	bossImage_LUT_2_leftUpperArm,
-	bossImage_LUT_2_rightUpperArm,
-	bossImage_LUT_2_leftWing,
-	bossImage_LUT_2_leftWingOpening_1,
-	bossImage_LUT_2_leftWingOpening_2,
-	bossImage_LUT_2_leftWingOpening_3,
-	bossImage_LUT_2_leftWingOpening_4,
-	bossImage_LUT_2_rightWing,
-	bossImage_LUT_2_rightWingOpening_1,
-	bossImage_LUT_2_rightWingOpening_2,
-	bossImage_LUT_2_rightWingOpening_3,
-	bossImage_LUT_2_rightWingOpening_4,
-	bossImage_LUT_2_rails,
-	bossImage_LUT_2_hitpoint_left_1,
-	bossImage_LUT_2_hitpoint_left_2,
-	bossImage_LUT_2_hitpoint_left_3,
-	bossImage_LUT_2_hitpoint_left_4,
-	bossImage_LUT_2_hitpoint_left_5,
-	bossImage_LUT_2_hitpoint_right_1,
-	bossImage_LUT_2_hitpoint_right_2,
-	bossImage_LUT_2_hitpoint_right_3,
-	bossImage_LUT_2_hitpoint_right_4,
-	bossImage_LUT_2_hitpoint_right_5,
-	NB_BOSS_IMAGES
-};
-
-// Background images LUT
-enum
-{
-	bgImage_LUT_1_0,
-	bgImage_LUT_1_1,
-	bgImage_LUT_1_2,
-	bgImage_LUT_1_3,
-	bgImage_LUT_1_4,
-	bgImage_LUT_2_0,
-	bgImage_LUT_2_1,
-	bgImage_LUT_2_2,
-	bgImage_LUT_2_3,
-	bgImage_LUT_2_4,
-	bgImage_LUT_2_5,
-	bgImage_LUT_2_6,
-	bgImage_LUT_2_7,
-	NB_BACKGROUND_IMAGES
-};
 
 // Enemies' patterns
 enum

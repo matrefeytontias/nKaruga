@@ -1,7 +1,7 @@
 #include "entities/Entity.hpp"
 
 #include "common.h"
-#include "fixmath.h"
+#include "helpers/math.hpp"
 #include "globals.h"
 #include "utils.hpp"
 

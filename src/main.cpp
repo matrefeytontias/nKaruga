@@ -1,5 +1,9 @@
+#include <SDL2/SDL.h>
+
+#include "n2DLib/n2DLib.hpp"
+
 #include "common.h"
-#include "fixmath.h"
+#include "helpers/math.hpp"
 #include "globals.h"
 #include "utils.hpp"
 #include "graphics/ChainNotif.hpp"
@@ -9,7 +13,7 @@
 #include "handlers/Level.hpp"
 #include "menu/Menu.hpp"
 
-#include "buildGameLUTs.hpp"
+#include "helpers/Constants.hpp"
 #include "levels.h" 
 #include "gfx/kanji.h"
 #include "misc_data.h"
@@ -20,7 +24,7 @@
 int G_gpTimer;
 int G_minX = 0, G_maxX = 320;
 int G_skipFrame = 0;
-int G_killedThisFrame[MAX_ENEMY] = { -1 }, G_frameChainOffset = 0, G_chainStatus = 0, G_inChainCount = 0, G_maxChain = 0;
+int G_killedThisFrame[Constants::MAX_ENEMY], G_frameChainOffset = 0, G_chainStatus = 0, G_inChainCount = 0, G_maxChain = 0;
 int G_score = 0, G_power = 0;
 bool G_displayBg = true, G_fireback = true, G_hardMode = false;
 bool G_hasFiredOnce = false;
@@ -135,7 +139,7 @@ int main(int argc, char **argv)
 	// Mix_VolumeMusic(0);
 	
 	printf("Building game LUTs ...\n");
-	buildGameLUTs();
+	LUTs::buildGameLUTs();
 	printf("Done\n");
 	
 	// Init things
@@ -148,7 +152,7 @@ int main(int argc, char **argv)
 	{
 		const Uint8 *keys = SDL_GetKeyboardState(NULL);
 
-		drawSprite(image_entries[image_LUT_titleScreen], 0, 0, 0, 0);
+		drawSprite(LUTs::baseImage(LUTs::BaseImageId::TITLESCREEN), 0, 0, 0, 0);
 		if(!openedMenu)
 		{
 			int x = (320 - strlen(string_title) * 8) / 2;
@@ -211,7 +215,7 @@ int main(int argc, char **argv)
 					readFromConfig(configFile);
 					fclose(configFile);
 				}
-				Level::soundSystem->quickPlaySFX(sound_entries[SD_MENU_START]);
+				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_START));
 				clearBufferB();
 				updateScreen();
 				SDL_Delay(1000);
@@ -227,6 +231,8 @@ int main(int argc, char **argv)
 			donePlaying = true;
 	}
 	
+	LUTs::freeGameLUTs();
+
 	// delete Level::soundSystem;
 	delete G_particles;
 	delete DC;
@@ -269,7 +275,7 @@ void playGame()
 	
 	Level::init(1);
 	
-	ChainNotif chainNotifsArray[MAX_ENEMY];
+	ChainNotif chainNotifsArray[Constants::MAX_ENEMY];
 	int currentNotif;
 	
 	Level::p->setx(itofix(160));
@@ -282,14 +288,14 @@ void playGame()
 	
 	G_runBoss = false;
 	
-	for(int i = 0; i < MAX_ENEMY; i++)
+	for(int i = 0; i < Constants::MAX_ENEMY; i++)
 	{
 		Level::enemiesArray->data[i].deactivate();
 		G_killedThisFrame[i] = -1;
 	}
 	
 	G_score = 0;
-	G_power = MAX_POWER;
+	G_power = Constants::MAX_STORED_POWER;
 	for(int i = 0; i < 3; i++)
 		chainColor[i] = 0;
 	G_chainStatus = 0;
@@ -330,7 +336,7 @@ void playGame()
 		else if(Level::phase == PHASE_BOSSFIGHT)
 		{
 			if (!Level::soundSystem->musicPlaying())
-				Level::soundSystem->playBgMusic(NULL, music_entries[BGM_CHAPTER1_BOSS]);
+				Level::soundSystem->playBgMusic(NULL, LUTs::music(LUTs::MusicId::CHAPTER1_BOSS));
 			if(Level::be->handle())
 			{
 				Level::phase = PHASE_BOSSEXPLODEINIT;
@@ -344,7 +350,7 @@ void playGame()
 		{
 			if (Level::phase == PHASE_BOSSCINEMATIC && G_bossIntroChannel == -2)
 			{
-				G_bossIntroChannel = Level::soundSystem->quickPlaySFX(sound_entries[SD_BOSS_ALERT]);
+				G_bossIntroChannel = Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BOSS_ALERT));
 				Mix_ChannelFinished(bossIntroDone);
 				G_runBoss = true;
 				if (G_bossIntroChannel == -1)
@@ -409,7 +415,7 @@ void playGame()
 			drawStringF(&statsRect.x, &statsRect.y, 0, 0xffff, 0, "Score : %d\n\n\n\nCH %d", G_score, G_chainStatus);
 			// Draw chain count
 			for (int i = 0, j = 0; i < G_inChainCount; i++, j += 18)
-				drawSprite(image_entries[chainColor[i] == LIGHT ? image_LUT_chain_hit_light : image_LUT_chain_hit_shadow], j, 12, 0, 0);
+				drawSprite(LUTs::baseImage(chainColor[i] == Constants::LIGHT ? LUTs::BaseImageId::CHAIN_HIT_LIGHT : LUTs::BaseImageId::CHAIN_HIT_SHADOW), j, 12, 0, 0);
 		}
 		else
 		{
@@ -420,14 +426,14 @@ void playGame()
 		Level::enemiesArray->handleExplosions();
 
 		// Draw power
-		for (int i = MAX_FRAGMENT - 1; i >= 0; i--)
+		for (int i = Constants::MAX_FRAGMENT - 1; i >= 0; i--)
 		{
-			drawSprite(image_entries[image_LUT_powerslot], 5, i * 14 + 40, 0, 0);
+			drawSprite(LUTs::baseImage(LUTs::BaseImageId::POWERSLOT), 5, i * 14 + 40, 0, 0);
 			for (int j = 0; j < 10; j++)
 			{
-				if (G_power > (MAX_FRAGMENT - 1 - i) * 10 + j)
+				if (G_power > (Constants::MAX_FRAGMENT - 1 - i) * 10 + j)
 					drawHLine(i * 14 + 40 + 10 - j, 5 + power_fill_offsets[j * 2], 5 + power_fill_offsets[j * 2 + 1],
-					drawPowerSlot || G_power < (MAX_FRAGMENT - i) * 10 ? (Level::p->getPolarity() ? 0xf800 : 0x3ff) : 0xffff);
+					drawPowerSlot || G_power < (Constants::MAX_FRAGMENT - i) * 10 ? (Level::p->getPolarity() ? 0xf800 : 0x3ff) : 0xffff);
 				else
 					break;
 			}
@@ -436,15 +442,19 @@ void playGame()
 
 		// Draw score-chaining notifs
 		if (!Level::fightingBoss)
-			for (int i = 0; i < MAX_ENEMY; i++)
+			for (int i = 0; i < Constants::MAX_ENEMY; i++)
 				chainNotifsArray[i].handle();
 
 		// Draw remaining lives
-		drawSprite(image_entries[image_LUT_lives], 0, 224, 0, 0);
-		statsRect.x = image_entries[image_LUT_lives][0] + 2;
-		statsRect.y = 226;
-		drawChar(&statsRect.x, &statsRect.y, 0, 'x', 0xffff, 0);
-		drawDecimal(&statsRect.x, &statsRect.y, max(0, Level::p->getLives() - 1), 0xffff, 0);
+		{
+			uint16_t* livesImg = LUTs::baseImage(LUTs::BaseImageId::LIVES);
+
+			drawSprite(livesImg, 0, 224, 0, 0);
+			statsRect.x = livesImg[0] + 2;
+			statsRect.y = 226;
+			drawChar(&statsRect.x, &statsRect.y, 0, 'x', 0xffff, 0);
+			drawDecimal(&statsRect.x, &statsRect.y, max(0, Level::p->getLives() - 1), 0xffff, 0);
+		}
 
 		// Overwrite all of that
 		if (Level::phase == PHASE_RESULTS)
@@ -498,7 +508,7 @@ void playGame()
 		}
 		else if (Level::phase == PHASE_BOSSCINEMATIC)
 		{
-			drawSprite(image_entries[image_LUT_bossWarning], 0, 72, 0, 0);
+			drawSprite(LUTs::baseImage(LUTs::BaseImageId::BOSS_WARNING), 0, 72, 0, 0);
 			// Level::soundSystem->bgChannel->setVolume(1.);
 		}
 		else if (Level::phase == PHASE_BOSSEXPLODEINIT)
@@ -558,13 +568,13 @@ void playGame()
 		// Display a scrolling background
 		Level::updateBg();
 		
-		constrainFrameRate(FPS);
+		constrainFrameRate(Constants::FPS);
 		displayFrameRate();
 		
 		// handle chaining
 		if(!Level::fightingBoss)
 		{
-			for(int i = 0; i < MAX_ENEMY; i++)
+			for(int i = 0; i < Constants::MAX_ENEMY; i++)
 			{
 				if(G_killedThisFrame[i] != -1)
 				{
@@ -585,20 +595,20 @@ void playGame()
 					if(G_inChainCount == 3)
 					{
 						G_score += 100 * (1 << min(G_chainStatus, 8));
-						for(int j = 0; j < MAX_ENEMY; j++)
+						for(int j = 0; j < Constants::MAX_ENEMY; j++)
 						{
 							if(Level::enemiesArray->deadEnemies.relevant[j])
 							{
 								if(j == i)
 								{
 									chainNotifsArray[currentNotif].activate(Level::enemiesArray->deadEnemies.x[j], Level::enemiesArray->deadEnemies.y[j], 100 * (1 << min(G_chainStatus, 8)));
-									currentNotif = (currentNotif + 1) % MAX_ENEMY;
+									currentNotif = (currentNotif + 1) % Constants::MAX_ENEMY;
 								}
 								Level::enemiesArray->deadEnemies.relevant[j] = false;
 							}
 						}
 						G_chainStatus++;
-						Level::soundSystem->quickPlaySFX(sound_entries[SD_PLAYER_CHAIN]);
+						Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::PLAYER_CHAIN));
 					}
 					G_killedThisFrame[i] = -1;
 				}

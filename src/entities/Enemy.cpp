@@ -2,7 +2,7 @@
 
 #include <cstdlib>
 
-#include "fixmath.h"
+#include "helpers/math.hpp"
 #include "patterns.h"
 #include "types.h"
 #include "handlers/DrawingCandidates.hpp"
@@ -20,7 +20,7 @@ Enemy::Enemy() : Entity()
 	prop = false;
 	damageable = false;
 	visible = true;
-	shipImgID = image_LUT_null;
+	shipImgId = static_cast<int>(LUTs::BaseImageId::NONE);
 	callback = NULL;
 	spawned = 0;
 	flash = false;
@@ -99,14 +99,15 @@ void Enemy::handle()
 
 #define SPAWN_DELAY 512
 
-void Enemy::activate(int _x, int _y, int _HP, int _shipImgID, int callbackID, int _waveIndex, bool _polarity, bool _hasRotation, int _f, bool _ghost, int type)
+// TODO : LUTs::BaseImageId _shipImgId
+void Enemy::activate(int _x, int _y, int _HP, int _shipImgId, int callbackID, int _waveIndex, bool _polarity, bool _hasRotation, int _f, bool _ghost, int type)
 {
 	maxHP = HP = _HP;
 	x = _x;
 	y = _y;
 	
-	shipImgID = _shipImgID;
-	img = image_entries[shipImgID];
+	shipImgId = _shipImgId;
+	img = LUTs::baseImage(static_cast<LUTs::BaseImageId>(shipImgId));
 	fireback = _f;
 	polarity = _polarity;
 	hasRotation = _hasRotation;
@@ -138,7 +139,7 @@ bool Enemy::damage(bool _pol, int amount)
 
 		if (HP <= 0)
 		{
-			Level::soundSystem->quickPlaySFX(sound_entries[maxHP > 20 ? SD_ENEMY_EXP_BIG : SD_ENEMY_EXP_SMALL]);
+			Level::soundSystem->quickPlaySFX(LUTs::sound(maxHP > 20 ? LUTs::SoundId::ENEMY_EXP_BIG : LUTs::SoundId::ENEMY_EXP_SMALL));
 			if (G_fireback)
 			{
 				if (_pol == polarity || G_hardMode)
@@ -146,7 +147,7 @@ bool Enemy::damage(bool _pol, int amount)
 					Fixed angle = angleToEntity(Level::p);
 					int famount = _pol != polarity ? fireback / 2 : fireback;
 					for (int i = 0; i < famount; i++)
-						Level::bArray->add(getx(), gety(), angle + (rand() % 16) - 8, itofix(4) + (rand() % 512) - 256, image_LUT_enemy_bullet_0_light, polarity, true, getCamRel());
+						Level::bArray->add(getx(), gety(), angle + (rand() % 16) - 8, itofix(4) + (rand() % 512) - 256, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT), polarity, true, getCamRel());
 				}
 			}
 			diedThisFrame = true;
@@ -312,18 +313,18 @@ void Enemy::beAbox()
 			Fixed a = (Fixed)(atan2((float)dy + r, (float)dx) * 128 / M_PI);
 			if (!(internal[2] & 1))
 				for (int i = 0; i < 3; i++)
-					Level::bArray->add(x + itofix(i - 1) * 10, y + itofix(24), a, r, image_LUT_enemy_bullet_1_light, polarity, true, getCamRel());
+					Level::bArray->add(x + itofix(i - 1) * 10, y + itofix(24), a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
 			else
-				Level::bArray->add(x, y + itofix(24), a, 192, image_LUT_enemy_bullet_1_light, polarity, true, getCamRel());
+				Level::bArray->add(x, y + itofix(24), a, 192, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
 		}
 		if (internal[0] & 2)
 		{
 			Fixed a = 128 - (Fixed)(asin((float)dy / (float)r) * 128 / M_PI);
 			if (!(internal[2] & 2))
 				for (int i = 0; i < 3; i++)
-					Level::bArray->add(x - itofix(24), y + itofix(i - 1) * 10, a, r, image_LUT_enemy_bullet_1_light, polarity, true, getCamRel());
+					Level::bArray->add(x - itofix(24), y + itofix(i - 1) * 10, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
 			else
-				Level::bArray->add(x - itofix(24), y, a, r, image_LUT_enemy_bullet_1_light, polarity, true, getCamRel());
+				Level::bArray->add(x - itofix(24), y, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
 		}
 		if (internal[0] & 4)
 		{
@@ -331,18 +332,18 @@ void Enemy::beAbox()
 
 			if (!(internal[2] & 4))
 				for (int i = 0; i < 3; i++)
-					Level::bArray->add(x + itofix(24), y + itofix(i - 1) * 10, a, r, image_LUT_enemy_bullet_1_light, polarity, true, getCamRel());
+					Level::bArray->add(x + itofix(24), y + itofix(i - 1) * 10, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
 			else
-				Level::bArray->add(x + itofix(24), y, a, r, image_LUT_enemy_bullet_1_light, polarity, true, getCamRel());
+				Level::bArray->add(x + itofix(24), y, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
 		}
 		if (internal[0] & 8)
 		{
 			Fixed a = (Fixed)(atan2((float)dy - r, (float)dx) * 128 / M_PI);
 			if (!(internal[2] & 8))
 				for (int i = 0; i < 3; i++)
-					Level::bArray->add(x + itofix(i - 1) * 10, y - itofix(24), a, r, image_LUT_enemy_bullet_1_light, polarity, true, getCamRel());
+					Level::bArray->add(x + itofix(i - 1) * 10, y - itofix(24), a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
 			else
-				Level::bArray->add(x, y - itofix(24), a, r, image_LUT_enemy_bullet_1_light, polarity, true, getCamRel());
+				Level::bArray->add(x, y - itofix(24), a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
 		}
 	}
 	// Animation
@@ -356,7 +357,7 @@ void Enemy::beAbox()
 	{
 		internal[4]++;
 		internal[4] %= 6;
-		img = image_entries[shipImgID + internal[4]];
+		img = LUTs::baseImage(static_cast<LUTs::BaseImageId>(shipImgId), internal[4]);
 	}
 	// a box is also a prop
 	if (fToScreenY(y, getCamRel()) > itofix(300))

@@ -1,10 +1,11 @@
 #include "entities/PowerFragment.hpp"
 
-#include "fixmath.h"
 #include "globals.h"
 #include "utils.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "handlers/Level.hpp"
+#include "helpers/Constants.hpp"
+#include "helpers/math.hpp"
 
 PowerFragment::PowerFragment() : Bullet()
 {
@@ -24,7 +25,7 @@ void PowerFragment::activate(Fixed _x, Fixed _y, Fixed initialAngle, Player *_ta
 	angle = initialAngle;
 	targetP = _targetP;
 	polarity = _p;
-	img = image_entries[polarity ? image_LUT_player_homing_bullet_shadow_0 : image_LUT_player_homing_bullet_light_0];
+	img = LUTs::baseImage(polarity ? LUTs::BaseImageId::PLAYER_HOMING_BULLET_SHADOW_0 : LUTs::BaseImageId::PLAYER_HOMING_BULLET_LIGHT_0);
 	hasReachedAngle = false;
 	hurtPlayer = _h;
 	if(!hurtPlayer)
@@ -139,6 +140,8 @@ void PowerFragment::draw()
 	{
 		r.x = fixtoi(previousX[i]);
 		r.y = fixtoi(previousY[i]);
-		DC->add(image_entries[(polarity ? image_LUT_player_homing_bullet_shadow_1 : image_LUT_player_homing_bullet_light_1) + i / ((FRAGMENT_TRAILING + 1) / 2)], &r, false, CAMREL_NONE);
+		DC->add(LUTs::baseImage(polarity ? LUTs::BaseImageId::PLAYER_HOMING_BULLET_SHADOW_1 : LUTs::BaseImageId::PLAYER_HOMING_BULLET_LIGHT_1,
+								i / ((FRAGMENT_TRAILING + 1) / 2)),
+				&r, false, CAMREL_NONE);
 	}
 }

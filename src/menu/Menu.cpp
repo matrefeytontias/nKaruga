@@ -2,9 +2,10 @@
 
 #include <varargs.h>
 
-#include "fixmath.h"
 #include "utils.hpp"
 #include "handlers/Level.hpp"
+#include "helpers/Constants.hpp"
+#include "helpers/math.hpp"
 #include "n2DLib/n2DLib.hpp"
 
 #define VSPACE 9
@@ -118,7 +119,7 @@ int Menu::run()
 		{
 			if (!pressed[0] && choice < num - 1)
 			{
-				Level::soundSystem->quickPlaySFX(sound_entries[SD_MENU_CURSOR]);
+				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_CURSOR));
 				pressed[0] = true;
 				choice++;
 			}
@@ -130,7 +131,7 @@ int Menu::run()
 		{
 			if (!pressed[1] && choice > 0)
 			{
-				Level::soundSystem->quickPlaySFX(sound_entries[SD_MENU_CURSOR]);
+				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_CURSOR));
 				pressed[1] = true;
 				choice--;
 			}
@@ -145,7 +146,7 @@ int Menu::run()
 				pressed[2] = true;
 				if (apply(choice))
 				{
-					Level::soundSystem->quickPlaySFX(sound_entries[SD_MENU_SELECT]);
+					Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_SELECT));
 					return choice;
 				}
 			}
@@ -155,7 +156,7 @@ int Menu::run()
 
 		if (isKeyPressed(SDL_SCANCODE_ESCAPE))
 		{
-			Level::soundSystem->quickPlaySFX(sound_entries[SD_MENU_BACK]);
+			Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_BACK));
 			return -1;
 		}
 	}

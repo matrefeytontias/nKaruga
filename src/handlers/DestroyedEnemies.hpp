@@ -1,6 +1,7 @@
 #pragma once
 
 #include "globals.h"
+#include "helpers/Constants.hpp"
 
 class Enemy;
 
@@ -12,7 +13,7 @@ public:
 	~DestroyedEnemies();
 	void activate(Enemy* origin, int offset);
 	void clear();
-	int x[MAX_ENEMY];
-	int y[MAX_ENEMY];
-	bool relevant[MAX_ENEMY];
+	int x[Constants::MAX_ENEMY];
+	int y[Constants::MAX_ENEMY];
+	bool relevant[Constants::MAX_ENEMY];
 };

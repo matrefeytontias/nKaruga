@@ -2,10 +2,11 @@
 
 #include <cstdlib>
 
-#include "fixmath.h"
 #include "globals.h"
 #include "entities/Enemy.hpp"
 #include "graphics/Particles.hpp"
+#include "helpers/Constants.hpp"
+#include "helpers/math.hpp"
 #include "n2DLib/n2DLib.hpp"
 
 Laser::Laser() : Bullet()
@@ -37,7 +38,7 @@ void Laser::handle()
 	angle = -origin->getRotation() + angleOffset;
 	x = fixtoi(origin->getx()) + fixtoi(fixcos(angle) * origin->img[0] / 2);
 	y = fixtoi(origin->gety()) + fixtoi(fixsin(angle) * origin->img[1] / 2);
-	amplitude += (amplitude < 320) * LASER_SPEED;
+	amplitude += (amplitude < 320) * Constants::LASER_SPEED;
 }
 
 inline unsigned short r5g6b5(uint8_t r, uint8_t g, uint8_t b)
@@ -127,10 +128,10 @@ Rect* Laser::getVector()
 
 void Laser::getSides(Rect* s1, Rect* s2)
 {
-	s1->x = x - fixtoi(fixsin(-angle) * LASER_THICKNESS / 2);
-	s1->y = y - fixtoi(fixcos(-angle) * LASER_THICKNESS / 2);
-	s2->x = x + fixtoi(fixsin(-angle) * LASER_THICKNESS / 2);
-	s2->y = y + fixtoi(fixcos(-angle) * LASER_THICKNESS / 2);
+	s1->x = x - fixtoi(fixsin(-angle) * Constants::LASER_THICKNESS / 2);
+	s1->y = y - fixtoi(fixcos(-angle) * Constants::LASER_THICKNESS / 2);
+	s2->x = x + fixtoi(fixsin(-angle) * Constants::LASER_THICKNESS / 2);
+	s2->y = y + fixtoi(fixcos(-angle) * Constants::LASER_THICKNESS / 2);
 }
 
 int Laser::getAmplitude()

@@ -1,19 +1,20 @@
 #include "entities/Player.hpp"
 
-#include "fixmath.h"
 #include "globals.h"
 #include "graphics/Particles.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "handlers/Level.hpp"
+#include "helpers/Constants.hpp"
+#include "helpers/math.hpp"
 
 Player::Player() : Entity()
 {
-	img[LIGHT] = image_entries[image_LUT_player_ship_light];
-	img[SHADOW] = image_entries[image_LUT_player_ship_shadow];
-	img[LIGHT + SWITCHING0] = image_entries[image_LUT_player_ship_polarityswitch_0_light];
-	img[SHADOW + SWITCHING0] = image_entries[image_LUT_player_ship_polarityswitch_0_shadow];
-	img[LIGHT + SWITCHING1] = image_entries[image_LUT_player_ship_polarityswitch_1_light];
-	img[SHADOW + SWITCHING1] = image_entries[image_LUT_player_ship_polarityswitch_1_shadow];
+	img[LUTs::PlayerAnimId::LIGHT] = LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_LIGHT);
+	img[LUTs::PlayerAnimId::SHADOW] = LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_SHADOW);
+	img[LUTs::PlayerAnimId::LIGHT + LUTs::PlayerAnimId::SWITCHING0] = LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_POLARITYSWITCH_0_LIGHT);
+	img[LUTs::PlayerAnimId::SHADOW + LUTs::PlayerAnimId::SWITCHING0] = LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_POLARITYSWITCH_0_SHADOW);
+	img[LUTs::PlayerAnimId::LIGHT + LUTs::PlayerAnimId::SWITCHING1] = LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_POLARITYSWITCH_1_LIGHT);
+	img[LUTs::PlayerAnimId::SHADOW + LUTs::PlayerAnimId::SWITCHING1] = LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_POLARITYSWITCH_1_SHADOW);
 	deathCounter = 0;
 	active = true;
 	x = 0;
@@ -23,7 +24,7 @@ Player::Player() : Entity()
 
 void Player::reset()
 {
-	polarity = LIGHT;
+	polarity = Constants::LIGHT;
 	fireRepeat = false;
 	polarityRepeat = false;
 	isSwitchingPolarity = 0;
@@ -49,7 +50,7 @@ void Player::handle(KeyEvent kEv)
 		
 		if(deathCounter)
 		{
-			DC->add(image_entries[image_LUT_player_ship_invincible_light + polarity], &r, false, CAMREL_NONE);
+			DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_INVINCIBLE_LIGHT, polarity), &r, false, CAMREL_NONE);
 			deathCounter--;
 		}
 		
@@ -84,7 +85,7 @@ void Player::handle(KeyEvent kEv)
 			if (!polarityRepeat)
 			{
 				switchPolarity();
-				Level::soundSystem->quickPlaySFX(sound_entries[SD_PLAYER_SWITCH]);
+				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::PLAYER_SWITCH));
 			}
 			polarityRepeat = true;
 		}
@@ -95,7 +96,7 @@ void Player::handle(KeyEvent kEv)
 		{
 			if(G_power > 9)
 			{
-				Level::soundSystem->quickPlaySFX(sound_entries[SD_BULLET_FIRE_FRAGMENT]);
+				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_FRAGMENT));
 				G_hasFiredOnce = true;
 				for(int i = 0; i < G_power / 10; i++)
 					Level::bArray->add_fragment(x, y, 64 + ((i % 2) ? 10 + (i / 2) * 21 : -10 - (i / 2) * 21), this, polarity, false);
@@ -111,8 +112,8 @@ void Player::handle(KeyEvent kEv)
 				if(fireRepeat)
 				{
 					// fire 2 bullets if the key is being held
-					Level::bArray->add(x - itofix(img[0][0]) / 4, y, 192, itofix(6), image_LUT_player_bullet_light, polarity, false, CAMREL_NONE);
-					Level::bArray->add(x + itofix(img[0][0]) / 4, y, 192, itofix(6), image_LUT_player_bullet_light, polarity, false, CAMREL_NONE);
+					Level::bArray->add(x - itofix(img[0][0]) / 4, y, 192, itofix(6), static_cast<int>(LUTs::BaseImageId::PLAYER_BULLET_LIGHT), polarity, false, CAMREL_NONE);
+					Level::bArray->add(x + itofix(img[0][0]) / 4, y, 192, itofix(6), static_cast<int>(LUTs::BaseImageId::PLAYER_BULLET_LIGHT), polarity, false, CAMREL_NONE);
 					fireDelay = 4;
 					int x1 = x - itofix(img[0][0]) / 4;
 					int x2 = x + itofix(img[0][0]) / 4;
@@ -125,13 +126,13 @@ void Player::handle(KeyEvent kEv)
 				else
 				{
 					// fire 1 bullet
-					Level::bArray->add(x, y, 192, itofix(6), image_LUT_player_bullet_light, polarity, false, CAMREL_NONE);
+					Level::bArray->add(x, y, 192, itofix(6), static_cast<int>(LUTs::BaseImageId::PLAYER_BULLET_LIGHT), polarity, false, CAMREL_NONE);
 					fireDelay = 8;
 					fireRepeat = true;
 					for(int i = 0; i < 8; i++)
 						G_particles->add(x, y, 192 + (rand() % 32) - 16, itofix(2), polarity, 8);
 				}
-				Level::soundSystem->quickPlaySFX(sound_entries[SD_BULLET_FIRE_PLAYER_BULLET]);
+				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_PLAYER_BULLET));
 			}
 		}
 		else
@@ -149,7 +150,7 @@ void Player::handle(KeyEvent kEv)
 		{
 			r.x = fixtoi(x);
 			r.y = fixtoi(y);
-			DC->add(image_entries[image_LUT_player_explosion_0 + deathCounter], &r, false, CAMREL_NONE);
+			DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_EXPLOSION_0, deathCounter), &r, false, CAMREL_NONE);
 			// Death animation
 			// Uses frameskipping as a counter
 			//if(!(G_skipFrame % 8))
@@ -158,7 +159,7 @@ void Player::handle(KeyEvent kEv)
 		}
 		else if(deathCounter == 12)
 		{
-			polarity = LIGHT;
+			polarity = Constants::LIGHT;
 			x = itofix(160);
 			y = itofix(260);
 			deathCounter++;
@@ -170,7 +171,7 @@ void Player::handle(KeyEvent kEv)
 		{
 			r.x = fixtoi(x);
 			r.y = fixtoi(y);
-			DC->add(image_entries[image_LUT_player_ship_light], &r, false, CAMREL_NONE);
+			DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_LIGHT), &r, false, CAMREL_NONE);
 			y -= itofix(2);
 		}
 		else active = true;
@@ -196,7 +197,7 @@ void Player::hurt()
 	G_frameChainOffset = 0;
 	G_inChainCount = 0;
 	G_power = 0;
-	Level::soundSystem->quickPlaySFX(sound_entries[SD_PLAYER_DEATH]);
+	Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::PLAYER_DEATH));
 }
 
 int Player::getLives()

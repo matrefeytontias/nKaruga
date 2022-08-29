@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "fixmath.h"
+#include "helpers/math.hpp"
 #include "globals.h"
 #include "handlers/DrawingCandidates.hpp"
 #include "handlers/Level.hpp"
@@ -21,7 +21,7 @@ Enemy* findNearestEnemy(Fixed x, Fixed y)
 	// Find first if there are any living enemy
 	bool hasLivingEnemy = false;
 	
-	for(int i = 0; i < MAX_ENEMY; i++)
+	for(int i = 0; i < Constants::MAX_ENEMY; i++)
 	{
 		ce = &Level::enemiesArray->data[i];
 		if(ce->isActive() && ce->isDamageable())
@@ -41,7 +41,7 @@ Enemy* findNearestEnemy(Fixed x, Fixed y)
 		int lastDistance = distance(fixtoi(nearest->getx()), fixtoi(nearest->gety()), fixtoi(x), fixtoi(y));
 		int concurrentDistance;
 		
-		for(int i = 0; i < MAX_ENEMY; i++)
+		for(int i = 0; i < Constants::MAX_ENEMY; i++)
 		{
 			ce = &Level::enemiesArray->data[i];
 			if(ce->isActive() && ce->isDamageable())

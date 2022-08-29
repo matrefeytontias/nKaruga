@@ -1,9 +1,10 @@
 #include "entities/Homing.hpp"
 
-#include "fixmath.h"
 #include "globals.h"
 #include "entities/Player.hpp"
 #include "handlers/DrawingCandidates.hpp"
+#include "helpers/Constants.hpp"
+#include "helpers/math.hpp"
 #include "n2DLib/n2DLib.hpp"
 
 Homing::Homing() : Bullet()
@@ -70,7 +71,8 @@ void Homing::draw()
 	r.x = fixtoi(x);
 	r.y = fixtoi(y);
 	
-	DC->add(image_entries[polarity ? image_LUT_enemy_homing_bullet_shadow : image_LUT_enemy_homing_bullet_light], &r, false, CAMREL_NONE);
+	// TODO : cache image in `activate` as polarity doesn't change during lifetime
+	DC->add(LUTs::baseImage(polarity ? LUTs::BaseImageId::ENEMY_HOMING_BULLET_SHADOW : LUTs::BaseImageId::ENEMY_HOMING_BULLET_LIGHT), &r, false, CAMREL_NONE);
 	
 	for(int i = 0; i < HOMING_TRAILING; i++)
 	{

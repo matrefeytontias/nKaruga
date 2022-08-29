@@ -1,6 +1,6 @@
 #include "helpers/Joint.hpp"
 
-#include "fixmath.h"
+#include "helpers/math.hpp"
 #include "entities/BossEnemy.hpp"
 #include "entities/Enemy.hpp"
 #include "entities/Entity.hpp"

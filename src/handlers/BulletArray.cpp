@@ -1,16 +1,17 @@
 #include "handlers/BulletArray.hpp"
 
-#include "fixmath.h"
 #include "utils.hpp"
 #include "graphics/Particles.hpp"
 #include "handlers/Level.hpp"
+#include "helpers/Constants.hpp"
+#include "helpers/math.hpp"
 #include "n2DLib/n2DLib.hpp"
 
 BulletArray::BulletArray()
 {
 	clear();
 	// lasers too
-	for(int i = 0; i < MAX_LASER; i++)
+	for(int i = 0; i < Constants::MAX_LASER; i++)
 		data_laser[i].deactivate();
 	laserCount = 0;
 }
@@ -49,15 +50,15 @@ void BulletArray::handle()
 					if(sq(fixtoi(cb->getx() - Level::p->getx())) + sq(fixtoi(cb->gety() - Level::p->gety())) < sq(19)) // sqrt(player.w/2 ^2 + player.h/2 ^2)
 					{
 						destroyBullet = true;
-						G_score += SCORE_ABSORB;
-						G_power += G_power < MAX_POWER;
+						G_score += Constants::SCORE_ABSORB;
+						G_power += G_power < Constants::MAX_STORED_POWER;
 					}
 				}
 			}
 			else if(!cb->hurtsPlayer())
 			{
 				// Check collisions with enemies (there are many more enemies than players)
-				for(int j = 0; j < MAX_ENEMY; j++)
+				for(int j = 0; j < Constants::MAX_ENEMY; j++)
 				{
 					Enemy *ce = &Level::enemiesArray->data[j];
 					if(ce->isActive() && !ce->isGhost())
@@ -70,7 +71,7 @@ void BulletArray::handle()
 								G_particles->add();
 							*/
 							if(ce->damage(cb->getPolarity(), 1))
-								G_score += cb->getPolarity() != ce->getPolarity() ? SCORE_HIT_OP : SCORE_HIT;
+								G_score += cb->getPolarity() != ce->getPolarity() ? Constants::SCORE_HIT_OP : Constants::SCORE_HIT;
 							destroyBullet = true;
 							// The same bullet can destroy several enemies if it hits them *during the same frame* !
 						}
@@ -92,7 +93,7 @@ void BulletArray::handle()
 			// Check collisions with props
 			// Props can rotate and shoot bullets at the same time, which can cause problems with AABBs
 			// See utils.cpp for collideProp
-			for (int j = 0; j < MAX_ENEMY; j++)
+			for (int j = 0; j < Constants::MAX_ENEMY; j++)
 			{
 				Enemy *ce = &Level::enemiesArray->data[j];
 				if (ce->isActive() && ce->isProp())
@@ -141,8 +142,8 @@ void BulletArray::handle()
 					if(sq(fixtoi(cf->getx() - Level::p->getx())) + sq(fixtoi(cf->gety() - Level::p->gety())) < sq(Level::p->img[0][0] / 2))
 					{
 						destroyBullet = true;
-						G_score += SCORE_ABSORB * 10;
-						G_power = min(G_power + 10, MAX_POWER);
+						G_score += Constants::SCORE_ABSORB * 10;
+						G_power = min(G_power + 10, Constants::MAX_STORED_POWER);
 					}
 				}
 			}
@@ -152,7 +153,7 @@ void BulletArray::handle()
 				// A power fragment can hit other enemies than its registered target
 				if(cf->targetE)
 				{
-					for (int i = 0; i < MAX_ENEMY; i++)
+					for (int i = 0; i < Constants::MAX_ENEMY; i++)
 					{
 						Enemy *ce = &Level::enemiesArray->data[i];
 						if(ce->isActive() && (ce->isDamageable() || !ce->isProp()))
@@ -163,7 +164,7 @@ void BulletArray::handle()
 							cf->gety() + itofix(4) >= fToScreenY(ce->gety(), ce->getCamRel()) - itofix(ce->img[1] / 2))
 							{
 								if(ce->damage(cf->getPolarity(), 10))
-									G_score += cf->getPolarity() != ce->getPolarity() ? SCORE_HIT_OP : SCORE_HIT;
+									G_score += cf->getPolarity() != ce->getPolarity() ? Constants::SCORE_HIT_OP : Constants::SCORE_HIT;
 								destroyBullet = true;
 							}
 						}
@@ -224,8 +225,8 @@ void BulletArray::handle()
 					if(sq(fixtoi(ch->getx() - Level::p->getx())) + sq(fixtoi(ch->gety() - Level::p->gety())) < sq(Level::p->img[0][0] / 2))
 					{
 						destroyBullet = true;
-						G_score += SCORE_ABSORB * 5;
-						G_power = min(G_power + 5, MAX_POWER);
+						G_score += Constants::SCORE_ABSORB * 5;
+						G_power = min(G_power + 5, Constants::MAX_STORED_POWER);
 					}
 				}
 			}
@@ -243,7 +244,7 @@ void BulletArray::handle()
 	}
 	
 	// Lasers
-	for(int i = 0; i < MAX_LASER; i++)
+	for(int i = 0; i < Constants::MAX_LASER; i++)
 	{
 		Rect *r, r1, r2;
 		Laser *cl = &data_laser[i];
@@ -293,8 +294,8 @@ void BulletArray::handle()
 									// Using G_gpTimer as a delay
 									if (!(G_gpTimer % 2))
 									{
-										G_power += G_power < MAX_POWER;
-										G_score += SCORE_ABSORB;
+										G_power += G_power < Constants::MAX_STORED_POWER;
+										G_score += Constants::SCORE_ABSORB;
 									}
 									// Lasers are powerful, so they push the player
 									Level::p->setx(Level::p->getx() + fixcos(cl->angle) / 2);
@@ -325,25 +326,26 @@ void BulletArray::handle()
 }
 
 // TODO : Add some particles each time a bullet is fired
-
-void BulletArray::add(Fixed _x, Fixed _y, Fixed a, Fixed r, int imgID, bool _p, bool _h, int camRel)
+// TOOD : LUTs::BaseImageId imgId
+void BulletArray::add(Fixed _x, Fixed _y, Fixed a, Fixed r, int imgId, bool _p, bool _h, int camRel)
 {
-	if(bulletCount < MAX_BULLET)
+	if(bulletCount < Constants::MAX_BULLET)
 	{
-		data[bulletCount].activate(_x, _y, a, r, imgID, _p, _h, camRel);
+		data[bulletCount].activate(_x, _y, a, r, imgId, _p, _h, camRel);
 		bulletCount++;
 		// Only handle sound for on-screen enemy bullets
 		if (_h && _x >= 0 && _x <= itofix(320) && _y >= 0 && _y <= itofix(240))
 		{
-			int d = (imgID - image_LUT_enemy_bullet_0_light) / 2;
-			Level::soundSystem->quickPlaySFX(sound_entries[SD_BULLET_FIRE_ENEMY_0 + d]);
+			// There's one sound per bullet type
+			int d = (imgId - static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT)) / 2;
+			Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_ENEMY_0, d));
 		}
 	}
 }
 
 void BulletArray::add_fragment(Fixed _x, Fixed _y, Fixed angle, Player* targetP, bool _p, bool _h)
 {
-	if(fragmentCount < MAX_FRAGMENT)
+	if(fragmentCount < Constants::MAX_FRAGMENT)
 	{
 		data_fragment[fragmentCount].activate(_x, _y, angle, targetP, _p, _h);
 		fragmentCount++;
@@ -352,18 +354,18 @@ void BulletArray::add_fragment(Fixed _x, Fixed _y, Fixed angle, Player* targetP,
 
 void BulletArray::add_homing(Fixed _x, Fixed _y, Fixed angle, Player* target, bool _p)
 {
-	if(homingCount < MAX_HOMING)
+	if(homingCount < Constants::MAX_HOMING)
 	{
 		data_homing[homingCount].activate(_x, _y, angle, target, _p);
 		homingCount++;
-		Level::soundSystem->quickPlaySFX(sound_entries[SD_BULLET_FIRE_ENEMY_HOMING]);
+		Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_ENEMY_HOMING));
 	}
 }
 
 void BulletArray::fire_laser(Enemy *e, bool _p, Fixed _a)
 {
 	data_laser[laserCount].activate(e, _p, _a);
-	laserCount = (laserCount + 1) % MAX_LASER;
+	laserCount = (laserCount + 1) % Constants::MAX_LASER; // TODO : make sure that's right
 }
 
 void BulletArray::deactivate(int n, bool playSound)
@@ -372,7 +374,7 @@ void BulletArray::deactivate(int n, bool playSound)
 	data[n].deactivate();
 	for(int i = n; i < bulletCount; i++)
 		data[i] = data[i + 1];
-	if(playSound) Level::soundSystem->quickPlaySFX(sound_entries[SD_BULLET_IMPACT]);
+	if(playSound) Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_IMPACT));
 	//data[bulletCount].deactivate();
 }
 
@@ -394,9 +396,10 @@ void BulletArray::deactivate_homing(int n)
 	//data_homing[homingCount].deactivate();
 }
 
+// TODO : one enemy can shoot several lasers, make sure they all stop
 void BulletArray::stop_laser(Enemy *e)
 {
-	for(int i = 0; i < MAX_LASER; i++)
+	for(int i = 0; i < Constants::MAX_LASER; i++)
 	{
 		if(data_laser[i].origin == e)
 		{

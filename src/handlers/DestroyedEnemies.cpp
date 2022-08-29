@@ -1,8 +1,8 @@
 #include "handlers/DestroyedEnemies.hpp"
 
-#include "fixmath.h"
 #include "utils.hpp"
-#include "entities/Enemy.hpp"
+#include "helpers/Constants.hpp"
+#include "helpers/math.hpp"
 
 DestroyedEnemies::DestroyedEnemies()
 {
@@ -22,6 +22,6 @@ void DestroyedEnemies::activate(Enemy *e, int c)
 
 void DestroyedEnemies::clear()
 {
-	for(int i = 0; i < MAX_ENEMY; i++)
+	for(int i = 0; i < Constants::MAX_ENEMY; i++)
 		relevant[i] = false;
 }
