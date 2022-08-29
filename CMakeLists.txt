@@ -85,7 +85,6 @@ set(SOURCES ${SOURCES}
     src/bossData.h
     src/common.h
     src/globals.h
-    src/misc_data.h
     src/types.h
     src/utils.hpp
     src/utils.cpp

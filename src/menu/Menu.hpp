@@ -5,9 +5,9 @@
 // General purpose menu handler
 typedef struct
 {
-	char* name;
-	void* value;
-	char** labels;
+	const char *name;
+	void *value;
+	const char* const *labels;
 	int labelsNb;
 } MenuItem;
 
@@ -19,9 +19,9 @@ public:
 	// Returns the index of the chosen option, or -1 if the menu was exitted
 	int run();
 private:
-	std::vector<char*> options;
+	std::vector<const char*> options;
 	std::vector<void*> values;
-	std::vector<std::vector<char*>> labels;
+	std::vector<std::vector<const char*>> labels;
 	int num;
 	int maxOptionWidth;
 	int width;

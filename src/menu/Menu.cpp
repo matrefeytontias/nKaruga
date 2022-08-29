@@ -32,7 +32,7 @@ Menu::Menu(int _num, ...)
 		MenuItem item = va_arg(argstack, MenuItem);
 		options.push_back(item.name);
 		values.push_back(item.value);
-		std::vector<char*> t;
+		std::vector<const char*> t;
 		if (item.labels)
 		{
 			for (int j = 0; j < item.labelsNb; j++)
@@ -48,7 +48,7 @@ Menu::Menu(int _num, ...)
 	for (uint8_t i = 0; i < options.size(); i++)
 	{
 		int b = stringWidth(options[i] + 1);
-		for (char* k : labels[i])
+		for (const char* k : labels[i])
 		{
 			int c = b + stringWidth(k);
 			maxOptionWidth = max(c, maxOptionWidth);

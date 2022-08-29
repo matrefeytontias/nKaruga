@@ -6,30 +6,73 @@
 struct Constants
 {
 	// General
-	static constexpr const int FPS = 60;
+	static constexpr int FPS = 60;
+	// General strings
+	static constexpr char CONFIG_FILENAME[] = "nKaruga.cfg";
+	static constexpr char TITLE_STRING[] = "Press Enter to start or Escape to quit";
+	static constexpr char CONTINUE_TEXT[] = "Continue ? (Enter/Esc : yes/no)";
 
 	// TODO : get rid of both of those
 	// also SHADOW -> DARK
-	static constexpr const int LIGHT = 0;
-	static constexpr const int SHADOW = 1;
+	static constexpr int LIGHT = 0;
+	static constexpr int SHADOW = 1;
 
 	// Enemies
-	static constexpr const int MAX_ENEMY = 500;
+	static constexpr int MAX_ENEMY = 500;
 
 	// Bullets
-	static constexpr const int MAX_BULLET = 1000;
-	static constexpr const int MAX_HOMING = 100;
-	static constexpr const int MAX_FRAGMENT = 12;
-	static constexpr const int MAX_LASER = 12;
+	static constexpr int MAX_BULLET = 1000;
+	static constexpr int MAX_HOMING = 100;
+	static constexpr int MAX_FRAGMENT = 12;
+	static constexpr int MAX_LASER = 12;
 
-	static constexpr const int MAX_STORED_POWER = 120;
+	static constexpr int MAX_STORED_POWER = 120;
 
-	static constexpr const int LASER_SPEED = 6;
-	static constexpr const int LASER_THICKNESS = 25;
+	static constexpr int LASER_SPEED = 6;
+	static constexpr int LASER_THICKNESS = 25;
 
-	static constexpr const int SCORE_HIT = 20;
-	static constexpr const int SCORE_HIT_OP = 40;
-	static constexpr const int SCORE_ABSORB = 100;
+	static constexpr int SCORE_HIT = 20;
+	static constexpr int SCORE_HIT_OP = 40;
+	static constexpr int SCORE_ABSORB = 100;
+
+	static constexpr const char* BOOLEAN_STRINGS[] = { "no\n", "yes\n" };
+
+	// Menu items
+	static constexpr int TITLE_OPTIONS = 4;
+	static constexpr const char* TITLE_MENU_OPTIONS[TITLE_OPTIONS] = {
+		"nPlay\n",
+		"iDifficulty:",
+		"bUse arrow keys:",
+		"nConfigure controls\n"
+	};
+
+	static constexpr int KEYS_TO_BIND = 4;
+	static constexpr const char* KEYBINDINGS_NAMES[KEYS_TO_BIND] = {
+		"Fire\n",
+		"Switch polarity\n",
+		"Release power\n",
+		"Pause the game\n"
+	};
+
+	static constexpr const char* DIFFICULTIES_NAMES[] = {
+		"Easy\n",
+		"Normal\n",
+		"Hard\n"
+	};
+
+	static constexpr const char* RESULTS_TEXT[6] = {
+		"BATTLE REPORT\n\n\n",
+		"Boss destroy bonus\n\n",
+		"Score (this chapter)\n\n",
+		"Max ",
+		" chains\n\n",
+		"Grade\n\n"
+	};
+
+	// (start x, end x) coordinates of the horizontal lines to draw to fill a power slot, relative to the power slot itself
+	// Bottom-up
+	static constexpr int POWER_SLOT_FILL_COORDINATES[] = { 1, 2, 1, 5, 1, 8, 1, 10, 1, 10, 1, 10, 1, 10, 3, 10, 6, 10, 9, 10 };
+
 };
 
 struct LUTs

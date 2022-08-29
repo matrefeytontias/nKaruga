@@ -109,10 +109,10 @@ int main(int argc, char **argv)
 	G_usingArrows = false;
 	FILE* configFile;
 	// Custom keys vars
-	t_key* customKeys[KEYS_TO_BIND] = { &G_fireKey, &G_polarityKey, &G_fragmentKey, &G_pauseKey };
+	t_key* customKeys[Constants::KEYS_TO_BIND] = { &G_fireKey, &G_polarityKey, &G_fragmentKey, &G_pauseKey };
 	int choice = 0;
 	
-	configFile = fopen(string_nKaruga_config, "rb");
+	configFile = fopen(Constants::CONFIG_FILENAME, "rb");
 	if(configFile)
 	{
 		readFromConfig(configFile);
@@ -155,10 +155,10 @@ int main(int argc, char **argv)
 		drawSprite(LUTs::baseImage(LUTs::BaseImageId::TITLESCREEN), 0, 0, 0, 0);
 		if(!openedMenu)
 		{
-			int x = (320 - strlen(string_title) * 8) / 2;
+			int x = (320 - strlen(Constants::TITLE_STRING) * 8) / 2;
 			int y = 160;
 			if(blink % 1024 < 512)
-				drawString(&x, &y, x, string_title, 0, 0xffff);
+				drawString(&x, &y, x, Constants::TITLE_STRING, 0, 0xffff);
 			blink++;
 			if(isKeyPressed(SDL_SCANCODE_RETURN))
 			{
@@ -169,17 +169,17 @@ int main(int argc, char **argv)
 		else if(openedMenu)
 		{
 			void* v[] = { NULL, &G_difficulty, &G_usingArrows, NULL };
-			MenuItem items[TITLE_OPTIONS];
-			for (int i = 0; i < TITLE_OPTIONS; i++)
+			MenuItem items[Constants::TITLE_OPTIONS];
+			for (int i = 0; i < Constants::TITLE_OPTIONS; i++)
 			{
-				items[i].name = string_options[i];
+				items[i].name = Constants::TITLE_MENU_OPTIONS[i];
 				items[i].value = v[i];
 				items[i].labels = NULL;
 				items[i].labelsNb = 0;
 			}
-			items[1].labels = string_difficulties;
+			items[1].labels = Constants::DIFFICULTIES_NAMES;
 			items[1].labelsNb = 3;
-			items[2].labels = string_bools;
+			items[2].labels = Constants::BOOLEAN_STRINGS;
 			items[2].labelsNb = 2;
 			Menu m(4, items[0], items[1], items[2], items[3]);
 			choice = m.run();
@@ -191,14 +191,14 @@ int main(int argc, char **argv)
 				int x = 0, y = 0;
 				drawString(&x, &y, 0, "Press the key you want to bind to this\naction.\n\n", 0xffff, 0);
 
-				for (int i = 0; i < KEYS_TO_BIND; i++)
+				for (int i = 0; i < Constants::KEYS_TO_BIND; i++)
 				{
-					drawString(&x, &y, 0, string_keys[i], 0xffff, 0);
+					drawString(&x, &y, 0, Constants::KEYBINDINGS_NAMES[i], 0xffff, 0);
 					updateScreen();
 					while (!get_key_pressed(customKeys[i])) updateKeys();
 					wait_no_key_pressed(*(customKeys[i]));
 				}
-				configFile = fopen(string_nKaruga_config, "wb");
+				configFile = fopen(Constants::CONFIG_FILENAME, "wb");
 				if (configFile)
 				{
 					writeToConfig(configFile);
@@ -207,7 +207,7 @@ int main(int argc, char **argv)
 			}
 			else if (!choice)
 			{
-				configFile = fopen(string_nKaruga_config, "w+");
+				configFile = fopen(Constants::CONFIG_FILENAME, "w+");
 				if (configFile)
 				{
 					writeToConfig(configFile);
@@ -370,9 +370,9 @@ void playGame()
 			
 			bool hasPressed = false;
 			// Display "continue" screen
-			int x = (320 - stringWidth(string_continue)) / 2;
+			int x = (320 - stringWidth(Constants::CONTINUE_TEXT)) / 2;
 			int y = 120;
-			drawString(&x, &y, x, string_continue, 0xffff, 0x0000);
+			drawString(&x, &y, x, Constants::CONTINUE_TEXT, 0xffff, 0x0000);
 			updateScreen();
 			while(!hasPressed)
 			{
@@ -432,8 +432,8 @@ void playGame()
 			for (int j = 0; j < 10; j++)
 			{
 				if (G_power > (Constants::MAX_FRAGMENT - 1 - i) * 10 + j)
-					drawHLine(i * 14 + 40 + 10 - j, 5 + power_fill_offsets[j * 2], 5 + power_fill_offsets[j * 2 + 1],
-					drawPowerSlot || G_power < (Constants::MAX_FRAGMENT - i) * 10 ? (Level::p->getPolarity() ? 0xf800 : 0x3ff) : 0xffff);
+					drawHLine(i * 14 + 40 + 10 - j, 5 + Constants::POWER_SLOT_FILL_COORDINATES[j * 2], 5 + Constants::POWER_SLOT_FILL_COORDINATES[j * 2 + 1],
+							  drawPowerSlot || G_power < (Constants::MAX_FRAGMENT - i) * 10 ? (Level::p->getPolarity() ? 0xf800 : 0x3ff) : 0xffff);
 				else
 					break;
 			}
@@ -462,14 +462,14 @@ void playGame()
 			if (currentH == 120 && currentW == 160)
 			{
 				clearBufferB();
-				statsRect.x = (320 - stringWidth(string_results[0])) / 2;
+				statsRect.x = (320 - stringWidth(Constants::RESULTS_TEXT[0])) / 2;
 				statsRect.y = 16;
-				drawString(&statsRect.x, &statsRect.y, (320 - stringWidth(string_results[1])) / 2, string_results[0], 0xffff, 0);
+				drawString(&statsRect.x, &statsRect.y, (320 - stringWidth(Constants::RESULTS_TEXT[1])) / 2, Constants::RESULTS_TEXT[0], 0xffff, 0);
 				if (G_gpTimer > 64)
 				{
 					Level::soundSystem->fadeOutMusic(2000, NULL);
 					// Boss bonus
-					drawString(&statsRect.x, &statsRect.y, (320 - numberWidth(Level::be->getTimeout() * 10000)) / 2, string_results[1], 0xffff, 0);
+					drawString(&statsRect.x, &statsRect.y, (320 - numberWidth(Level::be->getTimeout() * 10000)) / 2, Constants::RESULTS_TEXT[1], 0xffff, 0);
 					drawDecimal(&statsRect.x, &statsRect.y, Level::be->getTimeout() * 10000, 0xffff, 0);
 				}
 				if (G_gpTimer > 128)
@@ -477,17 +477,17 @@ void playGame()
 					G_score += bossBonus;
 					bossBonus = 0;
 					// Score
-					statsRect.x = (320 - stringWidth(string_results[2])) / 2;
+					statsRect.x = (320 - stringWidth(Constants::RESULTS_TEXT[2])) / 2;
 					statsRect.y += 16;
-					drawString(&statsRect.x, &statsRect.y, (320 - numberWidth(G_score)) / 2, string_results[2], 0xffff, 0);
+					drawString(&statsRect.x, &statsRect.y, (320 - numberWidth(G_score)) / 2, Constants::RESULTS_TEXT[2], 0xffff, 0);
 					drawDecimal(&statsRect.x, &statsRect.y, G_score, 0xffff, 0);
-					statsRect.x = (320 - stringWidth(string_results[3]) - stringWidth(string_results[4]) - numberWidth(G_maxChain)) / 2;
+					statsRect.x = (320 - stringWidth(Constants::RESULTS_TEXT[3]) - stringWidth(Constants::RESULTS_TEXT[4]) - numberWidth(G_maxChain)) / 2;
 					statsRect.y += 16;
-					drawString(&statsRect.x, &statsRect.y, 0, string_results[3], 0xffff, 0);
+					drawString(&statsRect.x, &statsRect.y, 0, Constants::RESULTS_TEXT[3], 0xffff, 0);
 					drawDecimal(&statsRect.x, &statsRect.y, G_maxChain, 0xffff, 0);
-					drawString(&statsRect.x, &statsRect.y, (320 - stringWidth(string_results[5])) / 2, string_results[4], 0xffff, 0);
+					drawString(&statsRect.x, &statsRect.y, (320 - stringWidth(Constants::RESULTS_TEXT[5])) / 2, Constants::RESULTS_TEXT[4], 0xffff, 0);
 					// Grade
-					drawString(&statsRect.x, &statsRect.y, (320 - stringWidth("Dot eater !")) / 2, string_results[5], 0xffff, 0);
+					drawString(&statsRect.x, &statsRect.y, (320 - stringWidth("Dot eater !")) / 2, Constants::RESULTS_TEXT[5], 0xffff, 0);
 					if (!G_hasFiredOnce)
 						drawString(&statsRect.x, &statsRect.y, statsRect.x, "Dot eater !", 0xffff, 0);
 				}
