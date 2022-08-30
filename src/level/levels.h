@@ -1,8 +1,8 @@
 #pragma once
 
-#include "common.h"
 #include "helpers/Constants.hpp"
 #include "helpers/math.hpp"
+#include "level/level_cmds.h"
 
 const static int levelStream[] = {
 	cmd_newChapter(0),

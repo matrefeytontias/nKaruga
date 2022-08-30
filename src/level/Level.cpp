@@ -1,6 +1,5 @@
-#include "handlers/Level.hpp"
+#include "level/Level.hpp"
 
-#include "helpers/math.hpp"
 #include "utils.hpp"
 #include "entities/BossEnemy.hpp"
 #include "entities/Player.hpp"
@@ -10,11 +9,12 @@
 #include "handlers/EnemiesArray.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "helpers/Constants.hpp"
+#include "helpers/math.hpp"
 #include "n2DLib/n2DLib.hpp"
 
-#include "levels.h"
 #include "gfx/kanji.h"
 #include "gfx/end_of_demo.h"
+#include "level/levels.h"
 
 void (*Level::executeIntro)() = NULL;
 int Level::phase = 0;

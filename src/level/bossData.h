@@ -1,12 +1,11 @@
 #pragma once
 
-#include "common.h"
 #include "globals.h"
 #include "utils.hpp"
 #include "entities/BossEnemy.hpp"
 #include "graphics/ExplosionEffect.hpp"
 #include "handlers/DrawingCandidates.hpp"
-#include "handlers/Level.hpp"
+#include "level/Level.hpp"
 #include "helpers/Constants.hpp"
 #include "helpers/math.hpp"
 #include "n2DLib/n2DLib.hpp"

@@ -1,7 +1,7 @@
 #include "entities/BossEnemy.hpp"
 
-#include "bossData.h"
-#include "handlers/Level.hpp"
+#include "level/bossData.h"
+#include "level/Level.hpp"
 #include "n2DLib/n2DLib.hpp"
 
 BossData createBossData(int bossID)

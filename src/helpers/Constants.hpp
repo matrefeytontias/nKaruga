@@ -35,9 +35,8 @@ struct Constants
 	static constexpr int SCORE_HIT_OP = 40;
 	static constexpr int SCORE_ABSORB = 100;
 
-	static constexpr const char* BOOLEAN_STRINGS[] = { "no\n", "yes\n" };
-
 	// Menu items
+	static constexpr const char* BOOLEAN_STRINGS[] = { "no\n", "yes\n" };
 	static constexpr int TITLE_OPTIONS = 4;
 	static constexpr const char* TITLE_MENU_OPTIONS[TITLE_OPTIONS] = {
 		"nPlay\n",

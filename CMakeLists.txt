@@ -24,8 +24,10 @@ set(SOURCES ${SOURCES}
     src/handlers/DestroyedEnemies.hpp
     src/handlers/DrawingCandidates.hpp
     src/handlers/EnemiesArray.hpp
-    src/handlers/Level.hpp
     src/handlers/SoundHandler.hpp
+
+    src/level/Level.hpp
+    src/level/level_cmds.h
 
     src/helpers/Constants.hpp
     src/helpers/Joint.hpp
@@ -54,8 +56,9 @@ set(SOURCES ${SOURCES}
     src/handlers/DestroyedEnemies.cpp
     src/handlers/DrawingCandidates.cpp
     src/handlers/EnemiesArray.cpp
-    src/handlers/Level.cpp
     src/handlers/SoundHandler.cpp
+
+    src/level/Level.cpp
 
     src/helpers/Constants.cpp
     src/helpers/Joint.cpp
@@ -64,9 +67,13 @@ set(SOURCES ${SOURCES}
     src/menu/Menu.cpp
 
 # TODO : refactor - Ad-hoc and data
-    src/levels.h
-    src/patterns.h
+    src/level/bossData.h
+    src/level/levels.h
+    src/level/patterns.h
     src/main.cpp
+    src/types.h
+    src/utils.hpp
+    src/utils.cpp
 # n2DLib
     src/n2DLib/n2DLib.hpp
     src/n2DLib/n2DLib.cpp
@@ -82,12 +89,8 @@ set(SOURCES ${SOURCES}
 # sfx
     src/sfx/list.h
 # TODO : get rid of these - misc
-    src/bossData.h
     src/common.h
     src/globals.h
-    src/types.h
-    src/utils.hpp
-    src/utils.cpp
 )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src PREFIX "Source Files" FILES ${SOURCES})

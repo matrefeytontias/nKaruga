@@ -3,7 +3,7 @@
 #include "globals.h"
 #include "graphics/Particles.hpp"
 #include "handlers/DrawingCandidates.hpp"
-#include "handlers/Level.hpp"
+#include "level/Level.hpp"
 #include "helpers/Constants.hpp"
 #include "helpers/math.hpp"
 

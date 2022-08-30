@@ -34,6 +34,7 @@ void initBuffering()
 	}
 	MAIN_SCREEN = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STREAMING, 320, 240);
 
+	// TODO : look into SDL_LockTexture on MAIN_SCREEN
 	BUFF_BASE_ADDRESS = (unsigned short*)malloc(320 * 240 * sizeof(unsigned short));
 	memset(BUFF_BASE_ADDRESS, 0, sizeof(BUFF_BASE_ADDRESS));
 	
@@ -416,7 +417,7 @@ void fillCircle(int x, int y, int radius, unsigned short c)
 }
 
 /*  /!\ for circle and ellispe, the x and y must be the center of the shape, not the top-left point   /!\  */
-
+// TODO : do better than that
 void fillEllipse(int x, int y, int w, int h, unsigned short c)
 {
 	int i,j;

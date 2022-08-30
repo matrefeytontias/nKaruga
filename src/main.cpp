@@ -3,20 +3,18 @@
 #include "n2DLib/n2DLib.hpp"
 
 #include "common.h"
-#include "helpers/math.hpp"
 #include "globals.h"
 #include "utils.hpp"
 #include "graphics/ChainNotif.hpp"
 #include "graphics/ExplosionEffect.hpp"
 #include "graphics/Particles.hpp"
 #include "handlers/DrawingCandidates.hpp"
-#include "handlers/Level.hpp"
+#include "helpers/math.hpp"
+#include "level/Level.hpp"
 #include "menu/Menu.hpp"
 
-#include "helpers/Constants.hpp"
-#include "levels.h" 
 #include "gfx/kanji.h"
-#include "misc_data.h"
+#include "helpers/Constants.hpp"
 
 #define ENEMY_W(i) Level::enemiesArray->data[i].img[0]
 #define ENEMY_H(i) Level::enemiesArray->data[i].img[1]

@@ -2,11 +2,11 @@
 
 #include <cstdlib>
 
-#include "helpers/math.hpp"
-#include "patterns.h"
 #include "types.h"
 #include "handlers/DrawingCandidates.hpp"
 #include "helpers/Joint.hpp"
+#include "helpers/math.hpp"
+#include "level/patterns.h"
 
 Enemy::Enemy() : Entity()
 {
