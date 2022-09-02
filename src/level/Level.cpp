@@ -17,7 +17,7 @@
 #include "level/levels.h"
 
 void (*Level::executeIntro)() = NULL;
-int Level::phase = 0;
+Constants::GamePhase Level::phase = Constants::GamePhase::PLAY;
 bool Level::fightingBoss;
 bool Level::gameEnded;
 int Level::counter, Level::timer, Level::waveIndex, Level::waveTimer;
@@ -59,7 +59,7 @@ void Level::deinit()
 void Level::reinit(int n)
 {
 	chapterNum = n;
-	phase = PHASE_GAME;
+	phase = Constants::GamePhase::PLAY;
 	fightingBoss = false;
 	timer = waveIndex = waveTimer = 0;
 	skipCommand = 0;
@@ -228,7 +228,7 @@ void Level::advanceLevel()
 					{
 						// Start a new chapter
 						// Set up transition
-						phase = PHASE_TRANSITION;
+						phase = Constants::GamePhase::TRANSITION;
 						currentW = 0;
 						G_gpTimer = 0;
 						counter++;
@@ -248,7 +248,7 @@ void Level::advanceLevel()
 						// Cinematic when the music is faded
 						fightingBoss = true;
 						soundSystem->stopBgMusic();
-						phase = PHASE_BOSSCINEMATIC;
+						phase = Constants::GamePhase::BOSSCINEMATIC;
 						G_bossIntroChannel = -2; // reinit the boss intro channel
 						G_gpTimer = 0;
 						// fight boss
@@ -279,7 +279,7 @@ void Level::advanceLevel()
 			}
 			else if(currentLevelByte == LVLSTR_CHAPTEREND)
 			{
-				phase = PHASE_RESULTS;
+				phase = Constants::GamePhase::RESULTS;
 				currentW = 0;
 				currentH = 0;
 				G_gpTimer = 0;
@@ -303,7 +303,7 @@ void Level::advanceLevel()
 				// Dunno what it is ? Then it's an enemy by default
 				if (!skipCommand)
 				{
-					bool prop = levelStream[counter + 8] != TYPE_ENEMY;
+					bool prop = levelStream[counter + 8] != static_cast<int>(Constants::EnemyType::ENEMY);
 					Enemy *e = enemiesArray->add(itofix(levelStream[counter]), itofix(levelStream[counter + 1]), levelStream[counter + 2],
 						levelStream[counter + 3], levelStream[counter + 4], waveIndex, levelStream[counter + 5],
 						levelStream[counter + 6], levelStream[counter + 7], false, levelStream[counter + 8]);
@@ -364,7 +364,7 @@ void Level::intro1()
 	{
 		// Reset all camera position
 		DC->cam.absX = DC->cam.absY = DC->cam.relX = DC->cam.relY = 0;
-		phase = PHASE_GAME;
+		phase = Constants::GamePhase::PLAY;
 	}
 	else if(G_gpTimer < TRANSLATE)
 	{
@@ -380,10 +380,10 @@ void Level::intro2()
 	
 	if(!currentW)
 	{
-		ld1 = enemiesArray->add(itofix(-166 + 83), itofix(120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_LEFT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_leftDoor), 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
-		ld2 = enemiesArray->add(itofix(-166 + 83), itofix(-120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_LEFT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_leftDoor), 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
-		rd1 = enemiesArray->add(itofix(320 + 83), itofix(120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_RIGHT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_rightDoor), 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
-		rd2 = enemiesArray->add(itofix(320 + 83), itofix(-120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_RIGHT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_rightDoor), 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
+		ld1 = enemiesArray->add(itofix(-166 + 83), itofix(120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_LEFT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_leftDoor), 0, Constants::LIGHT, false, 0, true, static_cast<int>(Constants::EnemyType::ENEMY));
+		ld2 = enemiesArray->add(itofix(-166 + 83), itofix(-120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_LEFT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_leftDoor), 0, Constants::LIGHT, false, 0, true, static_cast<int>(Constants::EnemyType::ENEMY));
+		rd1 = enemiesArray->add(itofix(320 + 83), itofix(120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_RIGHT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_rightDoor), 0, Constants::LIGHT, false, 0, true, static_cast<int>(Constants::EnemyType::ENEMY));
+		rd2 = enemiesArray->add(itofix(320 + 83), itofix(-120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_RIGHT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_rightDoor), 0, Constants::LIGHT, false, 0, true, static_cast<int>(Constants::EnemyType::ENEMY));
 	}
 	else if(currentW >= 120 && G_gpTimer == currentW + 1)
 	{

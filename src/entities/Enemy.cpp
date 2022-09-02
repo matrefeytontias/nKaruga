@@ -103,6 +103,7 @@ void Enemy::handle()
 
 // TODO : LUTs::BaseImageId _shipImgId
 // TODO : LUTs::EnemyPatternId patternId
+// TODO : Constants::EnemyType type
 void Enemy::activate(int _x, int _y, int _HP, int _shipImgId, int patternId, int _waveIndex, bool _polarity, bool _hasRotation, int _f, bool _ghost, int type)
 {
 	maxHP = HP = _HP;
@@ -120,10 +121,10 @@ void Enemy::activate(int _x, int _y, int _HP, int _shipImgId, int patternId, int
 	for(int i = 0; i < 6; i++)
 		internal[i] = 0;
 	ghost = _ghost;
-	prop = type != TYPE_ENEMY;
-	damageable = type != TYPE_PROP && !ghost;
+	prop = type != static_cast<int>(Constants::EnemyType::ENEMY);
+	damageable = type != static_cast<int>(Constants::EnemyType::PROP) && !ghost;
 	active = true;
-	camRel = prop ? CAMREL_ABSOLUTE : CAMREL_RELATIVE;
+	camRelation = prop ? static_cast<int>(Constants::CamRelation::ABSOLUTE) : static_cast<int>(Constants::CamRelation::RELATIVE);
 	diedThisFrame = false;
 	spawned = SPAWN_DELAY;
 	flash = false;
@@ -292,7 +293,7 @@ void Enemy::beAbox()
 	switch (internal[1] - 1)
 	{
 	case 0:
-		dy = 256 - FCAMERA_SPEED;
+		dy = 256 - Constants::CAMERA_SPEED;
 		break;
 	case 1:
 		dx = -256;

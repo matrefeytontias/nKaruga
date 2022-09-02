@@ -16,7 +16,7 @@ private:
 	bool rotates, centered, active, flash;
 	// How the camera affects the object's display
 	// See the enum lower in the file
-	int camRel;
+	int camRelation;
 	Fixed angle;
 	unsigned short* img;
 };

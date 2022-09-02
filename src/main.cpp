@@ -241,14 +241,14 @@ int main(int argc, char **argv)
 
 void musicFaded()
 {
-	Level::phase = PHASE_BOSSCINEMATIC;
+	Level::phase = Constants::GamePhase::BOSSCINEMATIC;
 }
 
 void bossIntroDone(int channel)
 {
 	if (channel == G_bossIntroChannel)
 	{
-		if (G_runBoss) Level::phase = PHASE_BOSSFIGHT;
+		if (G_runBoss) Level::phase = Constants::GamePhase::BOSSFIGHT;
 		G_runBoss = false;
 	}
 }
@@ -279,6 +279,7 @@ void playGame()
 	
 	// Reset the level stream
 	Level::counter = 0;
+	// Level::counter = 2619; // DBG : start at level 2
 	pauseTimer = 0;
 	G_hasFiredOnce = false;
 	
@@ -313,7 +314,7 @@ void playGame()
 		kEv = getk();
 		
 		// Prevent movement and firing during transitions
-		if(Level::phase == PHASE_TRANSITION)
+		if(Level::phase == Constants::GamePhase::TRANSITION)
 			kEv = 0;
 		
 		Level::p->handle(kEv);
@@ -325,17 +326,17 @@ void playGame()
 		// Update sound system
 		Level::soundSystem->update();
 		
-		if(Level::phase == PHASE_GAME && !Level::fightingBoss)
+		if(Level::phase == Constants::GamePhase::PLAY && !Level::fightingBoss)
 			Level::advanceLevel();
-		else if(Level::phase == PHASE_TRANSITION)
+		else if(Level::phase == Constants::GamePhase::TRANSITION)
 			Level::executeIntro();
-		else if(Level::phase == PHASE_BOSSFIGHT)
+		else if(Level::phase == Constants::GamePhase::BOSSFIGHT)
 		{
 			if (!Level::soundSystem->musicPlaying())
 				Level::soundSystem->playBgMusic(NULL, LUTs::music(LUTs::MusicId::CHAPTER1_BOSS));
 			if(Level::be->handle())
 			{
-				Level::phase = PHASE_BOSSEXPLODEINIT;
+				Level::phase = Constants::GamePhase::BOSSEXPLODEINIT;
 				Level::fightingBoss = false;
 				Level::enemiesArray->destroyAllEnemies();
 				Level::bArray->clear();
@@ -344,7 +345,7 @@ void playGame()
 		
 		if (Level::fightingBoss)
 		{
-			if (Level::phase == PHASE_BOSSCINEMATIC && G_bossIntroChannel == -2)
+			if (Level::phase == Constants::GamePhase::BOSSCINEMATIC && G_bossIntroChannel == -2)
 			{
 				G_bossIntroChannel = Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BOSS_ALERT));
 				Mix_ChannelFinished(bossIntroDone);
@@ -453,7 +454,7 @@ void playGame()
 		}
 
 		// Overwrite all of that
-		if (Level::phase == PHASE_RESULTS)
+		if (Level::phase == Constants::GamePhase::RESULTS)
 		{
 			if (currentH == 120 && currentW == 160)
 			{
@@ -490,7 +491,7 @@ void playGame()
 				if (G_gpTimer > 192 && KFIRE(kEv))
 				{
 					G_maxChain = 0;
-					Level::phase = PHASE_GAME;
+					Level::phase = Constants::GamePhase::PLAY;
 				}
 			}
 			else
@@ -502,21 +503,21 @@ void playGame()
 				G_gpTimer = 0;
 			}
 		}
-		else if (Level::phase == PHASE_BOSSCINEMATIC)
+		else if (Level::phase == Constants::GamePhase::BOSSCINEMATIC)
 		{
 			drawSprite(LUTs::baseImage(LUTs::BaseImageId::BOSS_WARNING), 0, 72, 0, 0);
 			// Level::soundSystem->bgChannel->setVolume(1.);
 		}
-		else if (Level::phase == PHASE_BOSSEXPLODEINIT)
+		else if (Level::phase == Constants::GamePhase::BOSSEXPLODEINIT)
 		{
 			initExplosionEffect(160, 120, 500, 0);
-			Level::phase = PHASE_BOSSEXPLODE;
+			Level::phase = Constants::GamePhase::BOSSEXPLODE;
 			bossBonus = Level::be->getTimeout() * 10000;
 		}
-		else if (Level::phase == PHASE_BOSSEXPLODE)
+		else if (Level::phase == Constants::GamePhase::BOSSEXPLODE)
 		{
 			if (updateExplosionEffect())
-				Level::phase = PHASE_GAME;
+				Level::phase = Constants::GamePhase::PLAY;
 		}
 
 		if (!pauseTimer)

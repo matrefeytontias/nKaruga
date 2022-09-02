@@ -21,7 +21,7 @@ public:
 	static void advanceLevel();
 	static void (*executeIntro)(); // re-bindable
 	static void updateBg();
-	static int phase;
+	static Constants::GamePhase phase;
 	static bool fightingBoss;
 	static bool gameEnded;
 	static int counter, timer, waveIndex, waveTimer; // level counter, pause timer (for wait commands), wave index, wave timer

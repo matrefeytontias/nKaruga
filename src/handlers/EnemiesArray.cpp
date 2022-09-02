@@ -17,6 +17,7 @@ EnemiesArray::~EnemiesArray()
 
 // TODO : LUTs::BaseImageId shipImgId
 // TODO : LUTs::EnemyPatternId patternId
+// TODO : Constants::EnemyType type
 Enemy* EnemiesArray::add(int x, int y, int HP, int shipImgId, int patternId, int waveIndex, bool polarity, bool hasRotation, int firebackAmount, bool ghost, int type)
 {
 	// Keep props active

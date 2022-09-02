@@ -9,7 +9,7 @@ Entity::Entity()
 {
 	x = y = 0;
 	active = false;
-	camRel = CAMREL_NONE;
+	camRelation = static_cast<int>(Constants::CamRelation::NONE);
 	isEnemy = false;
 	isBoss = false;
 }
@@ -75,7 +75,7 @@ void Entity::deactivate()
 
 int Entity::getCamRel()
 {
-	return camRel;
+	return camRelation;
 }
 
 Fixed Entity::angleToEntity(Entity *e)

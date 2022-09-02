@@ -28,7 +28,7 @@ void Bullet::activate(Fixed _x, Fixed _y, Fixed _a, Fixed _r, int imgId, bool _p
 	active = true;
 	polarity = _p;
 	hurtPlayer = _h;
-	camRel = _camRel;
+	camRelation = _camRel;
 	x = _x;
 	y = _y;
 	dx = fixmul(fixcos(_a), _r);
@@ -60,15 +60,15 @@ void Bullet::draw()
 	static Rect br;
 	br.x = fixtoi(x);
 	br.y = fixtoi(y);
-	DC->add(img, &br, false, camRel);
+	DC->add(img, &br, false, camRelation);
 }
 
 Fixed Bullet::getx()
 {
-	return fToScreenX(x, camRel);
+	return fToScreenX(x, camRelation);
 }
 
 Fixed Bullet::gety()
 {
-	return fToScreenY(y, camRel);
+	return fToScreenY(y, camRelation);
 }

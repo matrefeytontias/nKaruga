@@ -76,19 +76,19 @@ KeyEvent getk(void)
 	return k;
 }
 
-int iToScreenX(int x, int camRel)
+int iToScreenX(int x, int camRelation)
 {
-	return (camRel == CAMREL_ABSOLUTE ? x - DC->cam.absX : (camRel == CAMREL_RELATIVE ? x - DC->cam.relX : x));
+	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? x - DC->cam.absX : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? x - DC->cam.relX : x));
 }
-int iToScreenY(int y, int camRel)
+int iToScreenY(int y, int camRelation)
 {
-	return (camRel == CAMREL_ABSOLUTE ? y - DC->cam.absY : (camRel == CAMREL_RELATIVE ? y - DC->cam.relY : y));
+	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? y - DC->cam.absY : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? y - DC->cam.relY : y));
 }
-Fixed fToScreenX(Fixed x, int camRel)
+Fixed fToScreenX(Fixed x, int camRelation)
 {
-	return (camRel == CAMREL_ABSOLUTE ? x - itofix(DC->cam.absX) : (camRel == CAMREL_RELATIVE ? x - itofix(DC->cam.relX) : x));
+	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? x - itofix(DC->cam.absX) : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? x - itofix(DC->cam.relX) : x));
 }
-Fixed fToScreenY(Fixed y, int camRel)
+Fixed fToScreenY(Fixed y, int camRelation)
 {
-	return (camRel == CAMREL_ABSOLUTE ? y - itofix(DC->cam.absY) : (camRel == CAMREL_RELATIVE ? y - itofix(DC->cam.relY) : y));
+	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? y - itofix(DC->cam.absY) : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? y - itofix(DC->cam.relY) : y));
 }

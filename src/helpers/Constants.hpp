@@ -4,6 +4,7 @@
 #include <SDL2/SDL_mixer.h>
 
 #include "types.h"
+#include "helpers/math.hpp"
 
 struct Constants
 {
@@ -13,6 +14,41 @@ struct Constants
 	static constexpr char CONFIG_FILENAME[] = "nKaruga.cfg";
 	static constexpr char TITLE_STRING[] = "Press Enter to start or Escape to quit";
 	static constexpr char CONTINUE_TEXT[] = "Continue ? (Enter/Esc : yes/no)";
+
+	// Game phases
+	enum struct GamePhase
+	{
+		PLAY,
+		TRANSITION,
+		BOSSCINEMATIC,
+		BOSSFIGHT,
+		BOSSEXPLODEINIT,
+		BOSSEXPLODE,
+		RESULTS,
+	};
+
+	// Enemy types
+	enum struct EnemyType
+	{
+		ENEMY,
+		PROP,
+		BREAKABLE_PROP
+	};
+
+	// /!\ Fixed-point value
+	static constexpr Fixed CAMERA_SPEED = itofix(1) / 3;
+	// /!\ integer value
+	// TODO : make this fixed
+	static constexpr Fixed INV_CAMERA_SPEED = 3;
+
+// Camera relations
+	enum struct CamRelation
+	{
+		NONE,
+		ABSOLUTE,
+		RELATIVE
+	};
+
 
 	// TODO : get rid of both of those
 	// also SHADOW -> DARK

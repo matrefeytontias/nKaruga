@@ -18,7 +18,7 @@ void DrawingCandidate::activate(unsigned short *_img, Rect *_pos, bool _flash, i
 	img = _img;
 	pos.x = _pos->x - img[0] / 2;
 	pos.y = _pos->y - img[1] / 2;
-	camRel = _camRel;
+	camRelation = _camRel;
 	rotates = false;
 	active = true;
 	flash = _flash;
@@ -38,7 +38,7 @@ void DrawingCandidate::activate(unsigned short *_img, Rect *_pos, Rect *_center,
 	}
 	else
 		centered = true;
-	camRel = _camRel;
+	camRelation = _camRel;
 	rotates = true;
 	active = true;
 	flash = _flash;
@@ -53,14 +53,14 @@ void DrawingCandidate::draw()
 {
 	if(active)
 	{
-		pos.x = iToScreenX(pos.x, camRel);
-		pos.y = iToScreenY(pos.y, camRel);
+		pos.x = iToScreenX(pos.x, camRelation);
+		pos.y = iToScreenY(pos.y, camRelation);
 		if(rotates)
 		{
 			if(centered)
 			{
-				center.x = iToScreenX(center.x, camRel);
-				center.y = iToScreenY(center.y, camRel);
+				center.x = iToScreenX(center.x, camRelation);
+				center.y = iToScreenY(center.y, camRelation);
 			}
 			drawSpriteRotated(img, &pos, centered ? NULL : &center, angle, flash, 0xffff);
 		}

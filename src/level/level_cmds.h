@@ -7,7 +7,7 @@
 // x, y, HP, image ID, callback ID, polarity, has rotation ?, fireback amount, type
 // IMPORTANT
 // PROPS ARE NOT CONSIDERED PARTS OF A WAVE, THUS THEIR waveIndex VARIABLE MUST NOT BE USED
-#define enemy(x, y, HP, iID, cbID, p, hR, f, type) x, y, HP, idtoi<LUTs::BaseImageId>(iID), idtoi<LUTs::EnemyPatternId>(cbID), p, hR, f, type
+#define enemy(x, y, HP, iID, cbID, p, hR, f, type) x, y, HP, idtoi<LUTs::BaseImageId>(iID), idtoi<LUTs::EnemyPatternId>(cbID), p, hR, f, idtoi<Constants::EnemyType>(type)
 
 // Special values
 #define LVLSTR_CHAPTEREND -3

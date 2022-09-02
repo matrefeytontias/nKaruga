@@ -10,7 +10,7 @@ public:
 	Bullet();
 	~Bullet();
 	Rect* makeRect();
-	void activate(Fixed x, Fixed y, Fixed a, Fixed r, int imageID, bool polarity, bool hurtsPlayer, int camRel);
+	void activate(Fixed x, Fixed y, Fixed a, Fixed r, int imageID, bool polarity, bool hurtsPlayer, int camRelation);
 	bool getPolarity();
 	bool hurtsPlayer();
 	bool handle();

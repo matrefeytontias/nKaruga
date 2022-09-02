@@ -28,6 +28,7 @@ public:
 	bool waitFrames(int frames);
 protected:
 	bool active;
-	int camRel;
+	// TODO : Constants::CamRelation camRelation
+	int camRelation;
 	Fixed x, y;
 };
