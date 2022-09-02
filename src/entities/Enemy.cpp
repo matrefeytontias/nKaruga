@@ -6,7 +6,9 @@
 #include "handlers/DrawingCandidates.hpp"
 #include "helpers/Joint.hpp"
 #include "helpers/math.hpp"
-#include "level/patterns.h"
+#include "level/Level.hpp"
+#include "globals.h"
+#include "utils.hpp"
 
 Enemy::Enemy() : Entity()
 {
@@ -100,7 +102,8 @@ void Enemy::handle()
 #define SPAWN_DELAY 512
 
 // TODO : LUTs::BaseImageId _shipImgId
-void Enemy::activate(int _x, int _y, int _HP, int _shipImgId, int callbackID, int _waveIndex, bool _polarity, bool _hasRotation, int _f, bool _ghost, int type)
+// TODO : LUTs::EnemyPatternId patternId
+void Enemy::activate(int _x, int _y, int _HP, int _shipImgId, int patternId, int _waveIndex, bool _polarity, bool _hasRotation, int _f, bool _ghost, int type)
 {
 	maxHP = HP = _HP;
 	x = _x;
@@ -112,7 +115,7 @@ void Enemy::activate(int _x, int _y, int _HP, int _shipImgId, int callbackID, in
 	polarity = _polarity;
 	hasRotation = _hasRotation;
 	rotationAngle = 0;
-	callback = enemyCallbacks[callbackID];
+	callback = LUTs::enemyPattern(static_cast<LUTs::EnemyPatternId>(patternId));
 	waveIndex = _waveIndex;
 	for(int i = 0; i < 6; i++)
 		internal[i] = 0;

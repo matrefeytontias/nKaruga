@@ -4,8 +4,10 @@
 
 // Level streams
 
-// x, y, HP, image ID, callback ID, polarity, has rotation ?, fireback amount, type ?
-#define enemy(x, y, HP, iID, cbID, p, hR, f, type) x, y, HP, idtoi<LUTs::BaseImageId>(iID), cbID, p, hR, f, type
+// x, y, HP, image ID, callback ID, polarity, has rotation ?, fireback amount, type
+// IMPORTANT
+// PROPS ARE NOT CONSIDERED PARTS OF A WAVE, THUS THEIR waveIndex VARIABLE MUST NOT BE USED
+#define enemy(x, y, HP, iID, cbID, p, hR, f, type) x, y, HP, idtoi<LUTs::BaseImageId>(iID), idtoi<LUTs::EnemyPatternId>(cbID), p, hR, f, type
 
 // Special values
 #define LVLSTR_CHAPTEREND -3
@@ -34,6 +36,7 @@ enum
 	LVLSTR_BKPT
 };
 
+// Type-safely cast an enum value to an int.
 template <typename LUTid>
 constexpr int idtoi(LUTid id)
 {
@@ -43,7 +46,7 @@ constexpr int idtoi(LUTid id)
 // Starts a new wave
 #define cmd_newWave LVLSTR_CMD, 1, LVLSTR_NEWWAVE
 // Loads a new camera path
-#define cmd_newCameraPath(n) LVLSTR_CMD, 2, LVLSTR_NEWCAMERA, n
+#define cmd_newCameraPath(n) LVLSTR_CMD, 2, LVLSTR_NEWCAMERA, idtoi<LUTs::CamTravelingId>(n)
 // Waits a given amount of frames
 #define cmd_wait(x) LVLSTR_CMD, 2, LVLSTR_WAIT, x
 // Waits until G_gpTimer has a certain value
@@ -59,7 +62,7 @@ constexpr int idtoi(LUTid id)
 // Waits for all enemies to be killed (includes props)
 #define cmd_killed LVLSTR_CMD, 1, LVLSTR_KILLED
 // Pushes the given background to the background rendering stack
-#define cmd_useBackground(id, x, y, scrollScale, displayScale, handleID) LVLSTR_CMD, 7, LVLSTR_BACKGROUND, idtoi<LUTs::BgImageId>(id), x, y, scrollScale, displayScale, handleID
+#define cmd_useBackground(id, x, y, scrollScale, displayScale, handleID) LVLSTR_CMD, 7, LVLSTR_BACKGROUND, idtoi<LUTs::BgImageId>(id), x, y, scrollScale, displayScale, idtoi<LUTs::BgTravelingId>(handleID)
 // Empties the background rendering stack
 #define cmd_resetBackgrounds LVLSTR_CMD, 1, LVLSTR_RESETBG
 // Plays the chapter's music

@@ -5,20 +5,34 @@
 
 #include <SDL2/SDL_mixer.h>
 
-#include "common.h"
-
 #include "gfx/titleScreen.h"
 #include "gfx/gfx.h"
 #include "gfx/bossgfx.h"
 #include "gfx/bg.h"
 #include "gfx/bossWarning.h"
+#include "level/cameras.h"
+#include "level/patterns.h"
 #include "sfx/list.h"
 
-uint16_t* LUTs::image_entries[static_cast<int>(BaseImageId::NB_IMAGES)];
-uint16_t* LUTs::bossImage_entries[static_cast<int>(BossImageId::NB_BOSS_IMAGES)];
-uint16_t* LUTs::bgImage_entries[static_cast<int>(BgImageId::NB_BACKGROUND_IMAGES)];
-Mix_Chunk* LUTs::sound_entries[static_cast<int>(SoundId::NB_SOUNDS)];
-Mix_Music* LUTs::music_entries[static_cast<int>(MusicId::NB_MUSICS)];
+uint16_t* LUTs::image_entries[static_cast<int>(BaseImageId::COUNT)];
+uint16_t* LUTs::bossImage_entries[static_cast<int>(BossImageId::COUNT)];
+uint16_t* LUTs::bgImage_entries[static_cast<int>(BgImageId::COUNT)];
+Mix_Chunk* LUTs::sound_entries[static_cast<int>(SoundId::COUNT)];
+Mix_Music* LUTs::music_entries[static_cast<int>(MusicId::COUNT)];
+
+enemy_pattern LUTs::enemyPattern_entries[static_cast<int>(EnemyPatternId::COUNT)] = { cb_Pattern_null, cb_Pattern_box, cb_Pattern_prop, cb_Pattern_1_1, cb_Pattern_1_2, cb_Pattern_1_3, cb_Pattern_1_4, cb_Pattern_1_5, cb_Pattern_1_6,
+	cb_Pattern_1_7, cb_Pattern_1_8, cb_Pattern_1_9, cb_Pattern_1_10, cb_Pattern_1_11, cb_Pattern_1_12, cb_Pattern_1_13, cb_Pattern_1_14, cb_Pattern_1_15, cb_Pattern_1_16,
+	cb_Pattern_1_17, cb_Pattern_1_18, cb_Pattern_1_19, cb_Pattern_1_20, cb_Pattern_1_21, cb_Pattern_1_boss, cb_Pattern_1_bossGrenade,
+	cb_Pattern_2_1, cb_Pattern_2_2, cb_Pattern_2_3, cb_Pattern_2_4, cb_Pattern_2_5, cb_Pattern_2_6, cb_Pattern_2_7, cb_Pattern_2_leftDoor, cb_Pattern_2_rightDoor,
+	cb_Pattern_2_8, cb_Pattern_2_9, cb_Pattern_2_10, cb_Pattern_2_11, cb_Pattern_2_12, cb_Pattern_2_13, cb_Pattern_2_14, cb_Pattern_2_15, cb_Pattern_2_16, cb_Pattern_2_17,
+	cb_Pattern_2_18, cb_Pattern_2_19, cb_Pattern_2_20, cb_Pattern_2_21, cb_Pattern_2_22, cb_Pattern_2_23, cb_Pattern_2_24, cb_Pattern_2_25, cb_Pattern_2_26, cb_Pattern_2_27,
+	cb_Pattern_2_28, cb_Pattern_2_29, cb_Pattern_2_30, cb_Pattern_2_31, cb_Pattern_2_32, cb_Pattern_2_33, cb_Pattern_2_34, cb_Pattern_2_35, cb_Pattern_2_36, cb_Pattern_2_wall,
+	cb_Pattern_2_bossWeakPoint, cb_Pattern_2_bossShield
+};
+
+camera_traveling LUTs::camTraveling_entries[static_cast<int>(CamTravelingId::COUNT)] = { cthIntro1, cthChap1, cthIntro2, cthChap2, cthChap2_2, cthChap2_boss };
+
+background_traveling LUTs::bgTraveling_entries[static_cast<int>(BgTravelingId::COUNT)] = { cb_bgHandle_default, cb_bgHandle_2_2 };
 
 void LUTs::buildGameLUTs()
 {
@@ -185,14 +199,14 @@ void LUTs::buildGameLUTs()
 	
 	/* SFX */
 	// Sounds
-	for (int i = 0; i < static_cast<int>(LUTs::SoundId::NB_SOUNDS); i++)
+	for (int i = 0; i < static_cast<int>(SoundId::COUNT); i++)
 	{
 		printf("Loading sound '%s' ... ", sfxList[i]);
 		sound_entries[i] = Mix_LoadWAV(sfxList[i]);
 		printf("done\n");
 	}
 	// Background musics
-	for (int i = 0; i < static_cast<int>(LUTs::MusicId::NB_MUSICS); i++)
+	for (int i = 0; i < static_cast<int>(MusicId::COUNT); i++)
 	{
 		printf("Loading music '%s' ... ", musicList[i]);
 		music_entries[i] = Mix_LoadMUS(musicList[i]);
@@ -203,12 +217,14 @@ void LUTs::buildGameLUTs()
 void LUTs::freeGameLUTs()
 {
 	// Sounds
-	for (int i = 0; i < static_cast<int>(LUTs::SoundId::NB_SOUNDS); i++)
+	for (int i = 0; i < static_cast<int>(SoundId::COUNT); i++)
 		Mix_FreeChunk(sound_entries[i]);
 	// Background musics
-	for (int i = 0; i < static_cast<int>(LUTs::MusicId::NB_MUSICS); i++)
+	for (int i = 0; i < static_cast<int>(MusicId::COUNT); i++)
 		Mix_FreeMusic(music_entries[i]);
 }
+
+// LUT lookup functions
 
 uint16_t* LUTs::baseImage(BaseImageId entry)
 {
@@ -235,6 +251,22 @@ Mix_Music* LUTs::music(MusicId entry)
 	return music_entries[static_cast<int>(entry)];
 }
 
+enemy_pattern LUTs::enemyPattern(EnemyPatternId entry)
+{
+	return enemyPattern_entries[static_cast<int>(entry)];
+}
+
+camera_traveling LUTs::camTraveling(CamTravelingId entry)
+{
+	return camTraveling_entries[static_cast<int>(entry)];
+}
+
+background_traveling LUTs::bgTraveling(BgTravelingId entry)
+{
+	return bgTraveling_entries[static_cast<int>(entry)];
+}
+
+// LUT lookup with offset
 
 uint16_t* LUTs::baseImage(BaseImageId entry, unsigned int add)
 {

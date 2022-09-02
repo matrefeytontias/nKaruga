@@ -1,6 +1,7 @@
 #include "handlers/DestroyedEnemies.hpp"
 
 #include "utils.hpp"
+#include "entities/Enemy.hpp"
 #include "helpers/Constants.hpp"
 #include "helpers/math.hpp"
 

@@ -1,16 +1,10 @@
 ﻿#pragma once
 
+#include "graphics/Camera.hpp"
 #include "graphics/DrawingCandidate.hpp"
+#include "types.h"
 
 #define MAX_DISPLAYABLE 2000
-
-typedef struct
-{
-	int absX, absY;
-	int relX, relY;
-} Camera;
-
-typedef void (*camera_travelling)(Camera*);
 
 class DrawingCandidates
 {
@@ -25,5 +19,5 @@ public:
 private:
 	DrawingCandidate data[MAX_DISPLAYABLE];
 	int candidatesCount;
-	camera_travelling cameraPath;
+	camera_traveling cameraPath;
 };

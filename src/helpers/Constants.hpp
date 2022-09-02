@@ -3,6 +3,8 @@
 #include <cstdint>
 #include <SDL2/SDL_mixer.h>
 
+#include "types.h"
+
 struct Constants
 {
 	// General
@@ -186,7 +188,7 @@ struct LUTs
 		BOSS2_RIGHTSHIELD,
 		BOSS2_LEFTUPPERARM,
 		BOSS2_RIGHTUPPERARM,
-		NB_IMAGES
+		COUNT
 	};
 
 	// Player animation indices
@@ -239,7 +241,104 @@ struct LUTs
 		BOSS2_HITPOINT_RIGHT_3,
 		BOSS2_HITPOINT_RIGHT_4,
 		BOSS2_HITPOINT_RIGHT_5,
-		NB_BOSS_IMAGES
+		COUNT
+	};
+
+	// Enemy patterns
+	enum struct EnemyPatternId
+	{
+		Pattern_null = 0,
+		Pattern_box,
+		Pattern_prop,
+		// Intro 1
+		Pattern_1_1,
+		Pattern_1_2,
+		Pattern_1_3,
+		Pattern_1_4,
+		Pattern_1_5,
+		Pattern_1_6,
+		// Chapter 1
+		Pattern_1_7,
+		Pattern_1_8,
+		Pattern_1_9,
+		Pattern_1_10,
+		Pattern_1_11,
+		Pattern_1_12,
+		Pattern_1_13,
+		Pattern_1_14,
+		Pattern_1_15,
+		Pattern_1_16,
+		Pattern_1_17,
+		Pattern_1_18,
+		Pattern_1_19,
+		Pattern_1_20,
+		Pattern_1_21,
+		Pattern_1_boss,
+		Pattern_1_bossGrenade,
+		// Intro 2
+		Pattern_2_1,
+		Pattern_2_2,
+		Pattern_2_3,
+		Pattern_2_4,
+		Pattern_2_5,
+		Pattern_2_6,
+		Pattern_2_7,
+		Pattern_2_leftDoor,
+		Pattern_2_rightDoor,
+		// Chapter 2
+		Pattern_2_8,
+		Pattern_2_9,
+		Pattern_2_10,
+		Pattern_2_11,
+		Pattern_2_12,
+		Pattern_2_13,
+		Pattern_2_14,
+		Pattern_2_15,
+		Pattern_2_16,
+		Pattern_2_17,
+		Pattern_2_18,
+		Pattern_2_19,
+		Pattern_2_20,
+		Pattern_2_21,
+		Pattern_2_22,
+		Pattern_2_23,
+		Pattern_2_24,
+		Pattern_2_25,
+		Pattern_2_26,
+		Pattern_2_27,
+		Pattern_2_28,
+		Pattern_2_29,
+		Pattern_2_30,
+		Pattern_2_31,
+		Pattern_2_32,
+		Pattern_2_33,
+		Pattern_2_34,
+		Pattern_2_35,
+		Pattern_2_36,
+		Pattern_2_wall,
+		Pattern_2_bossWeakPoint,
+		Pattern_2_bossShield,
+		COUNT
+	};
+
+	// Camera travelling handlers
+	enum struct CamTravelingId
+	{
+		CameraPath_i1 = 0,
+		CameraPath_c1,
+		CameraPath_i2,
+		CameraPath_c2,
+		CameraPath_c2_2,
+		CameraPath_c2_boss,
+		COUNT
+	};
+
+	// Background handlers
+	enum struct BgTravelingId
+	{
+		bgHandle_default = 0,
+		bgHandle_2_2,
+		COUNT
 	};
 
 	// Background images LUT
@@ -258,7 +357,7 @@ struct LUTs
 		STAGE2_5,
 		STAGE2_6,
 		STAGE2_7,
-		NB_BACKGROUND_IMAGES
+		COUNT
 	};
 
 	// Sounds
@@ -286,8 +385,9 @@ struct LUTs
 		MENU_SELECT,
 		MENU_START,
 		BOSS_ALERT,
-		NB_SOUNDS
+		COUNT
 	};
+
 	// Musics
 	enum struct MusicId
 	{
@@ -296,7 +396,7 @@ struct LUTs
 		CHAPTER1_BOSS,
 		CHAPTER2_MAIN,
 		CHAPTER2_LOOP,
-		NB_MUSICS
+		COUNT
 	};
 
 	static void buildGameLUTs();
@@ -307,6 +407,9 @@ struct LUTs
 	static uint16_t* backgroundImage(BgImageId entry);
 	static Mix_Chunk* sound(SoundId entry);
 	static Mix_Music* music(MusicId entry);
+	static enemy_pattern enemyPattern(EnemyPatternId entry);
+	static camera_traveling camTraveling(CamTravelingId entry);
+	static background_traveling bgTraveling(BgTravelingId entry);
 	// Additional versions with offsets to ease animation and programmatic
 	// selection of images. TODO : find a better system maybe ?
 	// TODO : check bounds with "entry + add"
@@ -317,9 +420,12 @@ struct LUTs
 	static Mix_Music* music(MusicId entry, unsigned int add);
 
 private:
-	static uint16_t* image_entries[static_cast<int>(BaseImageId::NB_IMAGES)];
-	static uint16_t* bossImage_entries[static_cast<int>(BossImageId::NB_BOSS_IMAGES)];
-	static uint16_t* bgImage_entries[static_cast<int>(BgImageId::NB_BACKGROUND_IMAGES)];
-	static Mix_Chunk* sound_entries[static_cast<int>(SoundId::NB_SOUNDS)];
-	static Mix_Music* music_entries[static_cast<int>(MusicId::NB_MUSICS)];
+	static uint16_t* image_entries[static_cast<int>(BaseImageId::COUNT)];
+	static uint16_t* bossImage_entries[static_cast<int>(BossImageId::COUNT)];
+	static uint16_t* bgImage_entries[static_cast<int>(BgImageId::COUNT)];
+	static enemy_pattern enemyPattern_entries[static_cast<int>(EnemyPatternId::COUNT)];
+	static camera_traveling camTraveling_entries[static_cast<int>(CamTravelingId::COUNT)];
+	static background_traveling bgTraveling_entries[static_cast<int>(BgTravelingId::COUNT)];
+	static Mix_Chunk* sound_entries[static_cast<int>(SoundId::COUNT)];
+	static Mix_Music* music_entries[static_cast<int>(MusicId::COUNT)];
 };

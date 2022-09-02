@@ -14,6 +14,7 @@ set(SOURCES ${SOURCES}
     src/entities/PowerFragment.hpp
 
     src/graphics/BackgroundScroller.hpp
+    src/graphics/Camera.hpp
     src/graphics/ChainNotif.hpp
     src/graphics/DrawingCandidate.hpp
     src/graphics/ExplosionAnim.hpp
@@ -46,6 +47,7 @@ set(SOURCES ${SOURCES}
     src/entities/PowerFragment.cpp
 
     src/graphics/BackgroundScroller.cpp
+    src/graphics/Camera.cpp
     src/graphics/ChainNotif.cpp
     src/graphics/DrawingCandidate.cpp
     src/graphics/ExplosionAnim.cpp
@@ -68,6 +70,7 @@ set(SOURCES ${SOURCES}
 
 # TODO : refactor - Ad-hoc and data
     src/level/bossData.h
+    src/level/cameras.h
     src/level/levels.h
     src/level/patterns.h
     src/main.cpp

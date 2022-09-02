@@ -16,7 +16,8 @@ EnemiesArray::~EnemiesArray()
 }
 
 // TODO : LUTs::BaseImageId shipImgId
-Enemy* EnemiesArray::add(int x, int y, int HP, int shipImgId, int callbackId, int waveIndex, bool polarity, bool hasRotation, int firebackAmount, bool ghost, int type)
+// TODO : LUTs::EnemyPatternId patternId
+Enemy* EnemiesArray::add(int x, int y, int HP, int shipImgId, int patternId, int waveIndex, bool polarity, bool hasRotation, int firebackAmount, bool ghost, int type)
 {
 	// Keep props active
 	while (data[currentEnemy].isActive() && data[currentEnemy].isProp())
@@ -24,7 +25,7 @@ Enemy* EnemiesArray::add(int x, int y, int HP, int shipImgId, int callbackId, in
 		currentEnemy++;
 		currentEnemy %= Constants::MAX_ENEMY;
 	}
-	data[currentEnemy].activate(x, y, HP, shipImgId, callbackId, waveIndex, polarity, hasRotation, firebackAmount, ghost, type);
+	data[currentEnemy].activate(x, y, HP, shipImgId, patternId, waveIndex, polarity, hasRotation, firebackAmount, ghost, type);
 	Enemy *r = &data[currentEnemy];
 	currentEnemy++;
 	currentEnemy %= Constants::MAX_ENEMY;

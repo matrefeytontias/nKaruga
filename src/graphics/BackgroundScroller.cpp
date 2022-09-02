@@ -3,24 +3,8 @@
 #include "helpers/math.hpp"
 #include "n2DLib/n2DLib.hpp"
 
-void cb_bgHandle_default(BackgroundScroller *bg)
-{
-	bg->dy += itofix(1);
-}
-
-void cb_bgHandle_2_2(BackgroundScroller *bg)
-{
-	bg->dy += itofix(1);
-	// Here, the background scrolling is reset to 0 every time a period is completed to avoid rounding errors
-	// The formula is
-	// period = itofix(background_2_4.width) / background_2_4.speed
-	if(bg->dy >= itofix(120 * 256 / 192)) // might as well avoid using fixdiv
-		bg->dy = 0;
-}
-
-background_handler bgHandle[] = { cb_bgHandle_default, cb_bgHandle_2_2 };
-
-BackgroundScroller::BackgroundScroller(unsigned short *bg, Fixed _x, Fixed _y, Fixed sscale, Fixed dscale, int bgHandleID) // x is left-top corner, y is center (ugly but purpose-built)
+// TODO : LUTs::BgTravelingId bgTravelingId
+BackgroundScroller::BackgroundScroller(unsigned short *bg, Fixed _x, Fixed _y, Fixed sscale, Fixed dscale, int bgTravelingId) // x is left-top corner, y is center (ugly but purpose-built)
 {
 	img = &(bg[3]);
 	w = bg[0];
@@ -32,7 +16,7 @@ BackgroundScroller::BackgroundScroller(unsigned short *bg, Fixed _x, Fixed _y, F
 	dy = 0;
 	scrollScale = sscale;
 	displayScale = dscale;
-	handle = bgHandle[bgHandleID];
+	handle = LUTs::bgTraveling(static_cast<LUTs::BgTravelingId>(bgTravelingId));
 }
 
 BackgroundScroller::~BackgroundScroller()

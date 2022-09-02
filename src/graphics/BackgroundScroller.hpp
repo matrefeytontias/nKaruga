@@ -1,11 +1,7 @@
 #pragma once
 
 #include "types.h"
-
-class BackgroundScroller;
-
-// Update callback
-typedef void (*background_handler)(BackgroundScroller*);
+#include "helpers/Constants.hpp"
 
 // Background scrolling handler
 class BackgroundScroller
@@ -25,5 +21,5 @@ public:
 	unsigned short colorKey;
 	Fixed scrollScale;
 	Fixed displayScale;
-	background_handler handle;
+	background_traveling handle;
 };

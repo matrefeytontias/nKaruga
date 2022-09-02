@@ -380,10 +380,10 @@ void Level::intro2()
 	
 	if(!currentW)
 	{
-		ld1 = enemiesArray->add(itofix(-166 + 83), itofix(120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_LEFT), Pattern_2_leftDoor, 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
-		ld2 = enemiesArray->add(itofix(-166 + 83), itofix(-120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_LEFT), Pattern_2_leftDoor, 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
-		rd1 = enemiesArray->add(itofix(320 + 83), itofix(120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_RIGHT), Pattern_2_rightDoor, 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
-		rd2 = enemiesArray->add(itofix(320 + 83), itofix(-120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_RIGHT), Pattern_2_rightDoor, 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
+		ld1 = enemiesArray->add(itofix(-166 + 83), itofix(120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_LEFT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_leftDoor), 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
+		ld2 = enemiesArray->add(itofix(-166 + 83), itofix(-120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_LEFT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_leftDoor), 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
+		rd1 = enemiesArray->add(itofix(320 + 83), itofix(120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_RIGHT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_rightDoor), 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
+		rd2 = enemiesArray->add(itofix(320 + 83), itofix(-120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_RIGHT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_rightDoor), 0, Constants::LIGHT, false, 0, true, TYPE_ENEMY);
 	}
 	else if(currentW >= 120 && G_gpTimer == currentW + 1)
 	{

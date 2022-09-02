@@ -825,7 +825,7 @@ void cb_Pattern_2_12(cb_args)
 		e->internal[0] ^= 1;
 		Enemy *ce = Level::enemiesArray->add(e->getx(), e->gety(), 20,
 											 static_cast<int>(e->internal[0] ? LUTs::BaseImageId::BOX_SHADOW_1 : LUTs::BaseImageId::BOX_SHADOW_1),
-											 Pattern_box, 0, e->internal[0] ? Constants::SHADOW : Constants::LIGHT, 0, 5, false, TYPE_BREAKABLE_PROP);
+											 static_cast<int>(LUTs::EnemyPatternId::Pattern_box), 0, e->internal[0] ? Constants::SHADOW : Constants::LIGHT, 0, 5, false, TYPE_BREAKABLE_PROP);
 		ce->internal[1] = 3; // move right
 	}
 	e->beAprop();
@@ -838,7 +838,7 @@ void cb_Pattern_2_13(cb_args)
 		e->internal[0] ^= 1;
 		Enemy *ce = Level::enemiesArray->add(e->getx(), e->gety(), 20,
 											 static_cast<int>(e->internal[0] ? LUTs::BaseImageId::BOX_SHADOW_1 : LUTs::BaseImageId::BOX_SHADOW_1),
-											 Pattern_box, 0, e->internal[0], 0, 5, false, TYPE_BREAKABLE_PROP);
+											 static_cast<int>(LUTs::EnemyPatternId::Pattern_box), 0, e->internal[0], 0, 5, false, TYPE_BREAKABLE_PROP);
 		ce->internal[1] = 2; // move left
 	}
 	e->beAprop();
@@ -866,14 +866,14 @@ void cb_Pattern_2_16(cb_args)
 	{
 		if (e->internal[0] % 2)
 		{
-			Enemy *ce = Level::enemiesArray->add(e->getx(), e->gety(), 1, static_cast<int>(LUTs::BaseImageId::BOX_SOLID_1), Pattern_box, 0, Constants::LIGHT, 0, 0, false, TYPE_PROP);
+			Enemy *ce = Level::enemiesArray->add(e->getx(), e->gety(), 1, static_cast<int>(LUTs::BaseImageId::BOX_SOLID_1), static_cast<int>(LUTs::EnemyPatternId::Pattern_box), 0, Constants::LIGHT, 0, 0, false, TYPE_PROP);
 			ce->internal[1] = 1; // move down
 		}
 		else
 		{
 			Enemy *ce = Level::enemiesArray->add(e->getx(), e->gety(), 20,
 												 static_cast<int>(e->internal[0] >> 1 ? LUTs::BaseImageId::BOX_SHADOW_1 : LUTs::BaseImageId::BOX_SHADOW_1),
-												 Pattern_box, 0, e->internal[0] >> 1, 0, 5, false, TYPE_BREAKABLE_PROP);
+												 static_cast<int>(LUTs::EnemyPatternId::Pattern_box), 0, e->internal[0] >> 1, 0, 5, false, TYPE_BREAKABLE_PROP);
 			ce->internal[0] = 0x6; // fire left and right
 			ce->internal[1] = 1; // move down
 		}
@@ -893,14 +893,14 @@ void cb_Pattern_2_18(cb_args)
 {
 	e->setRotation(128);
 	if (!(Level::waveTimer % 30))
-		Level::enemiesArray->add(fToScreenX(e->getx(), e->getCamRel()), fToScreenY(e->gety(), e->getCamRel()), 1, static_cast<int>(LUTs::BaseImageId::ENEMY_SHIP_1_SHADOW), Pattern_2_20, 0, e->polarity, true, 2, false, TYPE_ENEMY);
+		Level::enemiesArray->add(fToScreenX(e->getx(), e->getCamRel()), fToScreenY(e->gety(), e->getCamRel()), 1, static_cast<int>(LUTs::BaseImageId::ENEMY_SHIP_1_SHADOW), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_20), 0, e->polarity, true, 2, false, TYPE_ENEMY);
 	e->beAprop();
 }
 
 void cb_Pattern_2_19(cb_args)
 {
 	if (!((Level::waveTimer + 15) % 30))
-		Level::enemiesArray->add(fToScreenX(e->getx(), e->getCamRel()), fToScreenY(e->gety(), e->getCamRel()), 1, static_cast<int>(LUTs::BaseImageId::ENEMY_SHIP_1_LIGHT), Pattern_2_20, 0, e->polarity, true, 2, false, TYPE_ENEMY);
+		Level::enemiesArray->add(fToScreenX(e->getx(), e->getCamRel()), fToScreenY(e->gety(), e->getCamRel()), 1, static_cast<int>(LUTs::BaseImageId::ENEMY_SHIP_1_LIGHT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_20), 0, e->polarity, true, 2, false, TYPE_ENEMY);
 	e->beAprop();
 }
 
@@ -1052,14 +1052,14 @@ void cb_Pattern_2_30(cb_args)
 {
 	e->setRotation(128);
 	if (!(G_gpTimer % 45))
-		Level::enemiesArray->add(fToScreenX(e->getx(), e->getCamRel()), fToScreenY(e->gety(), e->getCamRel()), 1, static_cast<int>(LUTs::BaseImageId::ENEMY_SHIP_1_LIGHT), Pattern_2_32, 0, e->polarity, true, 2, false, TYPE_ENEMY);
+		Level::enemiesArray->add(fToScreenX(e->getx(), e->getCamRel()), fToScreenY(e->gety(), e->getCamRel()), 1, static_cast<int>(LUTs::BaseImageId::ENEMY_SHIP_1_LIGHT), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_32), 0, e->polarity, true, 2, false, TYPE_ENEMY);
 	e->beAprop();
 }
 
 void cb_Pattern_2_31(cb_args)
 {
 	if (!(G_gpTimer % 45))
-		Level::enemiesArray->add(fToScreenX(e->getx(), e->getCamRel()), fToScreenY(e->gety(), e->getCamRel()), 1, static_cast<int>(LUTs::BaseImageId::ENEMY_SHIP_1_SHADOW), Pattern_2_33, 0, e->polarity, true, 2, false, TYPE_ENEMY);
+		Level::enemiesArray->add(fToScreenX(e->getx(), e->getCamRel()), fToScreenY(e->gety(), e->getCamRel()), 1, static_cast<int>(LUTs::BaseImageId::ENEMY_SHIP_1_SHADOW), static_cast<int>(LUTs::EnemyPatternId::Pattern_2_33), 0, e->polarity, true, 2, false, TYPE_ENEMY);
 	e->beAprop();
 }
 
@@ -1189,13 +1189,3 @@ void cb_Pattern_2_bossShield(cb_args)
 		e->rotationAngle += 1;
 	}
 }
-
-enemy_callback enemyCallbacks[] = { cb_Pattern_null, cb_Pattern_box, cb_Pattern_prop, cb_Pattern_1_1, cb_Pattern_1_2, cb_Pattern_1_3, cb_Pattern_1_4, cb_Pattern_1_5, cb_Pattern_1_6,
-	cb_Pattern_1_7, cb_Pattern_1_8, cb_Pattern_1_9, cb_Pattern_1_10, cb_Pattern_1_11, cb_Pattern_1_12, cb_Pattern_1_13, cb_Pattern_1_14, cb_Pattern_1_15, cb_Pattern_1_16,
-	cb_Pattern_1_17, cb_Pattern_1_18, cb_Pattern_1_19, cb_Pattern_1_20, cb_Pattern_1_21, cb_Pattern_1_boss, cb_Pattern_1_bossGrenade,
-	cb_Pattern_2_1, cb_Pattern_2_2, cb_Pattern_2_3, cb_Pattern_2_4, cb_Pattern_2_5, cb_Pattern_2_6, cb_Pattern_2_7, cb_Pattern_2_leftDoor, cb_Pattern_2_rightDoor,
-	cb_Pattern_2_8, cb_Pattern_2_9, cb_Pattern_2_10, cb_Pattern_2_11, cb_Pattern_2_12, cb_Pattern_2_13, cb_Pattern_2_14, cb_Pattern_2_15, cb_Pattern_2_16, cb_Pattern_2_17,
-	cb_Pattern_2_18, cb_Pattern_2_19, cb_Pattern_2_20, cb_Pattern_2_21, cb_Pattern_2_22, cb_Pattern_2_23, cb_Pattern_2_24, cb_Pattern_2_25, cb_Pattern_2_26, cb_Pattern_2_27,
-	cb_Pattern_2_28, cb_Pattern_2_29, cb_Pattern_2_30, cb_Pattern_2_31, cb_Pattern_2_32, cb_Pattern_2_33, cb_Pattern_2_34, cb_Pattern_2_35, cb_Pattern_2_36, cb_Pattern_2_wall,
-	cb_Pattern_2_bossWeakPoint, cb_Pattern_2_bossShield
-};

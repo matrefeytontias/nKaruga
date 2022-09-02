@@ -1,8 +1,8 @@
 #pragma once
 
 #include "types.h"
-#include "entities/Enemy.hpp"
-#include "entities/BossEnemy.hpp"
+
+class Enemy;
 
 #define UNUSED(var) (void)var
 

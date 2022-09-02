@@ -1,15 +1,12 @@
 #pragma once
 
 #include "entities/Entity.hpp"
+#include "helpers/Constants.hpp"
 
 class Joint;
 
 // Enemy
 // For real this time
-
-class Enemy;
-
-typedef void (*enemy_callback)(Enemy*);
 
 class Enemy : public Entity
 {
@@ -75,7 +72,7 @@ private:
 	bool hasRotation;
 	// The enemy's behaviour
 	//int callback;
-	enemy_callback callback;
+	enemy_pattern callback;
 
 	//bool isJointed;
 	bool diesWithJoint;

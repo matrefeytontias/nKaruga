@@ -2,69 +2,14 @@
 
 #include "globals.h"
 #include "utils.hpp"
+#include "helpers/Constants.hpp"
 #include "n2DLib/n2DLib.hpp"
-
-//
-// Camera travelling handlers
-//
-void cthIntro1(Camera *cam)
-{
-	// None needed in level 1
-	UNUSED(cam);
-}
-
-void cthChap1(Camera *cam)
-{
-	UNUSED(cam);
-}
-
-void cthIntro2(Camera *cam)
-{
-	UNUSED(cam);
-}
-
-void cthChap2(Camera *cam)
-{
-	if(!(G_gpTimer % 3))
-	{
-		cam->absY--;
-	}
-}
-
-void cthChap2_2(Camera *cam)
-{
-	if (!(G_gpTimer % 3))
-	{
-		cam->absY--;
-	}
-	G_minX += G_minX < 60;
-	G_maxX = 320 - G_minX;
-	fillRect(0, 0, G_minX, 240, 0);
-	fillRect(G_maxX, 0, 320 - G_maxX, 240, 0);
-}
-
-void cthChap2_boss(Camera *cam)
-{
-	G_minX -= G_minX > 0;
-	G_maxX = 320 - G_minX;
-	if (G_minX > 0)
-	{
-		fillRect(0, 0, G_minX, 240, 0);
-		fillRect(G_maxX, 0, 320 - G_maxX, 240, 0);
-	}
-}
-
-camera_travelling camTrav[] = { cthIntro1, cthChap1, cthIntro2, cthChap2, cthChap2_2, cthChap2_boss };
-
-// 
-// DrawingCandidates class
-// 
 
 DrawingCandidates::DrawingCandidates()
 {
 	candidatesCount = 0;
 	cam.absX = cam.absY = cam.relX = cam.relY = 0;
-	cameraPath = camTrav[0];
+	cameraPath = LUTs::camTraveling(LUTs::CamTravelingId::CameraPath_c1);
 }
 
 DrawingCandidates::~DrawingCandidates()
@@ -97,7 +42,8 @@ void DrawingCandidates::flush()
 	(cameraPath)(&cam);
 }
 
+// TODO : LUTs::CamTravelingId id
 void DrawingCandidates::loadCameraPath(int id)
 {
-	cameraPath = camTrav[id];
+	cameraPath = LUTs::camTraveling(static_cast<LUTs::CamTravelingId>(id));
 }
