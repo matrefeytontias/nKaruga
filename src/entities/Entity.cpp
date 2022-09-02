@@ -1,6 +1,5 @@
 #include "entities/Entity.hpp"
 
-#include "common.h"
 #include "helpers/math.hpp"
 #include "globals.h"
 #include "utils.hpp"

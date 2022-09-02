@@ -92,7 +92,6 @@ set(SOURCES ${SOURCES}
 # sfx
     src/sfx/list.h
 # TODO : get rid of these - misc
-    src/common.h
     src/globals.h
 )
 

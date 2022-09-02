@@ -67,13 +67,21 @@ bool collidePointRect(Fixed px, Fixed py, Fixed x, Fixed y, int w, int h)
 
 KeyEvent getk(void)
 {
-	static KeyEvent k;
-	k = isKeyPressed(G_pauseKey);
-	k <<= 4;
-	k |= (((((isKeyPressed(SDL_SCANCODE_ESCAPE) << 1) + isKeyPressed(G_fragmentKey)) << 1) + isKeyPressed(G_polarityKey)) << 1) + isKeyPressed(G_fireKey);
-	k <<= 4;
-	k |= (((((isKeyPressed(G_upKey) << 1) + isKeyPressed(G_rightKey)) << 1) + isKeyPressed(G_leftKey)) << 1) + isKeyPressed(G_downKey);
+#define setbit(pos, val) k |= val << pos
+	KeyEvent k = 0;
+
+	setbit(0, isKeyPressed(G_downKey));
+	setbit(1, isKeyPressed(G_leftKey));
+	setbit(2, isKeyPressed(G_rightKey));
+	setbit(3, isKeyPressed(G_upKey));
+	setbit(4, isKeyPressed(G_fireKey));
+	setbit(5, isKeyPressed(G_polarityKey));
+	setbit(6, isKeyPressed(G_fragmentKey));
+	setbit(7, isKeyPressed(SDL_SCANCODE_ESCAPE));
+	setbit(8, isKeyPressed(G_pauseKey));
+
 	return k;
+#undef setbit
 }
 
 int iToScreenX(int x, int camRelation)

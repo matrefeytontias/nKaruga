@@ -6,6 +6,7 @@
 #include "level/Level.hpp"
 #include "helpers/Constants.hpp"
 #include "helpers/math.hpp"
+#include "utils.hpp"
 
 Player::Player() : Entity()
 {
@@ -92,7 +93,7 @@ void Player::handle(KeyEvent kEv)
 		else
 			polarityRepeat = false;
 		
-		if(KPOWER(kEv))
+		if(KFRAGMENT(kEv))
 		{
 			if(G_power > 9)
 			{

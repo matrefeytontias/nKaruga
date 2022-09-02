@@ -2,7 +2,6 @@
 
 #include "n2DLib/n2DLib.hpp"
 
-#include "common.h"
 #include "globals.h"
 #include "utils.hpp"
 #include "graphics/ChainNotif.hpp"
@@ -128,6 +127,14 @@ int main(int argc, char **argv)
 	
 	G_particles = new Particles;
 	DC = new DrawingCandidates;
+
+	// TODO : move SoundHandler out of Level
+	// so this call can gtfo.
+	// In short, Level::init inits (among other things)
+	// the sound handler which inits SDL_mixer, which
+	// buildGameLUTs needs to load sound files.
+	// initBuffering only then initializes SDL.
+	// It's all pretty stupid really.
 
 	Level::init(1);
 	
@@ -269,6 +276,7 @@ void playGame()
 	int currentW = 0, currentH = 0, chapterNum = 0, dX = 0, dY = 0;
 	bool drawPowerSlot = true;
 	
+	// TODO : figure out if this should be here
 	Level::init(1);
 	
 	ChainNotif chainNotifsArray[Constants::MAX_ENEMY];
