@@ -134,7 +134,7 @@ const static int levelStream[] = {
 	cmd_wait(32),
 	enemy(0, 0, 1, LUTs::BaseImageId::ENEMY_SHIP_1_LIGHT, LUTs::EnemyPatternId::Pattern_1_2, Constants::LIGHT, 0, 2, Constants::EnemyType::ENEMY),
 	//cmd_killed,
-	cmd_waitAbs(21 * Constants::FPS), // aim at 21 seconds
+	cmd_waitAbs(21 * Constants::FPS + 45), // aim at 21.75 seconds
 	cmd_newWave,
 	cmd_startChapter(),
 	cmd_newCameraPath(LUTs::CamTravelingId::CameraPath_c1),
