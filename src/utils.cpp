@@ -65,11 +65,6 @@ bool collidePointRect(Fixed px, Fixed py, Fixed x, Fixed y, int w, int h)
 	return px >= x - itofix(w) / 2 && px < x + itofix(w) / 2 && py >= y - itofix(h) / 2 && py < y + itofix(h) / 2;
 }
 
-int isKeyPressed(t_key _k)
-{
-	return G_keys[_k];
-}
-
 KeyEvent getk(void)
 {
 	static KeyEvent k;

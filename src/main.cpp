@@ -36,8 +36,6 @@ t_key G_downKey, G_leftKey, G_rightKey, G_upKey, G_fireKey, G_polarityKey, G_fra
 DrawingCandidates *DC;
 Particles *G_particles;
 
-const t_key* G_keys;
-
 void playGame();
 
 static unsigned short image_cursor[] = { 5, 8, 1,

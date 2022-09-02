@@ -5,6 +5,8 @@
 #include "globals.h"
 #include "types.h"
 
+static volatile const t_key* keysArray;
+
 /*             *
  *  Buffering  *
  *             */
@@ -20,7 +22,7 @@ void initBuffering()
 {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 	
-	// This fixes the fullscreen/resize crash, see line 97
+	// This fixes the fullscreen/resize crash, see updateScreen
 	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 	
 	SDL_CreateWindowAndRenderer(320 * 2, 240 * 2, SDL_WINDOW_BORDERLESS, &sdlWindow, &sdlRenderer);
@@ -40,8 +42,9 @@ void initBuffering()
 	
 	baseFPS = SDL_GetTicks();
 	SDL_PumpEvents();
-	G_keys = SDL_GetKeyboardState(NULL);
+	keysArray = SDL_GetKeyboardState(NULL);
 }
+
 void toggleFullscreen()
 {
 	if(SDL_GetWindowFlags(sdlWindow) & SDL_WINDOW_MAXIMIZED)
@@ -89,12 +92,12 @@ void updateScreen()
 		*(unsigned int*)(pixels + di) = *(unsigned int*)(buf + di);
 	SDL_UnlockTexture(MAIN_SCREEN);
 	
-	if(G_keys[SDL_SCANCODE_F])
+	if(keysArray[SDL_SCANCODE_F])
 	{
 		if(!toggled)
 		{
 			toggled = 1;
-			toggleFullscreen(); // broken, bad SDL2 build ? 31/10/2016 : yes indeed, see line 23
+			toggleFullscreen(); // broken, bad SDL2 build ? 31/10/2016 : yes indeed, see initBuffering
 		}
 	}
 	else
@@ -108,7 +111,6 @@ void updateScreen()
 void updateKeys()
 {
 	SDL_PumpEvents();
-	G_keys = SDL_GetKeyboardState(NULL);
 }
 
 void deinitBuffering()
@@ -601,13 +603,15 @@ int stringWidth(const char* s)
  * Miscellaneous *
  *               */
 
+int isKeyPressed(t_key _k)
+{
+	return keysArray[_k];
+}
+
 void wait_no_key_pressed(t_key k)
 {
-	while (G_keys[k])
-	{
+	while (keysArray[k])
 		SDL_PumpEvents();
-		G_keys = SDL_GetKeyboardState(NULL);
-	}
 }
 
 int get_key_pressed(t_key* report)
@@ -615,7 +619,7 @@ int get_key_pressed(t_key* report)
 	int i;
 	for(i = 0; i < SDL_NUM_SCANCODES; i++)
 	{
-		if (G_keys[i])
+		if (keysArray[i])
 		{
 			if(report != NULL) *report = i;
 			return 1;

@@ -14,5 +14,3 @@ int iToScreenX(int x, int camRel);
 int iToScreenY(int y, int camRel);
 Fixed fToScreenX(Fixed x, int camRel);
 Fixed fToScreenY(Fixed y, int camRel);
-BossData createBossData(int bossID);
-int isKeyPressed(t_key);

@@ -77,6 +77,8 @@ typedef struct
 	boss_pccb* playerCollisionCallbacks;
 } BossData;
 
+BossData createBossData(int bossID);
+
 // The really big bad one
 class BossEnemy : public Entity
 {

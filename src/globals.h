@@ -20,7 +20,6 @@ extern bool G_usingArrows;
 extern bool G_fireback, G_hardMode;
 extern bool G_hasFiredOnce;
 extern int G_bossIntroChannel;
-extern const t_key* G_keys;
 
 // Custom keys
 extern t_key G_downKey, G_leftKey, G_rightKey, G_upKey, G_fireKey, G_polarityKey, G_fragmentKey, G_pauseKey;

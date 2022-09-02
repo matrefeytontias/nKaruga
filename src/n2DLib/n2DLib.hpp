@@ -14,6 +14,7 @@ void constrainFrameRate(int);
 void displayFrameRate();
 void updateScreen();
 void updateKeys();
+int isKeyPressed(t_key _k);
 void deinitBuffering();
 void timer_load(unsigned, Uint32);
 unsigned timer_read(unsigned);
