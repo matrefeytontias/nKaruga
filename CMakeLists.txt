@@ -28,7 +28,6 @@ set(SOURCES ${SOURCES}
     src/handlers/SoundHandler.hpp
 
     src/level/Level.hpp
-    src/level/level_cmds.h
 
     src/helpers/Constants.hpp
     src/helpers/Joint.hpp
@@ -69,6 +68,7 @@ set(SOURCES ${SOURCES}
 # TODO : refactor - Ad-hoc and data
     src/level/bossData.h
     src/level/cameras.h
+    src/level/level_cmds.h
     src/level/levels.h
     src/level/patterns.h
     src/main.cpp
