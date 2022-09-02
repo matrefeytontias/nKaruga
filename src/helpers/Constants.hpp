@@ -4,7 +4,6 @@
 #include <SDL2/SDL_mixer.h>
 
 #include "types.h"
-#include "helpers/math.hpp"
 
 struct Constants
 {
@@ -36,7 +35,8 @@ struct Constants
 	};
 
 	// /!\ Fixed-point value
-	static constexpr Fixed CAMERA_SPEED = itofix(1) / 3;
+	// One third in 24.8 fixed-point
+	static constexpr Fixed CAMERA_SPEED = 85;
 	// /!\ integer value
 	// TODO : make this fixed
 	static constexpr Fixed INV_CAMERA_SPEED = 3;

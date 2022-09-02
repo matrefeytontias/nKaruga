@@ -2,6 +2,7 @@
 
 #include "types.h"
 
+// TODO : move in Constants.hpp
 #define MAX_PARTICLE 1024
 #define PARTICLE_RADIUS 4
 

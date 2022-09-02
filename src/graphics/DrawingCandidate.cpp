@@ -1,7 +1,7 @@
 #include "graphics/DrawingCandidate.hpp"
 
 #include "utils.hpp"
-#include "n2DLib/n2DLib.hpp"
+#include "n2DLib/n2DLib.h"
 
 DrawingCandidate::DrawingCandidate()
 {

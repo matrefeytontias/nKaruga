@@ -5,7 +5,7 @@
 #include "types.h"
 #include "handlers/DrawingCandidates.hpp"
 #include "helpers/Joint.hpp"
-#include "helpers/math.hpp"
+#include "n2DLib/n2DLib_math.h"
 #include "level/Level.hpp"
 #include "globals.h"
 #include "utils.hpp"

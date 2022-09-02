@@ -1,30 +1,19 @@
 #pragma once
 
-#include <stdint.h>
+// Pull in types from n2DLib as well
+#include "n2DLib/n2DLib_types.h"
+
+typedef int16_t KeyEvent;
 
 class Enemy;
 class BackgroundScroller;
 struct Camera;
 
-// Single key presses
-typedef uint8_t t_key;
-
-// Keypress bitfields
-typedef uint32_t KeyEvent;
-
-// 24.8 fixed-point numbers
-typedef int32_t Fixed;
-
-typedef struct Rect
-{
-	int x, y, w, h;
-} Rect;
-
 // Enemy pattern, describing an enemy's behaviour.
-using enemy_pattern = void(*)(Enemy*);
+typedef void(*enemy_pattern)(Enemy*);
 // Background traveling, describing the way the background scrolls
 // through a level or a part of a level.
-using background_traveling = void(*)(BackgroundScroller*);
+typedef void(*background_traveling)(BackgroundScroller*);
 // Camera traveling, describing the camera's movement through
 // a level or part of a level.
-using camera_traveling = void(*)(Camera*);
+typedef void(*camera_traveling)(Camera*);

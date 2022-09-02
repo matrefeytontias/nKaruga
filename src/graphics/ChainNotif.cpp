@@ -1,6 +1,6 @@
 #include "graphics/ChainNotif.hpp"
 
-#include "n2DLib/n2DLib.hpp"
+#include "n2DLib/n2DLib.h"
 
 ChainNotif::ChainNotif() : Entity()
 {

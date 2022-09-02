@@ -1,9 +1,8 @@
-#include "n2DLib.hpp"
-#include "n2DLib_font.hpp"
+#include "n2DLib.h"
+#include "n2DLib_font.h"
+#include "n2DLib/n2DLib_math.h"
 
-#include "helpers/math.hpp"
-#include "globals.h"
-#include "types.h"
+#include <SDL2/SDL.h>
 
 static volatile const t_key* keysArray;
 
@@ -130,7 +129,7 @@ void deinitBuffering()
 
 Uint32 timerBase[MAX_TIMER], timerValue[MAX_TIMER];
 
-void timer_load(unsigned timer, Uint32 value) // milliseconds
+void timer_load(unsigned timer, unsigned int value) // milliseconds
 {
 	timerValue[timer] = value;
 	timerBase[timer] = SDL_GetTicks();

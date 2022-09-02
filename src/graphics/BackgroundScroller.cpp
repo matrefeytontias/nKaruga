@@ -1,7 +1,7 @@
 #include "graphics/BackgroundScroller.hpp"
 
-#include "helpers/math.hpp"
-#include "n2DLib/n2DLib.hpp"
+#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib_math.h"
 
 // TODO : LUTs::BgTravelingId bgTravelingId
 BackgroundScroller::BackgroundScroller(unsigned short *bg, Fixed _x, Fixed _y, Fixed sscale, Fixed dscale, int bgTravelingId) // x is left-top corner, y is center (ugly but purpose-built)

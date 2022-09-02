@@ -3,9 +3,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include <SDL2/SDL.h>
 
-#include "types.h"
+#include "n2DLib/n2DLib_types.h"
+
+// TODO : use sized types
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+struct SDL_Texture;
 
 #define MAX_TIMER 2
 
@@ -16,7 +25,7 @@ void updateScreen();
 void updateKeys();
 int isKeyPressed(t_key _k);
 void deinitBuffering();
-void timer_load(unsigned, Uint32);
+void timer_load(unsigned, unsigned int);
 unsigned timer_read(unsigned);
 void clearBufferB();
 void clearBufferW();
@@ -47,8 +56,12 @@ void wait_no_key_pressed(t_key);
 int get_key_pressed(t_key*);
 int isKey(t_key, t_key);
 
-unsigned short * loadBMP(const char*, unsigned short);
+unsigned short* loadBMP(const char*, unsigned short);
 
 #define BUFF_BYTES_SIZE (320*240*2)
-extern unsigned short *BUFF_BASE_ADDRESS;
-extern SDL_Texture *MAIN_SCREEN;
+extern unsigned short* BUFF_BASE_ADDRESS;
+extern SDL_Texture* MAIN_SCREEN;
+
+#ifdef __cplusplus
+}
+#endif

@@ -3,7 +3,6 @@
 #include "utils.hpp"
 #include "level/Level.hpp"
 #include "helpers/Constants.hpp"
-#include "helpers/math.hpp"
 
 #define cb_args Enemy *e
 

@@ -3,7 +3,7 @@
 #include "globals.h"
 #include "utils.hpp"
 #include "helpers/Constants.hpp"
-#include "n2DLib/n2DLib.hpp"
+#include "n2DLib/n2DLib.h"
 
 DrawingCandidates::DrawingCandidates()
 {

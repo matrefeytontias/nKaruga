@@ -4,7 +4,7 @@
 #include "utils.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "helpers/Constants.hpp"
-#include "helpers/math.hpp"
+#include "n2DLib/n2DLib_math.h"
 
 Bullet::Bullet() : Entity()
 {

@@ -1,6 +1,6 @@
 #include <SDL2/SDL.h>
 
-#include "n2DLib/n2DLib.hpp"
+#include "n2DLib/n2DLib.h"
 
 #include "globals.h"
 #include "utils.hpp"
@@ -8,12 +8,12 @@
 #include "graphics/ExplosionEffect.hpp"
 #include "graphics/Particles.hpp"
 #include "handlers/DrawingCandidates.hpp"
-#include "helpers/math.hpp"
+#include "helpers/Constants.hpp"
 #include "level/Level.hpp"
 #include "menu/Menu.hpp"
+#include "n2DLib/n2DLib_math.h"
 
 #include "gfx/kanji.h"
-#include "helpers/Constants.hpp"
 
 #define ENEMY_W(i) Level::enemiesArray->data[i].img[0]
 #define ENEMY_H(i) Level::enemiesArray->data[i].img[1]

@@ -2,8 +2,8 @@
 
 #include <cstdlib>
 
-#include "helpers/math.hpp"
-#include "n2DLib/n2DLib.hpp"
+#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib_math.h"
 
 typedef struct
 {

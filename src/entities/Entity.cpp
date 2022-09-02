@@ -1,8 +1,8 @@
 #include "entities/Entity.hpp"
 
-#include "helpers/math.hpp"
 #include "globals.h"
 #include "utils.hpp"
+#include "n2DLib/n2DLib_math.h"
 
 Entity::Entity()
 {

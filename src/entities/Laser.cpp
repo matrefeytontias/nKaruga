@@ -6,8 +6,8 @@
 #include "entities/Enemy.hpp"
 #include "graphics/Particles.hpp"
 #include "helpers/Constants.hpp"
-#include "helpers/math.hpp"
-#include "n2DLib/n2DLib.hpp"
+#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib_math.h"
 
 Laser::Laser() : Bullet()
 {

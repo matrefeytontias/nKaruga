@@ -3,9 +3,9 @@
 #include "globals.h"
 #include "utils.hpp"
 #include "handlers/DrawingCandidates.hpp"
-#include "level/Level.hpp"
 #include "helpers/Constants.hpp"
-#include "helpers/math.hpp"
+#include "level/Level.hpp"
+#include "n2DLib/n2DLib_math.h"
 
 PowerFragment::PowerFragment() : Bullet()
 {

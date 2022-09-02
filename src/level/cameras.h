@@ -5,8 +5,8 @@
 #include "utils.hpp"
 #include "graphics/BackgroundScroller.hpp"
 #include "graphics/Camera.hpp"
-#include "helpers/math.hpp"
-#include "n2DLib/n2DLib.hpp"
+#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib_math.h"
 
 // Camera travelings
 

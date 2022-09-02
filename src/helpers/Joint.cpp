@@ -1,9 +1,9 @@
 #include "helpers/Joint.hpp"
 
-#include "helpers/math.hpp"
 #include "entities/BossEnemy.hpp"
 #include "entities/Enemy.hpp"
 #include "entities/Entity.hpp"
+#include "n2DLib/n2DLib_math.h"
 
 Joint::Joint()
 {

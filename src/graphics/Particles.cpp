@@ -2,8 +2,8 @@
 
 #include "globals.h"
 #include "helpers/Constants.hpp"
-#include "helpers/math.hpp"
-#include "n2DLib/n2DLib.hpp"
+#include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib_math.h"
 
 Particles::Particles()
 {

@@ -32,7 +32,6 @@ set(SOURCES ${SOURCES}
 
     src/helpers/Constants.hpp
     src/helpers/Joint.hpp
-    src/helpers/math.hpp
 
     src/menu/Menu.hpp
 
@@ -64,7 +63,6 @@ set(SOURCES ${SOURCES}
 
     src/helpers/Constants.cpp
     src/helpers/Joint.cpp
-    src/helpers/math.cpp
 
     src/menu/Menu.cpp
 
@@ -78,9 +76,12 @@ set(SOURCES ${SOURCES}
     src/utils.hpp
     src/utils.cpp
 # n2DLib
-    src/n2DLib/n2DLib.hpp
-    src/n2DLib/n2DLib.cpp
-    src/n2DLib/n2DLib_font.hpp
+    src/n2DLib/n2DLib.h
+    src/n2DLib/n2DLib.c
+    src/n2DLib/n2DLib_font.h
+    src/n2DLib/n2DLib_math.h
+    src/n2DLib/n2DLib_math.c
+    src/n2DLib/n2DLib_types.h
 # TODO : get rid of these - gfx
     src/gfx/bg.h
     src/gfx/bossgfx.h
