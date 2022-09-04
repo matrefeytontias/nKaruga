@@ -177,7 +177,7 @@ void BulletArray::handle()
 				{
 					// Create a placeholder bullet to pass to the collision callback
 					Bullet temp;
-					temp.activate(cf->getx(), cf->gety(), 0, 0, 0, cf->getPolarity(), false, static_cast<int>(Constants::CamRelation::DEFAULT));
+					temp.activate(cf->getx(), cf->gety(), 0, 0, LUTs::BaseImageId::DEFAULT, cf->getPolarity(), false, static_cast<int>(Constants::CamRelation::DEFAULT));
 					bossDamaged = (Level::be->collisionCallbacks[Level::be->currentPattern])(Level::be, &temp, 10);
 					temp.deactivate();
 					if(bossDamaged)
@@ -332,7 +332,7 @@ void BulletArray::add(Fixed _x, Fixed _y, Fixed a, Fixed r, int imgId, bool _p, 
 {
 	if(bulletCount < Constants::MAX_BULLET)
 	{
-		data[bulletCount].activate(_x, _y, a, r, imgId, _p, _h, camRelation);
+		data[bulletCount].activate(_x, _y, a, r, static_cast<LUTs::BaseImageId>(imgId), _p, _h, camRelation);
 		bulletCount++;
 		// Only handle sound for on-screen enemy bullets
 		if (_h && _x >= 0 && _x <= itofix(320) && _y >= 0 && _y <= itofix(240))

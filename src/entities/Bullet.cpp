@@ -22,8 +22,7 @@ Rect* Bullet::makeRect()
 	return &r;
 }
 
-// TODO : LUTs::BaseImageId imgId
-void Bullet::activate(Fixed _x, Fixed _y, Fixed _a, Fixed _r, int imgId, bool _p, bool _h, int _camRel)
+void Bullet::activate(Fixed _x, Fixed _y, Fixed _a, Fixed _r, LUTs::BaseImageId imgId, bool _p, bool _h, int _camRel)
 {
 	active = true;
 	polarity = _p;
@@ -33,7 +32,7 @@ void Bullet::activate(Fixed _x, Fixed _y, Fixed _a, Fixed _r, int imgId, bool _p
 	y = _y;
 	dx = fixmul(fixcos(_a), _r);
 	dy = fixmul(fixsin(_a), _r);
-	img = LUTs::baseImage(static_cast<LUTs::BaseImageId>(imgId), _p ? 1 : 0);
+	img = LUTs::baseImage(imgId, _p ? 1 : 0);
 }
 
 bool Bullet::getPolarity()
