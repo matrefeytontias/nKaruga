@@ -77,21 +77,21 @@ Constants::CamRelation Entity::getCamRelation()
 	return camRelation;
 }
 
-// TODO : use float for everything angular
+// TODO : figure out fixed-point versions ? not sure it's worth it
 Fixed Entity::angleToEntity(Entity *e)
 {
 	int x1 = fToScreenX(getx(), getCamRelation()),
 		y1 = fToScreenY(gety(), getCamRelation()),
 		x2 = fToScreenX(e->getx(), e->getCamRelation()),
 		y2 = fToScreenY(e->gety(), e->getCamRelation());
-	return e->isActive() ? (Fixed)(atan2((double)(y2 - y1), (double)(x2 - x1)) * 128. / M_PI) & 0xff : -1;
+	return e->isActive() ? (Fixed)(atan2f((float)(y2 - y1), (float)(x2 - x1)) * 128.f / M_PI) & 0xff : -1;
 }
 
 Fixed Entity::angleToXY(Fixed x, Fixed y)
 {
 	int x1 = fToScreenX(getx(), getCamRelation()),
 		y1 = fToScreenY(gety(), getCamRelation());
-	return (Fixed)(atan2((double)(y - y1), (double)(x - x1)) * 128. / M_PI) & 0xff;
+	return (Fixed)(atan2f((float)(y - y1), (float)(x - x1)) * 128.f / M_PI) & 0xff;
 }
 
 Fixed Entity::distance2ToEntity(Entity *e)
