@@ -102,9 +102,8 @@ void Enemy::handle()
 
 #define SPAWN_DELAY 512
 
-// TODO : LUTs::EnemyPatternId patternId
 // TODO : Constants::EnemyType type
-void Enemy::activate(int _x, int _y, int _HP, LUTs::BaseImageId _shipImgId, int patternId, int _waveIndex, bool _polarity, bool _hasRotation, int _f, bool _ghost, int type)
+void Enemy::activate(int _x, int _y, int _HP, LUTs::BaseImageId _shipImgId, LUTs::EnemyPatternId patternId, int _waveIndex, bool _polarity, bool _hasRotation, int _f, bool _ghost, int type)
 {
 	maxHP = HP = _HP;
 	x = _x;
@@ -116,7 +115,7 @@ void Enemy::activate(int _x, int _y, int _HP, LUTs::BaseImageId _shipImgId, int 
 	polarity = _polarity;
 	hasRotation = _hasRotation;
 	rotationAngle = 0;
-	callback = LUTs::enemyPattern(static_cast<LUTs::EnemyPatternId>(patternId));
+	callback = LUTs::enemyPattern(patternId);
 	waveIndex = _waveIndex;
 	for(int i = 0; i < 6; i++)
 		internal[i] = 0;
