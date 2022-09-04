@@ -1,6 +1,6 @@
 #include "entities/Player.hpp"
 
-#include "globals.h"
+#include "GameSystems.hpp"
 #include "graphics/Particles.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "helpers/Constants.hpp"
@@ -47,11 +47,11 @@ void Player::handle(KeyEvent kEv)
 		r.x = fixtoi(x);
 		r.y = fixtoi(y);
 		
-		DC->add(img[((isSwitchingPolarity / 4) * 2) + polarity], &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
+		GS->DC->add(img[((isSwitchingPolarity / 4) * 2) + polarity], &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
 		
 		if(deathCounter)
 		{
-			DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_INVINCIBLE_LIGHT, polarity), &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
+			GS->DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_INVINCIBLE_LIGHT, polarity), &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
 			deathCounter--;
 		}
 		
@@ -78,7 +78,7 @@ void Player::handle(KeyEvent kEv)
 		temp.x = img[(isSwitchingPolarity / 8) * 2][0] / 2;
 		temp.y = img[(isSwitchingPolarity / 8) * 2][1] / 2;
 			
-		x = r.x < G_minX ? itofix(G_minX + temp.x) : (r.x > G_maxX - (temp.x * 2) ? itofix(G_maxX - temp.x) : x);
+		x = r.x < GS->minX ? itofix(GS->minX + temp.x) : (r.x > GS->maxX - (temp.x * 2) ? itofix(GS->maxX - temp.x) : x);
 		y = r.y < 0 ? itofix(temp.y) : (r.y > 240 - (temp.y * 2) ? itofix(240 - temp.y) : y);
 		
 		if(KPOLARITY(kEv))
@@ -95,13 +95,13 @@ void Player::handle(KeyEvent kEv)
 		
 		if(KFRAGMENT(kEv))
 		{
-			if(G_power > 9)
+			if(GS->power > 9)
 			{
 				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_FRAGMENT));
-				G_hasFiredOnce = true;
-				for(int i = 0; i < G_power / 10; i++)
+				GS->hasFiredOnce = true;
+				for(int i = 0; i < GS->power / 10; i++)
 					Level::bArray->add_fragment(x, y, 64 + ((i % 2) ? 10 + (i / 2) * 21 : -10 - (i / 2) * 21), this, polarity, false);
-				G_power = 0;
+				GS->power = 0;
 			}
 		}
 		
@@ -109,7 +109,7 @@ void Player::handle(KeyEvent kEv)
 		{
 			if(!fireDelay)
 			{
-				G_hasFiredOnce = true;
+				GS->hasFiredOnce = true;
 				if(fireRepeat)
 				{
 					// fire 2 bullets if the key is being held
@@ -120,8 +120,8 @@ void Player::handle(KeyEvent kEv)
 					int x2 = x + itofix(img[0][0]) / 4;
 					for(int i = 0; i < 8; i++)
 					{
-						G_particles->add(x1, y, 192 + (rand() % 32) - 16, itofix(2), polarity, 8);
-						G_particles->add(x2, y, 192 + (rand() % 32) - 16, itofix(2), polarity, 8);
+						GS->particles->add(x1, y, 192 + (rand() % 32) - 16, itofix(2), polarity, 8);
+						GS->particles->add(x2, y, 192 + (rand() % 32) - 16, itofix(2), polarity, 8);
 					}
 				}
 				else
@@ -131,7 +131,7 @@ void Player::handle(KeyEvent kEv)
 					fireDelay = 8;
 					fireRepeat = true;
 					for(int i = 0; i < 8; i++)
-						G_particles->add(x, y, 192 + (rand() % 32) - 16, itofix(2), polarity, 8);
+						GS->particles->add(x, y, 192 + (rand() % 32) - 16, itofix(2), polarity, 8);
 				}
 				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_PLAYER_BULLET));
 			}
@@ -151,11 +151,11 @@ void Player::handle(KeyEvent kEv)
 		{
 			r.x = fixtoi(x);
 			r.y = fixtoi(y);
-			DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_EXPLOSION_0, deathCounter), &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
+			GS->DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_EXPLOSION_0, deathCounter), &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
 			// Death animation
 			// Uses frameskipping as a counter
-			//if(!(G_skipFrame % 8))
-			if(!(G_gpTimer % 4))
+			//if(!(GS->skipFrame % 8))
+			if(!(GS->chapterTimer % 4))
 				deathCounter++;
 		}
 		else if(deathCounter == 12)
@@ -172,7 +172,7 @@ void Player::handle(KeyEvent kEv)
 		{
 			r.x = fixtoi(x);
 			r.y = fixtoi(y);
-			DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_LIGHT), &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
+			GS->DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_LIGHT), &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
 			y -= itofix(2);
 		}
 		else active = true;
@@ -194,10 +194,10 @@ void Player::hurt()
 	lives--;
 	active = false;
 	deathCounter = 0;
-	G_chainStatus = 0;
-	G_frameChainOffset = 0;
-	G_inChainCount = 0;
-	G_power = 0;
+	GS->chainStatus = 0;
+	GS->frameChainOffset = 0;
+	GS->inChainCount = 0;
+	GS->power = 0;
 	Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::PLAYER_DEATH));
 }
 

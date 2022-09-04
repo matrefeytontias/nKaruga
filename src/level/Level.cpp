@@ -119,12 +119,12 @@ void Level::advanceLevel()
 						counter++;
 						enemiesArray->resetEnemyCounter();
 						// Reset relative camera
-						DC->cam.relX = DC->cam.relY = 0;
+						GS->DC->cam.relX = GS->DC->cam.relY = 0;
 					}
 					else if (currentLevelByte == LVLSTR_NEWCAMERA)
 					{
 						// Follow a new camera path
-						DC->loadCameraPath(levelStream[++counter]);
+						GS->DC->loadCameraPath(levelStream[++counter]);
 						counter++;
 					}
 					else if (currentLevelByte == LVLSTR_WAIT)
@@ -135,8 +135,8 @@ void Level::advanceLevel()
 					}
 					else if (currentLevelByte == LVLSTR_WAITABS)
 					{
-						// Wait until G_gpTimer is above a certain value
-						if (G_gpTimer < levelStream[counter + 1])
+						// Wait until GS->chapterTimer is above a certain value
+						if (GS->chapterTimer < levelStream[counter + 1])
 							counter -= 2;
 						else
 							counter += 2;
@@ -144,7 +144,7 @@ void Level::advanceLevel()
 					else if (currentLevelByte == LVLSTR_WAITCAMERA)
 					{
 						// Wait until the absolute camera reaches a given point
-						if (DC->cam.absX == levelStream[counter + 1] && DC->cam.absY == levelStream[counter + 2])
+						if (GS->DC->cam.absX == levelStream[counter + 1] && GS->DC->cam.absY == levelStream[counter + 2])
 							counter += 3;
 						else
 							counter -= 2;
@@ -158,15 +158,15 @@ void Level::advanceLevel()
 					}
 					else if (currentLevelByte == LVLSTR_SKIPABS)
 					{
-						if (G_gpTimer > levelStream[++counter])
+						if (GS->chapterTimer > levelStream[++counter])
 							skipCommand = levelStream[counter + 1];
 						counter += 2;
 						continueParsing = true;
 					}
 					else if (currentLevelByte == LVLSTR_REPEATABS)
 					{
-						printf("Global timer : %d\n", G_gpTimer / Constants::FPS);
-						if (G_gpTimer < levelStream[counter + 1])
+						printf("Global timer : %d\n", GS->chapterTimer / Constants::FPS);
+						if (GS->chapterTimer < levelStream[counter + 1])
 						{
 							int amount = levelStream[counter + 2];
 							for(int i = 0; i < amount; i++)
@@ -209,18 +209,18 @@ void Level::advanceLevel()
 						enemiesArray->destroyAllEnemies();
 						bArray->clear();
 						// Reset everything chains-related
-						G_chainStatus = 0;
-						G_frameChainOffset = 0;
-						G_inChainCount = 0;
-						G_power = 0;
+						GS->chainStatus = 0;
+						GS->frameChainOffset = 0;
+						GS->inChainCount = 0;
+						GS->power = 0;
 						clearBufferB();
 						updateScreen();
 						SDL_Delay(1000);
 						counter++;
 						// Reset all camera position
-						DC->cam.absX = DC->cam.absY = DC->cam.relX = DC->cam.relY = 0;
+						GS->DC->cam.absX = GS->DC->cam.absY = GS->DC->cam.relX = GS->DC->cam.relY = 0;
 						// And here we go for a new chapter
-						G_gpTimer = 0;
+						GS->chapterTimer = 0;
 						reinit(chapterNum);
 						
 					}
@@ -230,7 +230,7 @@ void Level::advanceLevel()
 						// Set up transition
 						phase = Constants::GamePhase::TRANSITION;
 						currentW = 0;
-						G_gpTimer = 0;
+						GS->chapterTimer = 0;
 						counter++;
 					}
 					else if (currentLevelByte == LVLSTR_JOINT)
@@ -249,8 +249,8 @@ void Level::advanceLevel()
 						fightingBoss = true;
 						soundSystem->stopBgMusic();
 						phase = Constants::GamePhase::BOSSCINEMATIC;
-						G_bossIntroChannel = -2; // reinit the boss intro channel
-						G_gpTimer = 0;
+						GS->bossIntroChannel = -2; // reinit the boss intro channel
+						GS->chapterTimer = 0;
 						// fight boss
 						counter++;
 						BossData bossData = createBossData(levelStream[counter]);
@@ -261,7 +261,7 @@ void Level::advanceLevel()
 					{
 						// Debug stuff
 						printf("Current wave timer : %d\nGlobal timer : %d\nCurrent wave index : %d\n",
-							waveTimer, G_gpTimer, waveIndex);
+							waveTimer, GS->chapterTimer, waveIndex);
 						for (int i = 0; i < Constants::MAX_ENEMY; i++)
 						{
 							Enemy *e = &(enemiesArray->data[i]);
@@ -282,7 +282,7 @@ void Level::advanceLevel()
 				phase = Constants::GamePhase::RESULTS;
 				currentW = 0;
 				currentH = 0;
-				G_gpTimer = 0;
+				GS->chapterTimer = 0;
 				counter++;
 			}
 			else if(currentLevelByte == LVLSTR_END)
@@ -354,19 +354,19 @@ void Level::intro1()
 	}
 	else
 	{
-		if (G_gpTimer == currentW + 1) G_particles->pulse(p->getx(), p->gety(), p->getPolarity());
+		if (GS->chapterTimer == currentW + 1) GS->particles->pulse(p->getx(), p->gety(), p->getPolarity());
 		int x = 30;
 		int y = 60;
 		drawString(&x, &y, x, levelStrs[chapterNum], 0xffff, 0);
 		drawSprite(levelKanjis[chapterNum], 30, 80, 0, 0);
 	}
-	if(G_gpTimer > 384)
+	if(GS->chapterTimer > 384)
 	{
 		// Reset all camera position
-		DC->cam.absX = DC->cam.absY = DC->cam.relX = DC->cam.relY = 0;
+		GS->DC->cam.absX = GS->DC->cam.absY = GS->DC->cam.relX = GS->DC->cam.relY = 0;
 		phase = Constants::GamePhase::PLAY;
 	}
-	else if(G_gpTimer < TRANSLATE)
+	else if(GS->chapterTimer < TRANSLATE)
 	{
 		p->setx(p->getx() + dX);
 		p->sety(p->gety() + dY);
@@ -385,7 +385,7 @@ void Level::intro2()
 		rd1 = enemiesArray->add(itofix(320 + 83), itofix(120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_RIGHT), static_cast<int>(LUTs::EnemyPatternId::C2_RIGHT_DOOR), 0, Constants::LIGHT, false, 0, true, static_cast<int>(Constants::EnemyType::ENEMY));
 		rd2 = enemiesArray->add(itofix(320 + 83), itofix(-120), 1, static_cast<int>(LUTs::BaseImageId::DOOR_RIGHT), static_cast<int>(LUTs::EnemyPatternId::C2_RIGHT_DOOR), 0, Constants::LIGHT, false, 0, true, static_cast<int>(Constants::EnemyType::ENEMY));
 	}
-	else if(currentW >= 120 && G_gpTimer == currentW + 1)
+	else if(currentW >= 120 && GS->chapterTimer == currentW + 1)
 	{
 		ld1->internal[1] = itofix(8);
 		ld2->internal[1] = itofix(8);
@@ -399,7 +399,7 @@ void Level::intro2()
 	{
 		for(int i = 0; i < 4; i++)
 		{
-			G_particles->add(p->getx(), p->gety() + itofix(14), (rand() % 32) + 48, (rand() % itofix(2)) + itofix(2), p->getPolarity(), Constants::FPS);
+			GS->particles->add(p->getx(), p->gety() + itofix(14), (rand() % 32) + 48, (rand() % itofix(2)) + itofix(2), p->getPolarity(), Constants::FPS);
 		}
 	}
 }

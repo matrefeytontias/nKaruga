@@ -1,6 +1,6 @@
 #pragma once
 
-#include "globals.h"
+#include "GameSystems.hpp"
 #include "utils.hpp"
 #include "entities/BossEnemy.hpp"
 #include "graphics/ExplosionEffect.hpp"
@@ -188,47 +188,47 @@ void boss2_display(BossEnemy *be)
 	// [28] : wings image index
 
 	pos = getFullJointedPos(be, be->bodyImg, LUTs::bossImage(LUTs::BossImageId::BOSS2_RAILS), boss2_jointData, boss2_joint_rails);
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_RAILS), &pos, false, be->getCamRel());
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_RAILS), &pos, false, be->getCamRel());
 
 	pos = getJointPoint(be, boss2_jointData, boss2_joint_leftWing);
 	centerRot.x = pos.w;
 	centerRot.y = pos.h;
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_LEFTWING, be->getInternal(28)), &pos, &centerRot, be->getInternal(0), false, be->getCamRel());
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_LEFTWING, be->getInternal(28)), &pos, &centerRot, be->getInternal(0), false, be->getCamRel());
 	pos = getJointPoint(be, boss2_jointData, boss2_joint_rightWing);
 	centerRot.x = pos.w;
 	centerRot.y = pos.h;
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_RIGHTWING, be->getInternal(28)), &pos, &centerRot, be->getInternal(1), false, be->getCamRel());
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_RIGHTWING, be->getInternal(28)), &pos, &centerRot, be->getInternal(1), false, be->getCamRel());
 
 	pos = getJointPoint(be, boss2_jointData, boss2_joint_leftUpperArm);
 	pos.x = fixtoi(attached(boss2_ghost_leftUpperArm)->getx());
 	pos.y = fixtoi(attached(boss2_ghost_leftUpperArm)->gety());
 	centerRot.x = pos.w;
 	centerRot.y = pos.h;
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_LEFTUPPERARM), &pos, &centerRot, attached(boss2_ghost_leftUpperArm)->rotationAngle, false, be->getCamRel());
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_LEFTUPPERARM), &pos, &centerRot, attached(boss2_ghost_leftUpperArm)->rotationAngle, false, be->getCamRel());
 	pos = getJointPoint(be, boss2_jointData, boss2_joint_rightUpperArm);
 	pos.x = fixtoi(attached(boss2_ghost_rightUpperArm)->getx());
 	pos.y = fixtoi(attached(boss2_ghost_rightUpperArm)->gety());
 	centerRot.x = pos.w;
 	centerRot.y = pos.h;
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_RIGHTUPPERARM), &pos, &centerRot, attached(boss2_ghost_rightUpperArm)->rotationAngle, false, be->getCamRel());
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_RIGHTUPPERARM), &pos, &centerRot, attached(boss2_ghost_rightUpperArm)->rotationAngle, false, be->getCamRel());
 	
 	pos.x = fixtoi(attached(boss2_ghost_leftArm)->getx());
 	pos.y = fixtoi(attached(boss2_ghost_leftArm)->gety());
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_LEFTARM), &pos, false, be->getCamRel());
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_LEFTARM), &pos, false, be->getCamRel());
 	pos.x = fixtoi(attached(boss2_ghost_rightArm)->getx());
 	pos.y = fixtoi(attached(boss2_ghost_rightArm)->gety());
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_RIGHTARM), &pos, false, be->getCamRel());
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_RIGHTARM), &pos, false, be->getCamRel());
 
 	pos.x = fixtoi(attached(boss2_ghost_leftShield)->getx());
 	pos.y = fixtoi(attached(boss2_ghost_leftShield)->gety());
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_LEFTSHIELD), &pos, NULL, attached(boss2_ghost_leftShield)->rotationAngle, false, be->getCamRel());
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_LEFTSHIELD), &pos, NULL, attached(boss2_ghost_leftShield)->rotationAngle, false, be->getCamRel());
 	pos.x = fixtoi(attached(boss2_ghost_rightShield)->getx());
 	pos.y = fixtoi(attached(boss2_ghost_rightShield)->gety());
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_RIGHTSHIELD), &pos, NULL, attached(boss2_ghost_rightShield)->rotationAngle, false, be->getCamRel());
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_RIGHTSHIELD), &pos, NULL, attached(boss2_ghost_rightShield)->rotationAngle, false, be->getCamRel());
 
 	pos.x = fixtoi(be->getx());
 	pos.y = fixtoi(be->gety());
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_BODY), &pos, false, be->getCamRel());
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS2_BODY), &pos, false, be->getCamRel());
 }
 
 #undef attached
@@ -304,19 +304,19 @@ void boss1_icb1(BossEnemy *be)
 		}
 	}
 	Rect pos = { fixtoi(be->getx()), fixtoi(be->gety()), 0, 0 }, centerRot;
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_BODY), &pos, false, static_cast<int>(Constants::CamRelation::RELATIVE));
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_BODY), &pos, false, static_cast<int>(Constants::CamRelation::RELATIVE));
 	
 	pos = getJointPoint(be, boss1_jointData, boss1_joint_rightarm_armed1);
 	centerRot.x = pos.w;
 	centerRot.y = pos.h;
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_RIGHTARM_ARMED1), &pos, &centerRot, be->angle, false, static_cast<int>(Constants::CamRelation::RELATIVE));
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_RIGHTARM_ARMED1), &pos, &centerRot, be->angle, false, static_cast<int>(Constants::CamRelation::RELATIVE));
 	
 	// [1]: angle of sword [-32, 0]
 	pos = getJointPoint(be, boss1_jointData, boss1_joint_leftarm_armed);
 	rotate(pos.x, pos.y, fixtoi(be->getx()), fixtoi(be->gety()), be->angle, &pos);
 	centerRot.x = pos.w;
 	centerRot.y = pos.h;
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_LEFTARM_ARMED), &pos, &centerRot, be->getInternal(1) + be->angle, false, static_cast<int>(Constants::CamRelation::RELATIVE));
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_LEFTARM_ARMED), &pos, &centerRot, be->getInternal(1) + be->angle, false, static_cast<int>(Constants::CamRelation::RELATIVE));
 }
 
 void boss1_icb2(BossEnemy *be)
@@ -360,19 +360,19 @@ void boss1_icb2(BossEnemy *be)
 		
 	pos.x = fixtoi(be->getx());
 	pos.y = fixtoi(be->gety());
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_BODY), &pos, false, static_cast<int>(Constants::CamRelation::RELATIVE));
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_BODY), &pos, false, static_cast<int>(Constants::CamRelation::RELATIVE));
 	
 	pos = getJointPoint(be, boss1_jointData, be->currentPattern == 1 ? boss1_joint_rightarm_armed1 : boss1_joint_rightarm_nonarmed);
 	centerRot.x = pos.w;
 	centerRot.y = pos.h;
-	DC->add(LUTs::bossImage(be->currentPattern == 1 ? LUTs::BossImageId::BOSS1_RIGHTARM_ARMED1 : LUTs::BossImageId::BOSS1_RIGHTARM_NONARMED),
+	GS->DC->add(LUTs::bossImage(be->currentPattern == 1 ? LUTs::BossImageId::BOSS1_RIGHTARM_ARMED1 : LUTs::BossImageId::BOSS1_RIGHTARM_NONARMED),
 			&pos, &centerRot, be->angle, false, static_cast<int>(Constants::CamRelation::RELATIVE));
 	
 	pos = getJointPoint(be, boss1_jointData, boss1_joint_leftarm_nonarmed);
 	rotate(pos.x, pos.y, fixtoi(be->getx()), fixtoi(be->gety()), be->angle, &pos);
 	centerRot.x = pos.w;
 	centerRot.y = pos.h;
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_LEFTARM_NONARMED), &pos, &centerRot, be->angle, false, static_cast<int>(Constants::CamRelation::RELATIVE));
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_LEFTARM_NONARMED), &pos, &centerRot, be->angle, false, static_cast<int>(Constants::CamRelation::RELATIVE));
 }
 
 /**********
@@ -528,7 +528,7 @@ void boss1_cb(BossEnemy *be)
 	
 	pos.x = fixtoi(be->getx());
 	pos.y = fixtoi(be->gety());
-	DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_BODY), &pos, NULL, be->angle, be->currentPattern == 2 && be->flash, static_cast<int>(Constants::CamRelation::RELATIVE));
+	GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_BODY), &pos, NULL, be->angle, be->currentPattern == 2 && be->flash, static_cast<int>(Constants::CamRelation::RELATIVE));
 	
 	be->currentPattern = getPatternID(be);
 	if(be->currentPattern != be->lastPattern)
@@ -555,13 +555,13 @@ void boss1_cb(BossEnemy *be)
 		rotate(pos.x, pos.y, fixtoi(be->getx()), fixtoi(be->gety()), be->angle, &pos);
 		centerRot.x = pos.w;
 		centerRot.y = pos.h;
-		DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_RIGHTARM_ARMED1), &pos, &centerRot, be->angle, false, static_cast<int>(Constants::CamRelation::RELATIVE));
+		GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_RIGHTARM_ARMED1), &pos, &centerRot, be->angle, false, static_cast<int>(Constants::CamRelation::RELATIVE));
 		
 		pos = getJointPoint(be, boss1_jointData, boss1_joint_leftarm_armed);
 		rotate(pos.x, pos.y, fixtoi(be->getx()), fixtoi(be->gety()), be->angle, &pos);
 		centerRot.x = pos.w;
 		centerRot.y = pos.h;
-		DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_LEFTARM_ARMED), &pos, &centerRot, be->angle, be->flash, static_cast<int>(Constants::CamRelation::RELATIVE));
+		GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_LEFTARM_ARMED), &pos, &centerRot, be->angle, be->flash, static_cast<int>(Constants::CamRelation::RELATIVE));
 		
 		int timer = be->getInternal(0);
 		
@@ -599,13 +599,13 @@ void boss1_cb(BossEnemy *be)
 		rotate(pos.x, pos.y, fixtoi(be->getx()), fixtoi(be->gety()), be->angle, &pos);
 		centerRot.x = pos.w;
 		centerRot.y = pos.h;
-		DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_LEFTARM_NONARMED), &pos, &centerRot, be->angle, false, static_cast<int>(Constants::CamRelation::RELATIVE));
+		GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_LEFTARM_NONARMED), &pos, &centerRot, be->angle, false, static_cast<int>(Constants::CamRelation::RELATIVE));
 		
 		pos = getJointPoint(be, boss1_jointData, boss1_joint_rightarm_armed2);
 		rotate(pos.x, pos.y, fixtoi(be->getx()), fixtoi(be->gety()), be->angle, &pos);
 		centerRot.x = pos.w;
 		centerRot.y = pos.h;
-		DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_RIGHTARM_ARMED2), &pos, &centerRot, be->angle, be->flash, static_cast<int>(Constants::CamRelation::RELATIVE));
+		GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_RIGHTARM_ARMED2), &pos, &centerRot, be->angle, be->flash, static_cast<int>(Constants::CamRelation::RELATIVE));
 		
 		int timer = be->getInternal(0);
 		
@@ -644,13 +644,13 @@ void boss1_cb(BossEnemy *be)
 		pos = getJointPoint(be, boss1_jointData, boss1_joint_leftarm_nonarmed);
 		centerRot.x = pos.w;
 		centerRot.y = pos.h;
-		DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_LEFTARM_NONARMED), &pos, &centerRot, be->getInternal(2), false, static_cast<int>(Constants::CamRelation::RELATIVE));
+		GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_LEFTARM_NONARMED), &pos, &centerRot, be->getInternal(2), false, static_cast<int>(Constants::CamRelation::RELATIVE));
 		
 		pos = getJointPoint(be, boss1_jointData, boss1_joint_rightarm_nonarmed);
 		rotate(pos.x, pos.y, fixtoi(be->getx()), fixtoi(be->gety()), be->angle, &pos);
 		centerRot.x = pos.w;
 		centerRot.y = pos.h;
-		DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_RIGHTARM_NONARMED), &pos, &centerRot, be->getInternal(3), false, static_cast<int>(Constants::CamRelation::RELATIVE));
+		GS->DC->add(LUTs::bossImage(LUTs::BossImageId::BOSS1_RIGHTARM_NONARMED), &pos, &centerRot, be->getInternal(3), false, static_cast<int>(Constants::CamRelation::RELATIVE));
 		
 		be->incInternal(0);
 		
@@ -713,14 +713,14 @@ void boss2_cb(BossEnemy *be)
 	s = attached(boss2_ghost_rightShield); w = attached(boss2_ghost_rightWeakPoint);
 	w->damageable = !collidePointRect(w->getx(), w->gety(), s->getx(), s->gety(), s->img[0], s->img[1]);
 	
-	if (!(G_gpTimer % MOVE_DELAY))
+	if (!(GS->chapterTimer % MOVE_DELAY))
 		be->incInternal(30);
 
 	// Continuously fire bullets from the two top points (21, 54) and (118, 55)
 	Fixed ox = itofix(be->bodyImg[0] / 2 - 21), oy = itofix(-be->bodyImg[1] / 2 + 54);
-	if (!(G_gpTimer % 20))
+	if (!(GS->chapterTimer % 20))
 		Level::bArray->add(be->getx() - ox, be->gety() + oy, 128 + Level::p->angleToXY(be->getx() - ox, be->gety() + oy) + ((rand() % 32) - 16), 192, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT), Constants::LIGHT, true, be->getCamRel());
-	else if (!((G_gpTimer + 10) % 20))
+	else if (!((GS->chapterTimer + 10) % 20))
 		Level::bArray->add(be->getx() + ox, be->gety() + oy, 128 + Level::p->angleToXY(be->getx() + ox, be->gety() + oy) + ((rand() % 32) - 16), 192, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT), Constants::SHADOW, true, be->getCamRel());
 
 	/* Pattern handling
@@ -878,7 +878,7 @@ void boss2_cb(BossEnemy *be)
 			be->incInternal(31);
 		break;
 	case 8:
-		if (be->getInternal(28) < 4 && !(G_gpTimer % 8)) be->incInternal(28);
+		if (be->getInternal(28) < 4 && !(GS->chapterTimer % 8)) be->incInternal(28);
 		if (be->waitFrames(128))
 		{
 			be->setInternal(2, 0);
@@ -890,7 +890,7 @@ void boss2_cb(BossEnemy *be)
 		if (be->getInternal(4) < 4)
 		{
 			bool oddWave = be->getInternal(4) & 1;
-			if (!(G_gpTimer % 6))
+			if (!(GS->chapterTimer % 6))
 			{
 				if (be->getInternal(2) < 6)
 				{
@@ -942,7 +942,7 @@ void boss2_cb(BossEnemy *be)
 		}
 		break;
 	case 11:
-		if (!(G_gpTimer % 6))
+		if (!(GS->chapterTimer % 6))
 		{
 			if (be->getInternal(2) < 8)
 			{
@@ -965,7 +965,7 @@ void boss2_cb(BossEnemy *be)
 			}
 			else
 			{
-				if (be->getInternal(28) > 0 && !(G_gpTimer % 8)) be->decInternal(28);
+				if (be->getInternal(28) > 0 && !(GS->chapterTimer % 8)) be->decInternal(28);
 				if (be->waitFrames(128))
 				{
 					be->setInternal(2, 0);
@@ -1016,7 +1016,7 @@ int boss1_ccb1(BossEnemy *be, Bullet *b, int amount)
 	if(box.x <= fixtoi(b->getx()) && box.x + box.w >= fixtoi(b->getx()) &&
 		box.y <= fixtoi(b->gety()) && box.y + box.h >= fixtoi(b->gety()))
 	{
-		G_score += b->getPolarity() == Constants::SHADOW ? Constants::SCORE_HIT_OP : Constants::SCORE_HIT;
+		GS->score += b->getPolarity() == Constants::SHADOW ? Constants::SCORE_HIT_OP : Constants::SCORE_HIT;
 		return ((b->getPolarity() == Constants::SHADOW) + 1) * amount;
 	}
 	return 0;
@@ -1034,7 +1034,7 @@ int boss1_ccb2(BossEnemy *be, Bullet *b, int amount)
 	if(box.x <= fixtoi(b->getx()) && box.x + box.w >= fixtoi(b->getx()) &&
 		box.y <= fixtoi(b->gety()) && box.y + box.h >= fixtoi(b->gety()))
 	{
-		G_score += b->getPolarity() == Constants::LIGHT ? Constants::SCORE_HIT_OP : Constants::SCORE_HIT;
+		GS->score += b->getPolarity() == Constants::LIGHT ? Constants::SCORE_HIT_OP : Constants::SCORE_HIT;
 		return ((b->getPolarity() == Constants::LIGHT) + 1) * amount;
 	}
 	return 0;
@@ -1048,7 +1048,7 @@ int boss1_ccb3(BossEnemy *be, Bullet *b, int amount)
 	if(be->getx() - itofix(img[0]) / 2 <= b->getx() && be->getx() + itofix(img[0]) / 2 >= b->getx() &&
 		be->gety() - itofix(img[1]) / 2 <= b->gety() && be->gety() + itofix(img[1]) / 2 >= b->gety())
 	{
-		G_score += b->getPolarity() == Constants::SHADOW ? Constants::SCORE_HIT_OP : Constants::SCORE_HIT;
+		GS->score += b->getPolarity() == Constants::SHADOW ? Constants::SCORE_HIT_OP : Constants::SCORE_HIT;
 		return ((b->getPolarity() == Constants::SHADOW) + 1) * amount;
 	}
 	return 0;

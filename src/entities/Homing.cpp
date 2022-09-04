@@ -1,6 +1,6 @@
 #include "entities/Homing.hpp"
 
-#include "globals.h"
+#include "GameSystems.hpp"
 #include "entities/Player.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "helpers/Constants.hpp"
@@ -72,7 +72,7 @@ void Homing::draw()
 	r.y = fixtoi(y);
 	
 	// TODO : cache image in `activate` as polarity doesn't change during lifetime
-	DC->add(LUTs::baseImage(polarity ? LUTs::BaseImageId::ENEMY_HOMING_BULLET_SHADOW : LUTs::BaseImageId::ENEMY_HOMING_BULLET_LIGHT), &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
+	GS->DC->add(LUTs::baseImage(polarity ? LUTs::BaseImageId::ENEMY_HOMING_BULLET_SHADOW : LUTs::BaseImageId::ENEMY_HOMING_BULLET_LIGHT), &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
 	
 	for(int i = 0; i < HOMING_TRAILING; i++)
 	{

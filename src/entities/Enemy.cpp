@@ -7,7 +7,7 @@
 #include "helpers/Joint.hpp"
 #include "n2DLib/n2DLib_math.h"
 #include "level/Level.hpp"
-#include "globals.h"
+#include "GameSystems.hpp"
 #include "utils.hpp"
 
 Enemy::Enemy() : Entity()
@@ -74,11 +74,11 @@ void Enemy::handle()
 				// then the enemy image
 				if(hasRotation)
 				{
-					DC->add(img, &er, NULL, rotationAngle, flash, getCamRel());
+					GS->DC->add(img, &er, NULL, rotationAngle, flash, getCamRel());
 				}
 				else
 				{
-					DC->add(img, &er, flash, getCamRel());
+					GS->DC->add(img, &er, flash, getCamRel());
 				}
 				flash = false;
 			}
@@ -144,9 +144,9 @@ bool Enemy::damage(bool _pol, int amount)
 		if (HP <= 0)
 		{
 			Level::soundSystem->quickPlaySFX(LUTs::sound(maxHP > 20 ? LUTs::SoundId::ENEMY_EXP_BIG : LUTs::SoundId::ENEMY_EXP_SMALL));
-			if (G_fireback)
+			if (GP->fireback)
 			{
-				if (_pol == polarity || G_hardMode)
+				if (_pol == polarity || GP->hardMode)
 				{
 					Fixed angle = angleToEntity(Level::p);
 					int famount = _pol != polarity ? fireback / 2 : fireback;
@@ -309,7 +309,7 @@ void Enemy::beAbox()
 	y += dy;
 
 	// Shooting boxes
-	if (!(G_gpTimer % 16))
+	if (!(GS->chapterTimer % 16))
 	{
 		Fixed r = itofix(1);
 		if (internal[0] & 1)
@@ -357,7 +357,7 @@ void Enemy::beAbox()
 		internal[5] = 1;
 	}
 
-	if (!(G_gpTimer % 3))
+	if (!(GS->chapterTimer % 3))
 	{
 		internal[4]++;
 		internal[4] %= 6;

@@ -2,7 +2,7 @@
 
 #include "n2DLib/n2DLib.h"
 
-#include "globals.h"
+#include "GameSystems.hpp"
 #include "utils.hpp"
 #include "graphics/ChainNotif.hpp"
 #include "graphics/ExplosionEffect.hpp"
@@ -14,26 +14,6 @@
 #include "n2DLib/n2DLib_math.h"
 
 #include "gfx/kanji.h"
-
-#define ENEMY_W(i) Level::enemiesArray->data[i].img[0]
-#define ENEMY_H(i) Level::enemiesArray->data[i].img[1]
-
-int G_gpTimer;
-int G_minX = 0, G_maxX = 320;
-int G_skipFrame = 0;
-int G_killedThisFrame[Constants::MAX_ENEMY], G_frameChainOffset = 0, G_chainStatus = 0, G_inChainCount = 0, G_maxChain = 0;
-int G_score = 0, G_power = 0;
-bool G_displayBg = true, G_fireback = true, G_hardMode = false;
-bool G_hasFiredOnce = false;
-bool G_runBoss = false;
-int G_bossIntroChannel = -2;
-int G_difficulty = 1;
-bool G_usingArrows = false;
-
-t_key G_downKey, G_leftKey, G_rightKey, G_upKey, G_fireKey, G_polarityKey, G_fragmentKey, G_pauseKey;
-
-DrawingCandidates *DC;
-Particles *G_particles;
 
 void playGame();
 
@@ -60,51 +40,73 @@ inline void readKeyFromConfig(FILE* in, t_key* key)
 
 inline void writeToConfig(FILE* out)
 {
-	writeKeyToConfig(out, &G_fireKey);
-	writeKeyToConfig(out, &G_polarityKey);
-	writeKeyToConfig(out, &G_fragmentKey);
-	writeKeyToConfig(out, &G_pauseKey);
-	fputc(G_difficulty, out);
-	fputc(G_usingArrows, out);
-	fputc(G_displayBg, out);
+	writeKeyToConfig(out, &GP->keys.fire);
+	writeKeyToConfig(out, &GP->keys.polarity);
+	writeKeyToConfig(out, &GP->keys.fragment);
+	writeKeyToConfig(out, &GP->keys.pause);
+	fputc(static_cast<int>(GP->difficulty), out);
+	fputc(GP->usingArrows, out);
+	fputc(GP->displayBg, out);
 }
 
 inline void readFromConfig(FILE* in)
 {
-	readKeyFromConfig(in, &G_fireKey);
-	readKeyFromConfig(in, &G_polarityKey);
-	readKeyFromConfig(in, &G_fragmentKey);
-	readKeyFromConfig(in, &G_pauseKey);
-	G_difficulty = fgetc(in);
-	G_usingArrows = !!fgetc(in);
-	if (G_usingArrows)
+	readKeyFromConfig(in, &GP->keys.fire);
+	readKeyFromConfig(in, &GP->keys.polarity);
+	readKeyFromConfig(in, &GP->keys.fragment);
+	readKeyFromConfig(in, &GP->keys.pause);
+	GP->difficulty = static_cast<Constants::DifficultySetting>(fgetc(in));
+	GP->usingArrows = !!fgetc(in);
+	if (GP->usingArrows)
 	{
-		G_downKey = SDL_SCANCODE_DOWN;
-		G_leftKey = SDL_SCANCODE_LEFT;
-		G_rightKey = SDL_SCANCODE_RIGHT;
-		G_upKey = SDL_SCANCODE_UP;
+		GP->keys.down = SDL_SCANCODE_DOWN;
+		GP->keys.left = SDL_SCANCODE_LEFT;
+		GP->keys.right = SDL_SCANCODE_RIGHT;
+		GP->keys.up = SDL_SCANCODE_UP;
 	}
 	else
 	{
-		G_downKey = SDL_SCANCODE_S;
-		G_leftKey = SDL_SCANCODE_A;
-		G_rightKey = SDL_SCANCODE_D;
-		G_upKey = SDL_SCANCODE_W;
+		GP->keys.down = SDL_SCANCODE_S;
+		GP->keys.left = SDL_SCANCODE_A;
+		GP->keys.right = SDL_SCANCODE_D;
+		GP->keys.up = SDL_SCANCODE_W;
 	}
-	G_displayBg = !!fgetc(in);
+	GP->displayBg = !!fgetc(in);
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	UNUSED(argc);
 	UNUSED(argv);
 
+	// Init things
+	// TODO : make things order-independent as right now they are not,
+	// or at least throw when something is not right.
+
+	// TODO : move SoundHandler out of Level
+	// so this call can gtfo.
+	// In short, Level::init inits (among other things)
+	// the sound handler which inits SDL_mixer, which
+	// buildGameLUTs needs to load sound files.
+	// initBuffering only then initializes SDL.
+	// It is also called later when the LUTs are
+	// loaded so it can load images and whatnot.
+	// It's all pretty stupid really.
+	Level::init(1);
+
+	initBuffering();
+	printf("Building game LUTs ...\n");
+	LUTs::buildGameLUTs();
+	printf("Done\n");
+	GameParameters::init();
+	GameSystems::init();
+	initExplosionEngine();
+
 	int blink = 0;
 	bool donePlaying = false, openedMenu = false;
-	G_usingArrows = false;
 	FILE* configFile;
 	// Custom keys vars
-	t_key* customKeys[Constants::KEYS_TO_BIND] = { &G_fireKey, &G_polarityKey, &G_fragmentKey, &G_pauseKey };
+	t_key* customKeys = &GP->keys.fire;
 	int choice = 0;
 	
 	configFile = fopen(Constants::CONFIG_FILENAME, "rb");
@@ -115,40 +117,20 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		G_fireKey = SDL_SCANCODE_I;
-		G_polarityKey = SDL_SCANCODE_O;
-		G_fragmentKey = SDL_SCANCODE_P;
-		G_pauseKey = SDL_SCANCODE_M;
-		G_downKey = SDL_SCANCODE_S;
-		G_leftKey = SDL_SCANCODE_A;
-		G_rightKey = SDL_SCANCODE_D;
-		G_upKey = SDL_SCANCODE_W;
+		GP->keys.fire = SDL_SCANCODE_I;
+		GP->keys.polarity = SDL_SCANCODE_O;
+		GP->keys.fragment = SDL_SCANCODE_P;
+		GP->keys.pause = SDL_SCANCODE_M;
+		GP->keys.down = SDL_SCANCODE_S;
+		GP->keys.left = SDL_SCANCODE_A;
+		GP->keys.right = SDL_SCANCODE_D;
+		GP->keys.up = SDL_SCANCODE_W;
 	}
-	
-	G_particles = new Particles;
-	DC = new DrawingCandidates;
-
-	// TODO : move SoundHandler out of Level
-	// so this call can gtfo.
-	// In short, Level::init inits (among other things)
-	// the sound handler which inits SDL_mixer, which
-	// buildGameLUTs needs to load sound files.
-	// initBuffering only then initializes SDL.
-	// It's all pretty stupid really.
-
-	Level::init(1);
 	
 	// Mix_Volume(-1, 0);
 	// Mix_VolumeMusic(0);
 	
-	printf("Building game LUTs ...\n");
-	LUTs::buildGameLUTs();
-	printf("Done\n");
-	
-	// Init things
-	initBuffering();
 	clearBufferW();
-	initExplosionEngine();
 	timer_load(1, 0);
 
 	while(!donePlaying)
@@ -171,7 +153,11 @@ int main(int argc, char **argv)
 		}
 		else if(openedMenu)
 		{
-			void* v[] = { NULL, &G_difficulty, &G_usingArrows, NULL };
+			void* v[4]; // = { NULL, &GP->difficulty, &GP->usingArrows, NULL };
+			v[0] = NULL;
+			v[1] = &GP->difficulty;
+			v[2] = &GP->usingArrows;
+			v[3] = NULL;
 			MenuItem items[Constants::TITLE_OPTIONS];
 			for (int i = 0; i < Constants::TITLE_OPTIONS; i++)
 			{
@@ -198,8 +184,8 @@ int main(int argc, char **argv)
 				{
 					drawString(&x, &y, 0, Constants::KEYBINDINGS_NAMES[i], 0xffff, 0);
 					updateScreen();
-					while (!get_key_pressed(customKeys[i])) updateKeys();
-					wait_no_key_pressed(*(customKeys[i]));
+					while (!get_key_pressed(customKeys + i)) updateKeys();
+					wait_no_key_pressed(customKeys[i]);
 				}
 				configFile = fopen(Constants::CONFIG_FILENAME, "wb");
 				if (configFile)
@@ -222,8 +208,8 @@ int main(int argc, char **argv)
 				clearBufferB();
 				updateScreen();
 				SDL_Delay(1000);
-				G_fireback = G_difficulty > 0;
-				G_hardMode = G_difficulty == 2;
+				GP->hardMode = GP->difficulty == Constants::DifficultySetting::HARD;
+				GP->fireback = GP->difficulty == Constants::DifficultySetting::NORMAL || GP->hardMode;
 				playGame();
 				openedMenu = false;
 			}
@@ -237,8 +223,6 @@ int main(int argc, char **argv)
 	LUTs::freeGameLUTs();
 
 	// delete Level::soundSystem;
-	delete G_particles;
-	delete DC;
 	
 	deinitExplosionEngine();
 	deinitBuffering();
@@ -253,10 +237,10 @@ void musicFaded()
 
 void bossIntroDone(int channel)
 {
-	if (channel == G_bossIntroChannel)
+	if (channel == GS->bossIntroChannel)
 	{
-		if (G_runBoss) Level::phase = Constants::GamePhase::BOSSFIGHT;
-		G_runBoss = false;
+		if (GS->runBoss) Level::phase = Constants::GamePhase::BOSSFIGHT;
+		GS->runBoss = false;
 	}
 }
 
@@ -265,56 +249,56 @@ void playGame()
 	KeyEvent kEv = 0;
 	int pauseTimer = 0;
 	int x = 0, y = 0;
-	
+
 	Rect statsRect;
 	int chainColor[3] = { 0 };
-	
+
 	// Game phase
 	int bossBonus = 0;
-	
+
 	// Variables for transition animation
 	int currentW = 0, currentH = 0, chapterNum = 0, dX = 0, dY = 0;
 	bool drawPowerSlot = true;
-	
+
 	// TODO : figure out if this should be here
 	Level::init(1);
-	
+
 	ChainNotif chainNotifsArray[Constants::MAX_ENEMY];
 	int currentNotif;
-	
+
 	Level::p->setx(itofix(160));
 	Level::p->sety(itofix(180));
-	
+
 	// Reset the level stream
 	Level::counter = 0;
 	// Level::counter = 2619; // DBG : start at level 2
 	pauseTimer = 0;
-	G_hasFiredOnce = false;
-	
-	G_runBoss = false;
-	
-	for(int i = 0; i < Constants::MAX_ENEMY; i++)
+	GS->hasFiredOnce = false;
+
+	GS->runBoss = false;
+
+	for (int i = 0; i < Constants::MAX_ENEMY; i++)
 	{
 		Level::enemiesArray->data[i].deactivate();
-		G_killedThisFrame[i] = -1;
+		GS->killedThisFrame[i] = -1;
 	}
 	
-	G_score = 0;
-	G_power = Constants::MAX_STORED_POWER;
+	GS->score = 0;
+	GS->power = Constants::MAX_STORED_POWER;
 	for(int i = 0; i < 3; i++)
 		chainColor[i] = 0;
-	G_chainStatus = 0;
-	G_frameChainOffset = 0;
+	GS->chainStatus = 0;
+	GS->frameChainOffset = 0;
 	
-	G_inChainCount = 0;
+	GS->inChainCount = 0;
 	currentNotif = 0;
-	G_gpTimer = 0;
-	G_minX = 0;
-	G_maxX = 320;
+	GS->chapterTimer = 0;
+	GS->minX = 0;
+	GS->maxX = 320;
 
 	while(!KQUIT(kEv) && !Level::gameEnded)
 	{
-		G_gpTimer++;
+		GS->chapterTimer++;
 		Level::waveTimer++;
 		
 		Level::enemiesArray->handle();
@@ -330,7 +314,7 @@ void playGame()
 		Level::bArray->handle();
 		
 		// Draw everything that has to be drawn
-		DC->flush();
+		GS->DC->flush();
 		// Update sound system
 		Level::soundSystem->update();
 		
@@ -353,12 +337,12 @@ void playGame()
 		
 		if (Level::fightingBoss)
 		{
-			if (Level::phase == Constants::GamePhase::BOSSCINEMATIC && G_bossIntroChannel == -2)
+			if (Level::phase == Constants::GamePhase::BOSSCINEMATIC && GS->bossIntroChannel == -2)
 			{
-				G_bossIntroChannel = Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BOSS_ALERT));
+				GS->bossIntroChannel = Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BOSS_ALERT));
 				Mix_ChannelFinished(bossIntroDone);
-				G_runBoss = true;
-				if (G_bossIntroChannel == -1)
+				GS->runBoss = true;
+				if (GS->bossIntroChannel == -1)
 				{
 					printf("Error happened : %s\n", Mix_GetError());
 				}
@@ -391,13 +375,13 @@ void playGame()
 					Level::bArray->clear();
 					Level::enemiesArray->deadEnemies.clear();
 					// - score and power set to 0
-					G_score = 0; // ouch
-					G_power = 0;
+					GS->score = 0; // ouch
+					GS->power = 0;
 					// - chains to 0
-					G_chainStatus = 0;
-					G_frameChainOffset = 0;
-					G_inChainCount = 0;
-					G_maxChain = 0; // I know that this one hurts but it has to be done ;_;
+					GS->chainStatus = 0;
+					GS->frameChainOffset = 0;
+					GS->inChainCount = 0;
+					GS->maxChain = 0; // I know that this one hurts but it has to be done ;_;
 					// - DO NOT RESET DOT EATER ACHIEVEMENT
 				}
 				else if(isKeyPressed(SDL_SCANCODE_ESCAPE))
@@ -411,20 +395,20 @@ void playGame()
 		
 		// Things drawn passed this point MUST NOT be candidates
 		
-		G_particles->handle();
+		GS->particles->handle();
 		
 		// Draw score and chains
 		statsRect.x = statsRect.y = 0;
 		if (!Level::fightingBoss)
 		{
-			drawStringF(&statsRect.x, &statsRect.y, 0, 0xffff, 0, "Score : %d\n\n\n\nCH %d", G_score, G_chainStatus);
+			drawStringF(&statsRect.x, &statsRect.y, 0, 0xffff, 0, "Score : %d\n\n\n\nCH %d", GS->score, GS->chainStatus);
 			// Draw chain count
-			for (int i = 0, j = 0; i < G_inChainCount; i++, j += 18)
+			for (int i = 0, j = 0; i < GS->inChainCount; i++, j += 18)
 				drawSprite(LUTs::baseImage(chainColor[i] == Constants::LIGHT ? LUTs::BaseImageId::CHAIN_HIT_LIGHT : LUTs::BaseImageId::CHAIN_HIT_SHADOW), j, 12, 0, 0);
 		}
 		else
 		{
-			drawStringF(&statsRect.x, &statsRect.y, 0, 0xffff, 0, "Score : %d\nTime : %d", G_score, Level::be->getTimeout());
+			drawStringF(&statsRect.x, &statsRect.y, 0, 0xffff, 0, "Score : %d\nTime : %d", GS->score, Level::be->getTimeout());
 		}
 
 		// Draw explosions
@@ -436,14 +420,14 @@ void playGame()
 			drawSprite(LUTs::baseImage(LUTs::BaseImageId::POWERSLOT), 5, i * 14 + 40, 0, 0);
 			for (int j = 0; j < 10; j++)
 			{
-				if (G_power > (Constants::MAX_FRAGMENT - 1 - i) * 10 + j)
+				if (GS->power > (Constants::MAX_FRAGMENT - 1 - i) * 10 + j)
 					drawHLine(i * 14 + 40 + 10 - j, 5 + Constants::POWER_SLOT_FILL_COORDINATES[j * 2], 5 + Constants::POWER_SLOT_FILL_COORDINATES[j * 2 + 1],
-							  drawPowerSlot || G_power < (Constants::MAX_FRAGMENT - i) * 10 ? (Level::p->getPolarity() ? 0xf800 : 0x3ff) : 0xffff);
+							  drawPowerSlot || GS->power < (Constants::MAX_FRAGMENT - i) * 10 ? (Level::p->getPolarity() ? 0xf800 : 0x3ff) : 0xffff);
 				else
 					break;
 			}
 		}
-		drawPowerSlot = (G_gpTimer / 4) % 2;
+		drawPowerSlot = (GS->chapterTimer / 4) % 2;
 
 		// Draw score-chaining notifs
 		if (!Level::fightingBoss)
@@ -470,35 +454,35 @@ void playGame()
 				statsRect.x = (320 - stringWidth(Constants::RESULTS_TEXT[0])) / 2;
 				statsRect.y = 16;
 				drawString(&statsRect.x, &statsRect.y, (320 - stringWidth(Constants::RESULTS_TEXT[1])) / 2, Constants::RESULTS_TEXT[0], 0xffff, 0);
-				if (G_gpTimer > 64)
+				if (GS->chapterTimer > 64)
 				{
 					Level::soundSystem->fadeOutMusic(2000, NULL);
 					// Boss bonus
 					drawString(&statsRect.x, &statsRect.y, (320 - numberWidth(Level::be->getTimeout() * 10000)) / 2, Constants::RESULTS_TEXT[1], 0xffff, 0);
 					drawDecimal(&statsRect.x, &statsRect.y, Level::be->getTimeout() * 10000, 0xffff, 0);
 				}
-				if (G_gpTimer > 128)
+				if (GS->chapterTimer > 128)
 				{
-					G_score += bossBonus;
+					GS->score += bossBonus;
 					bossBonus = 0;
 					// Score
 					statsRect.x = (320 - stringWidth(Constants::RESULTS_TEXT[2])) / 2;
 					statsRect.y += 16;
-					drawString(&statsRect.x, &statsRect.y, (320 - numberWidth(G_score)) / 2, Constants::RESULTS_TEXT[2], 0xffff, 0);
-					drawDecimal(&statsRect.x, &statsRect.y, G_score, 0xffff, 0);
-					statsRect.x = (320 - stringWidth(Constants::RESULTS_TEXT[3]) - stringWidth(Constants::RESULTS_TEXT[4]) - numberWidth(G_maxChain)) / 2;
+					drawString(&statsRect.x, &statsRect.y, (320 - numberWidth(GS->score)) / 2, Constants::RESULTS_TEXT[2], 0xffff, 0);
+					drawDecimal(&statsRect.x, &statsRect.y, GS->score, 0xffff, 0);
+					statsRect.x = (320 - stringWidth(Constants::RESULTS_TEXT[3]) - stringWidth(Constants::RESULTS_TEXT[4]) - numberWidth(GS->maxChain)) / 2;
 					statsRect.y += 16;
 					drawString(&statsRect.x, &statsRect.y, 0, Constants::RESULTS_TEXT[3], 0xffff, 0);
-					drawDecimal(&statsRect.x, &statsRect.y, G_maxChain, 0xffff, 0);
+					drawDecimal(&statsRect.x, &statsRect.y, GS->maxChain, 0xffff, 0);
 					drawString(&statsRect.x, &statsRect.y, (320 - stringWidth(Constants::RESULTS_TEXT[5])) / 2, Constants::RESULTS_TEXT[4], 0xffff, 0);
 					// Grade
 					drawString(&statsRect.x, &statsRect.y, (320 - stringWidth("Dot eater !")) / 2, Constants::RESULTS_TEXT[5], 0xffff, 0);
-					if (!G_hasFiredOnce)
+					if (!GS->hasFiredOnce)
 						drawString(&statsRect.x, &statsRect.y, statsRect.x, "Dot eater !", 0xffff, 0);
 				}
-				if (G_gpTimer > 192 && KFIRE(kEv))
+				if (GS->chapterTimer > 192 && KFIRE(kEv))
 				{
-					G_maxChain = 0;
+					GS->maxChain = 0;
 					Level::phase = Constants::GamePhase::PLAY;
 				}
 			}
@@ -508,7 +492,7 @@ void playGame()
 				else if (currentW < 160) currentW += 2;
 
 				fillRect(160 - currentW, 120 - currentH, currentW * 2 + 1, currentH * 2, 0);
-				G_gpTimer = 0;
+				GS->chapterTimer = 0;
 			}
 		}
 		else if (Level::phase == Constants::GamePhase::BOSSCINEMATIC)
@@ -534,7 +518,7 @@ void playGame()
 			{
 				Level::soundSystem->setPausedBgMusic(true);
 				// Pause the game until another pauseKey is pressed
-				wait_no_key_pressed(G_pauseKey);
+				wait_no_key_pressed(GP->keys.pause);
 
 				// Display a "paused" box. It will be cleared in the next frame.
 				int x = (320 - stringWidth("Paused")) / 2, y = 116;
@@ -546,7 +530,7 @@ void playGame()
 				drawString(&x, &y, 0, "Paused", 0, 0xffff);
 				updateScreen();
 
-				while (!isKeyPressed(G_pauseKey))
+				while (!isKeyPressed(GP->keys.pause))
 				{
 					updateKeys();
 					constrainFrameRate(10);
@@ -556,7 +540,7 @@ void playGame()
 						break;
 					}
 				}
-				wait_no_key_pressed(G_pauseKey);
+				wait_no_key_pressed(GP->keys.pause);
 				pauseTimer = 5;
 				Level::soundSystem->setPausedBgMusic(false);
 			}
@@ -581,45 +565,45 @@ void playGame()
 		{
 			for(int i = 0; i < Constants::MAX_ENEMY; i++)
 			{
-				if(G_killedThisFrame[i] != -1)
+				if(GS->killedThisFrame[i] != -1)
 				{
-					if(G_inChainCount == 3) G_inChainCount = 0;
+					if(GS->inChainCount == 3) GS->inChainCount = 0;
 					
-					if(G_inChainCount)
+					if(GS->inChainCount)
 					{
-						if(chainColor[G_inChainCount - 1] != G_killedThisFrame[i])
+						if(chainColor[GS->inChainCount - 1] != GS->killedThisFrame[i])
 						{
-							G_inChainCount = 0;
-							G_chainStatus = 0;
+							GS->inChainCount = 0;
+							GS->chainStatus = 0;
 						}
 					}
 					
-					chainColor[G_inChainCount] = G_killedThisFrame[i];
-					G_inChainCount++;
+					chainColor[GS->inChainCount] = GS->killedThisFrame[i];
+					GS->inChainCount++;
 					
-					if(G_inChainCount == 3)
+					if(GS->inChainCount == 3)
 					{
-						G_score += 100 * (1 << min(G_chainStatus, 8));
+						GS->score += 100 * (1 << min(GS->chainStatus, 8));
 						for(int j = 0; j < Constants::MAX_ENEMY; j++)
 						{
 							if(Level::enemiesArray->deadEnemies.relevant[j])
 							{
 								if(j == i)
 								{
-									chainNotifsArray[currentNotif].activate(Level::enemiesArray->deadEnemies.x[j], Level::enemiesArray->deadEnemies.y[j], 100 * (1 << min(G_chainStatus, 8)));
+									chainNotifsArray[currentNotif].activate(Level::enemiesArray->deadEnemies.x[j], Level::enemiesArray->deadEnemies.y[j], 100 * (1 << min(GS->chainStatus, 8)));
 									currentNotif = (currentNotif + 1) % Constants::MAX_ENEMY;
 								}
 								Level::enemiesArray->deadEnemies.relevant[j] = false;
 							}
 						}
-						G_chainStatus++;
+						GS->chainStatus++;
 						Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::PLAYER_CHAIN));
 					}
-					G_killedThisFrame[i] = -1;
+					GS->killedThisFrame[i] = -1;
 				}
 			}
-			G_maxChain = max(G_chainStatus, G_maxChain);
-			G_frameChainOffset = 0;
+			GS->maxChain = max(GS->chainStatus, GS->maxChain);
+			GS->frameChainOffset = 0;
 		}
 	}
 	

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "globals.h"
+#include "GameSystems.hpp"
 #include "helpers/Constants.hpp"
 
 class Enemy;

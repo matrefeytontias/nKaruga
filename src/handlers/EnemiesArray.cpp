@@ -37,10 +37,10 @@ void EnemiesArray::handle()
 {
 	for(int i = 0; i < Constants::MAX_ENEMY; i++)
 	{
-		G_killedThisFrame[i] = -1;
+		GS->killedThisFrame[i] = -1;
 		if(data[i].diedThisFrame)
 		{
-			G_killedThisFrame[i] = data[i].getPolarity();
+			GS->killedThisFrame[i] = data[i].getPolarity();
 			deadEnemies.activate(&data[i], i);
 			explosionsAnims[currentExplosion].activate(iToScreenX(fixtoi(data[i].getx()), data[i].getCamRel()),
 													   iToScreenY(fixtoi(data[i].gety()), data[i].getCamRel()),

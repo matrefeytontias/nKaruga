@@ -1049,14 +1049,14 @@ void cb_Pattern_2_29(cb_args)
 void cb_Pattern_2_30(cb_args)
 {
 	e->setRotation(128);
-	if (!(G_gpTimer % 45))
+	if (!(GS->chapterTimer % 45))
 		Level::enemiesArray->add(fToScreenX(e->getx(), e->getCamRel()), fToScreenY(e->gety(), e->getCamRel()), 1, static_cast<int>(LUTs::BaseImageId::ENEMY_SHIP_1_LIGHT), static_cast<int>(LUTs::EnemyPatternId::C2_P32), 0, e->polarity, true, 2, false, static_cast<int>(Constants::EnemyType::ENEMY));
 	e->beAprop();
 }
 
 void cb_Pattern_2_31(cb_args)
 {
-	if (!(G_gpTimer % 45))
+	if (!(GS->chapterTimer % 45))
 		Level::enemiesArray->add(fToScreenX(e->getx(), e->getCamRel()), fToScreenY(e->gety(), e->getCamRel()), 1, static_cast<int>(LUTs::BaseImageId::ENEMY_SHIP_1_SHADOW), static_cast<int>(LUTs::EnemyPatternId::C2_P33), 0, e->polarity, true, 2, false, static_cast<int>(Constants::EnemyType::ENEMY));
 	e->beAprop();
 }
@@ -1167,7 +1167,7 @@ void cb_Pattern_2_wall(cb_args)
 
 void cb_Pattern_2_bossWeakPoint(cb_args)
 {
-	if(!(G_gpTimer % 8)) e->internal[0] = (e->internal[0] + 1) % 5;
+	if(!(GS->chapterTimer % 8)) e->internal[0] = (e->internal[0] + 1) % 5;
 	e->img = LUTs::bossImage((e->getPolarity() == Constants::LIGHT ? LUTs::BossImageId::BOSS2_HITPOINT_LEFT_1 : LUTs::BossImageId::BOSS2_HITPOINT_RIGHT_1), e->internal[0]);
 }
 

@@ -50,8 +50,8 @@ void BulletArray::handle()
 					if(sq(fixtoi(cb->getx() - Level::p->getx())) + sq(fixtoi(cb->gety() - Level::p->gety())) < sq(19)) // sqrt(player.w/2 ^2 + player.h/2 ^2)
 					{
 						destroyBullet = true;
-						G_score += Constants::SCORE_ABSORB;
-						G_power += G_power < Constants::MAX_STORED_POWER;
+						GS->score += Constants::SCORE_ABSORB;
+						GS->power += GS->power < Constants::MAX_STORED_POWER;
 					}
 				}
 			}
@@ -68,10 +68,10 @@ void BulletArray::handle()
 							// Send a couple particles
 							/*
 							for(int k = 0; k < 8; k++)
-								G_particles->add();
+								GS->particles->add();
 							*/
 							if(ce->damage(cb->getPolarity(), 1))
-								G_score += cb->getPolarity() != ce->getPolarity() ? Constants::SCORE_HIT_OP : Constants::SCORE_HIT;
+								GS->score += cb->getPolarity() != ce->getPolarity() ? Constants::SCORE_HIT_OP : Constants::SCORE_HIT;
 							destroyBullet = true;
 							// The same bullet can destroy several enemies if it hits them *during the same frame* !
 						}
@@ -142,8 +142,8 @@ void BulletArray::handle()
 					if(sq(fixtoi(cf->getx() - Level::p->getx())) + sq(fixtoi(cf->gety() - Level::p->gety())) < sq(Level::p->img[0][0] / 2))
 					{
 						destroyBullet = true;
-						G_score += Constants::SCORE_ABSORB * 10;
-						G_power = min(G_power + 10, Constants::MAX_STORED_POWER);
+						GS->score += Constants::SCORE_ABSORB * 10;
+						GS->power = min(GS->power + 10, Constants::MAX_STORED_POWER);
 					}
 				}
 			}
@@ -164,7 +164,7 @@ void BulletArray::handle()
 							cf->gety() + itofix(4) >= fToScreenY(ce->gety(), ce->getCamRel()) - itofix(ce->img[1] / 2))
 							{
 								if(ce->damage(cf->getPolarity(), 10))
-									G_score += cf->getPolarity() != ce->getPolarity() ? Constants::SCORE_HIT_OP : Constants::SCORE_HIT;
+									GS->score += cf->getPolarity() != ce->getPolarity() ? Constants::SCORE_HIT_OP : Constants::SCORE_HIT;
 								destroyBullet = true;
 							}
 						}
@@ -225,8 +225,8 @@ void BulletArray::handle()
 					if(sq(fixtoi(ch->getx() - Level::p->getx())) + sq(fixtoi(ch->gety() - Level::p->gety())) < sq(Level::p->img[0][0] / 2))
 					{
 						destroyBullet = true;
-						G_score += Constants::SCORE_ABSORB * 5;
-						G_power = min(G_power + 5, Constants::MAX_STORED_POWER);
+						GS->score += Constants::SCORE_ABSORB * 5;
+						GS->power = min(GS->power + 5, Constants::MAX_STORED_POWER);
 					}
 				}
 			}
@@ -291,11 +291,11 @@ void BulletArray::handle()
 								{
 									// Hit, but doesn't hurt
 									cl->setAmplitude((int)sqrt((float)sq(fixtoi(Level::p->getx()) - r->x) + sq(fixtoi(Level::p->gety()) - r->y)));
-									// Using G_gpTimer as a delay
-									if (!(G_gpTimer % 2))
+									// Using GS->chapterTimer as a delay
+									if (!(GS->chapterTimer % 2))
 									{
-										G_power += G_power < Constants::MAX_STORED_POWER;
-										G_score += Constants::SCORE_ABSORB;
+										GS->power += GS->power < Constants::MAX_STORED_POWER;
+										GS->score += Constants::SCORE_ABSORB;
 									}
 									// Lasers are powerful, so they push the player
 									Level::p->setx(Level::p->getx() + fixcos(cl->angle) / 2);
@@ -306,7 +306,7 @@ void BulletArray::handle()
 									for(int j = 0; j < k; j++)
 									{
 										Fixed a = cl->angle + 128 + (rand() % 64) - 32;
-										G_particles->add(Level::p->getx(), Level::p->gety(), a, itofix(1), cl->getPolarity(), 32);
+										GS->particles->add(Level::p->getx(), Level::p->gety(), a, itofix(1), cl->getPolarity(), 32);
 									}
 								}
 							}
@@ -316,7 +316,7 @@ void BulletArray::handle()
 				
 				cl->handle();
 				// Lasers are very complicated to draw ; only do it if necessary
-				//if(!(G_skipFrame % 4))
+				//if(!(GS->skipFrame % 4))
 					cl->draw();
 			}
 			else

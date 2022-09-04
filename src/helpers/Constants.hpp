@@ -9,11 +9,22 @@ struct Constants
 {
 	// General
 	static constexpr int FPS = 60;
+	static constexpr int SCREEN_WIDTH = 320;
+	static constexpr int SCREEN_HEIGHT = 240;
+
 	// General strings
 	static constexpr char CONFIG_FILENAME[] = "nKaruga.cfg";
 	static constexpr char TITLE_STRING[] = "Press Enter to start or Escape to quit";
 	static constexpr char CONTINUE_TEXT[] = "Continue ? (Enter/Esc : yes/no)";
 
+	// Difficulty settings
+	enum struct DifficultySetting
+	{
+		EASY = 0,
+		NORMAL,
+		HARD,
+	};
+	
 	// Game phases
 	enum struct GamePhase
 	{
@@ -57,6 +68,9 @@ struct Constants
 
 	// Enemies
 	static constexpr int MAX_ENEMY = 500;
+	// Max amount of enemies that can be killed each frame.
+	// It's very unlikely to ever get that high.
+	static constexpr int MAX_KILLED_ENEMIES_PER_FRAME = 24;
 
 	// Bullets
 	static constexpr int MAX_BULLET = 1000;

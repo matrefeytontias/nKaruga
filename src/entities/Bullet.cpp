@@ -1,6 +1,6 @@
 #include "entities/Bullet.hpp"
 
-#include "globals.h"
+#include "GameSystems.hpp"
 #include "utils.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "helpers/Constants.hpp"
@@ -60,7 +60,7 @@ void Bullet::draw()
 	static Rect br;
 	br.x = fixtoi(x);
 	br.y = fixtoi(y);
-	DC->add(img, &br, false, camRelation);
+	GS->DC->add(img, &br, false, camRelation);
 }
 
 Fixed Bullet::getx()

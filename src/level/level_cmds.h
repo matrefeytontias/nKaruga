@@ -49,15 +49,15 @@ constexpr int idtoi(LUTid id)
 #define cmd_newCameraPath(n) LVLSTR_CMD, 2, LVLSTR_NEWCAMERA, idtoi<LUTs::CamTravelingId>(n)
 // Waits a given amount of frames
 #define cmd_wait(x) LVLSTR_CMD, 2, LVLSTR_WAIT, x
-// Waits until G_gpTimer has a certain value
+// Waits until GS->chapterTimer has a certain value
 #define cmd_waitAbs(x) LVLSTR_CMD, 2, LVLSTR_WAITABS, x
 // Waits until the ABSOLUTE camera reaches this point in the level
 #define cmd_waitCamera(x, y) LVLSTR_CMD, 3, LVLSTR_WAITCAMERA, x, y
-// Skips the nb next commands if G_waveTimer is greater than time
+// Skips the nb next commands if GS->waveTimer is greater than time
 #define cmd_skip(time, nb) LVLSTR_CMD, 3, LVLSTR_SKIP, time, nb
-// Skips the nb next commands if G_gpTimer is greater than time
+// Skips the nb next commands if GS->chapterTimer is greater than time
 #define cmd_skipAbs(time, nb) LVLSTR_CMD, 3, LVLSTR_SKIPABS, time, nb
-// Go back nb commands before the current position (not including this one) if G_gpTimer is lower than time
+// Go back nb commands before the current position (not including this one) if GS->chapterTimer is lower than time
 #define cmd_repeatAbs(time, nb) LVLSTR_CMD, 3, LVLSTR_REPEATABS, time, nb
 // Waits for all enemies to be killed (includes props)
 #define cmd_killed LVLSTR_CMD, 1, LVLSTR_KILLED

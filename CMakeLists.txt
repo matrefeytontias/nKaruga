@@ -4,6 +4,8 @@ project(nKarugaProject LANGUAGES C CXX)
 
 set(SOURCES ${SOURCES}
 # Game source - headers
+    src/GameSystems.hpp
+    
     src/entities/BossEnemy.hpp
     src/entities/Bullet.hpp
     src/entities/Enemy.hpp
@@ -35,6 +37,8 @@ set(SOURCES ${SOURCES}
     src/menu/Menu.hpp
 
 # Game source - sources
+    src/GameSystems.cpp
+
     src/entities/BossEnemy.cpp
     src/entities/Bullet.cpp
     src/entities/Enemy.cpp
@@ -92,8 +96,6 @@ set(SOURCES ${SOURCES}
     src/gfx/titleScreen.h
 # sfx
     src/sfx/list.h
-# TODO : get rid of these - misc
-    src/globals.h
 )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src PREFIX "Source Files" FILES ${SOURCES})

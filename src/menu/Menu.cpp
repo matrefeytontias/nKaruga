@@ -115,7 +115,7 @@ int Menu::run()
 		drawSprite(image_cursor, x[choice] - 7, y[choice], 1, 0xffff);
 
 		// Let the user pick an option or fiddle with the values
-		if (isKeyPressed(G_downKey))
+		if (isKeyPressed(GP->keys.down))
 		{
 			if (!pressed[0] && choice < num - 1)
 			{
@@ -127,7 +127,7 @@ int Menu::run()
 		else
 			pressed[0] = false;
 		
-		if (isKeyPressed(G_upKey))
+		if (isKeyPressed(GP->keys.up))
 		{
 			if (!pressed[1] && choice > 0)
 			{

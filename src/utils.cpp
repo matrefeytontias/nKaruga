@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "globals.h"
+#include "GameSystems.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "level/Level.hpp"
 #include "n2DLib/n2DLib.h"
@@ -70,15 +70,15 @@ KeyEvent getk(void)
 #define setbit(pos, val) k |= val << pos
 	KeyEvent k = 0;
 
-	setbit(0, isKeyPressed(G_downKey));
-	setbit(1, isKeyPressed(G_leftKey));
-	setbit(2, isKeyPressed(G_rightKey));
-	setbit(3, isKeyPressed(G_upKey));
-	setbit(4, isKeyPressed(G_fireKey));
-	setbit(5, isKeyPressed(G_polarityKey));
-	setbit(6, isKeyPressed(G_fragmentKey));
+	setbit(0, isKeyPressed(GP->keys.down));
+	setbit(1, isKeyPressed(GP->keys.left));
+	setbit(2, isKeyPressed(GP->keys.right));
+	setbit(3, isKeyPressed(GP->keys.up));
+	setbit(4, isKeyPressed(GP->keys.fire));
+	setbit(5, isKeyPressed(GP->keys.polarity));
+	setbit(6, isKeyPressed(GP->keys.fragment));
 	setbit(7, isKeyPressed(SDL_SCANCODE_ESCAPE));
-	setbit(8, isKeyPressed(G_pauseKey));
+	setbit(8, isKeyPressed(GP->keys.pause));
 
 	return k;
 #undef setbit
@@ -86,17 +86,17 @@ KeyEvent getk(void)
 
 int iToScreenX(int x, int camRelation)
 {
-	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? x - DC->cam.absX : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? x - DC->cam.relX : x));
+	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? x - GS->DC->cam.absX : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? x - GS->DC->cam.relX : x));
 }
 int iToScreenY(int y, int camRelation)
 {
-	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? y - DC->cam.absY : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? y - DC->cam.relY : y));
+	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? y - GS->DC->cam.absY : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? y - GS->DC->cam.relY : y));
 }
 Fixed fToScreenX(Fixed x, int camRelation)
 {
-	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? x - itofix(DC->cam.absX) : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? x - itofix(DC->cam.relX) : x));
+	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? x - itofix(GS->DC->cam.absX) : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? x - itofix(GS->DC->cam.relX) : x));
 }
 Fixed fToScreenY(Fixed y, int camRelation)
 {
-	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? y - itofix(DC->cam.absY) : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? y - itofix(DC->cam.relY) : y));
+	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? y - itofix(GS->DC->cam.absY) : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? y - itofix(GS->DC->cam.relY) : y));
 }

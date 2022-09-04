@@ -1,6 +1,6 @@
 #pragma once
 
-#include "globals.h"
+#include "GameSystems.hpp"
 #include "types.h"
 #include "utils.hpp"
 #include "graphics/BackgroundScroller.hpp"
@@ -28,7 +28,7 @@ void cthIntro2(Camera* cam)
 
 void cthChap2(Camera* cam)
 {
-	if (!(G_gpTimer % 3))
+	if (!(GS->chapterTimer % 3))
 	{
 		cam->absY--;
 	}
@@ -36,24 +36,24 @@ void cthChap2(Camera* cam)
 
 void cthChap2_2(Camera* cam)
 {
-	if (!(G_gpTimer % 3))
+	if (!(GS->chapterTimer % 3))
 	{
 		cam->absY--;
 	}
-	G_minX += G_minX < 60;
-	G_maxX = 320 - G_minX;
-	fillRect(0, 0, G_minX, 240, 0);
-	fillRect(G_maxX, 0, 320 - G_maxX, 240, 0);
+	GS->minX += GS->minX < 60;
+	GS->maxX = 320 - GS->minX;
+	fillRect(0, 0, GS->minX, 240, 0);
+	fillRect(GS->maxX, 0, 320 - GS->maxX, 240, 0);
 }
 
 void cthChap2_boss(Camera* cam)
 {
-	G_minX -= G_minX > 0;
-	G_maxX = 320 - G_minX;
-	if (G_minX > 0)
+	GS->minX -= GS->minX > 0;
+	GS->maxX = 320 - GS->minX;
+	if (GS->minX > 0)
 	{
-		fillRect(0, 0, G_minX, 240, 0);
-		fillRect(G_maxX, 0, 320 - G_maxX, 240, 0);
+		fillRect(0, 0, GS->minX, 240, 0);
+		fillRect(GS->maxX, 0, 320 - GS->maxX, 240, 0);
 	}
 }
 

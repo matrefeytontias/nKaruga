@@ -1,6 +1,6 @@
 #include "entities/Entity.hpp"
 
-#include "globals.h"
+#include "GameSystems.hpp"
 #include "utils.hpp"
 #include "n2DLib/n2DLib_math.h"
 
@@ -110,8 +110,8 @@ Fixed Entity::distance2ToXY(Fixed _x, Fixed _y)
 bool Entity::waitFrames(int frames)
 {
 	static int base = -1;
-	if (base == -1) base = G_gpTimer;
-	bool r = G_gpTimer - base >= frames;
+	if (base == -1) base = GS->chapterTimer;
+	bool r = GS->chapterTimer - base >= frames;
 	if (r) base = -1;
 	return r;
 }

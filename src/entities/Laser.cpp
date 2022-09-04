@@ -2,7 +2,7 @@
 
 #include <cstdlib>
 
-#include "globals.h"
+#include "GameSystems.hpp"
 #include "entities/Enemy.hpp"
 #include "graphics/Particles.hpp"
 #include "helpers/Constants.hpp"
@@ -30,7 +30,7 @@ void Laser::activate(Enemy *e, bool _p, Fixed _a)
 	angle = -origin->getRotation() + angleOffset;
 	x = fixtoi(origin->getx()) + fixtoi(fixcos(angle) * origin->img[0] / 2);
 	y = fixtoi(origin->gety()) + fixtoi(fixsin(angle) * origin->img[1] / 2);
-	G_particles->pulse(itofix(x), itofix(y), polarity);
+	GS->particles->pulse(itofix(x), itofix(y), polarity);
 }
 
 void Laser::handle()
@@ -52,7 +52,7 @@ void Laser::draw()
 	for(int i = 0; i < j; i++)
 	{
 		Fixed a = angle + (rand() % 64) - 32;
-		G_particles->add(itofix(x), itofix(y), a, itofix(1), polarity, 32);
+		GS->particles->add(itofix(x), itofix(y), a, itofix(1), polarity, 32);
 	}
 	
 	// A laser has an up-to 8-pixels core radius with an up-to 12-pixels aura radius (ie a laser is up to 24 pixels thick)
@@ -69,7 +69,7 @@ void Laser::draw()
 	// Slice drawing vars
 	Fixed sdx = fixsin(-angle);
 	Fixed sdy = fixcos(-angle);
-	Fixed phase = -G_gpTimer * 48;
+	Fixed phase = -GS->chapterTimer * 48;
 	
 	unsigned short coreColor = polarity ? 0 : 0xffff;
 	while (!(x1 == x2 && y1 == y2))

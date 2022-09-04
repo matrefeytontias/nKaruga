@@ -1,6 +1,6 @@
 #include "graphics/ExplosionAnim.hpp"
 
-#include "globals.h"
+#include "GameSystems.hpp"
 #include "helpers/Constants.hpp"
 #include "n2DLib/n2DLib.h"
 
