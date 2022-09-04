@@ -3,6 +3,8 @@
 #include "types.h"
 #include "helpers/Constants.hpp"
 
+// TODO : a lot of subclasses take ints where Fixed should be,
+// like Enemy::activate and EnemiesArray::add
 class Entity
 {
 public:

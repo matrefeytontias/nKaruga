@@ -10,7 +10,7 @@ class EnemiesArray
 public:
 	EnemiesArray();
 	~EnemiesArray();
-	Enemy* add(int x, int y, int HP, int shipImgId, int callbackID, int waveIndex, bool polarity, bool hasRotation, int firebackAmount, bool ghost, int type);
+	Enemy* add(int x, int y, int HP, LUTs::BaseImageId shipImgId, int callbackID, int waveIndex, bool polarity, bool hasRotation, int firebackAmount, bool ghost, int type);
 	void handle();
 	void handleExplosions();
 	void resetEnemyCounter();
