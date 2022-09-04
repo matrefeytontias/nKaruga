@@ -39,12 +39,12 @@ struct Constants
 	static constexpr Fixed CAMERA_SPEED = 85;
 	// /!\ integer value
 	// TODO : make this fixed
-	static constexpr Fixed INV_CAMERA_SPEED = 3;
+	static constexpr int INV_CAMERA_SPEED = 3;
 
-// Camera relations
+	// Camera relations
 	enum struct CamRelation
 	{
-		NONE,
+		DEFAULT,
 		ABSOLUTE,
 		RELATIVE
 	};
@@ -117,7 +117,7 @@ struct LUTs
 	// Base images LUT
 	enum struct BaseImageId
 	{
-		NONE = 0,
+		DEFAULT = 0,
 		PLAYER_SHIP_LIGHT,
 		PLAYER_SHIP_SHADOW,
 		PLAYER_SHIP_POLARITYSWITCH_0_LIGHT,
@@ -281,99 +281,100 @@ struct LUTs
 	};
 
 	// Enemy patterns
+	// Naming format for generic enemies is Cx_Py = chapter x, pattern y.
 	enum struct EnemyPatternId
 	{
-		Pattern_null = 0,
-		Pattern_box,
-		Pattern_prop,
+		DEFAULT = 0,
+		BOX,
+		PROP,
 		// Intro 1
-		Pattern_1_1,
-		Pattern_1_2,
-		Pattern_1_3,
-		Pattern_1_4,
-		Pattern_1_5,
-		Pattern_1_6,
+		C1_P1,
+		C1_P2,
+		C1_P3,
+		C1_P4,
+		C1_P5,
+		C1_P6,
 		// Chapter 1
-		Pattern_1_7,
-		Pattern_1_8,
-		Pattern_1_9,
-		Pattern_1_10,
-		Pattern_1_11,
-		Pattern_1_12,
-		Pattern_1_13,
-		Pattern_1_14,
-		Pattern_1_15,
-		Pattern_1_16,
-		Pattern_1_17,
-		Pattern_1_18,
-		Pattern_1_19,
-		Pattern_1_20,
-		Pattern_1_21,
-		Pattern_1_boss,
-		Pattern_1_bossGrenade,
+		C1_P7,
+		C1_P8,
+		C1_P9,
+		C1_P10,
+		C1_P11,
+		C1_P12,
+		C1_P13,
+		C1_P14,
+		C1_P15,
+		C1_P16,
+		C1_P17,
+		C1_P18,
+		C1_P19,
+		C1_P20,
+		C1_P21,
+		C1_BOSS,
+		C1_BOSS_GRENADE,
 		// Intro 2
-		Pattern_2_1,
-		Pattern_2_2,
-		Pattern_2_3,
-		Pattern_2_4,
-		Pattern_2_5,
-		Pattern_2_6,
-		Pattern_2_7,
-		Pattern_2_leftDoor,
-		Pattern_2_rightDoor,
+		C2_P1,
+		C2_P2,
+		C2_P3,
+		C2_P4,
+		C2_P5,
+		C2_P6,
+		C2_P7,
+		C2_LEFT_DOOR,
+		C2_RIGHT_DOOR,
 		// Chapter 2
-		Pattern_2_8,
-		Pattern_2_9,
-		Pattern_2_10,
-		Pattern_2_11,
-		Pattern_2_12,
-		Pattern_2_13,
-		Pattern_2_14,
-		Pattern_2_15,
-		Pattern_2_16,
-		Pattern_2_17,
-		Pattern_2_18,
-		Pattern_2_19,
-		Pattern_2_20,
-		Pattern_2_21,
-		Pattern_2_22,
-		Pattern_2_23,
-		Pattern_2_24,
-		Pattern_2_25,
-		Pattern_2_26,
-		Pattern_2_27,
-		Pattern_2_28,
-		Pattern_2_29,
-		Pattern_2_30,
-		Pattern_2_31,
-		Pattern_2_32,
-		Pattern_2_33,
-		Pattern_2_34,
-		Pattern_2_35,
-		Pattern_2_36,
-		Pattern_2_wall,
-		Pattern_2_bossWeakPoint,
-		Pattern_2_bossShield,
+		C2_P8,
+		C2_P9,
+		C2_P10,
+		C2_P11,
+		C2_P12,
+		C2_P13,
+		C2_P14,
+		C2_P15,
+		C2_P16,
+		C2_P17,
+		C2_P18,
+		C2_P19,
+		C2_P20,
+		C2_P21,
+		C2_P22,
+		C2_P23,
+		C2_P24,
+		C2_P25,
+		C2_P26,
+		C2_P27,
+		C2_P28,
+		C2_P29,
+		C2_P30,
+		C2_P31,
+		C2_P32,
+		C2_P33,
+		C2_P34,
+		C2_P35,
+		C2_P36,
+		C2_WALL,
+		C2_BOSS_WEAK_POINT,
+		C2_BOSS_SHIELD,
 		COUNT
 	};
 
 	// Camera travelling handlers
 	enum struct CamTravelingId
 	{
-		CameraPath_i1 = 0,
-		CameraPath_c1,
-		CameraPath_i2,
-		CameraPath_c2,
-		CameraPath_c2_2,
-		CameraPath_c2_boss,
+		INTRO1 = 0,
+		CHAPTER1,
+		INTRO2,
+		CHAPTER2,
+		CHAPTER2_2,
+		CHAPTER2_BOSS,
 		COUNT
 	};
 
 	// Background handlers
 	enum struct BgTravelingId
 	{
-		bgHandle_default = 0,
-		bgHandle_2_2,
+		DEFAULT = 0,
+		CHAPTER2_2,
 		COUNT
 	};
 

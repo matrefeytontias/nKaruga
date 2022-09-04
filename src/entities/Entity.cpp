@@ -8,7 +8,7 @@ Entity::Entity()
 {
 	x = y = 0;
 	active = false;
-	camRelation = static_cast<int>(Constants::CamRelation::NONE);
+	camRelation = static_cast<int>(Constants::CamRelation::DEFAULT);
 	isEnemy = false;
 	isBoss = false;
 }

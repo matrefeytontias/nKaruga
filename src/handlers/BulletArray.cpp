@@ -176,7 +176,7 @@ void BulletArray::handle()
 				{
 					// Create a placeholder bullet to pass to the collision callback
 					Bullet temp;
-					temp.activate(cf->getx(), cf->gety(), 0, 0, 0, cf->getPolarity(), false, static_cast<int>(Constants::CamRelation::NONE));
+					temp.activate(cf->getx(), cf->gety(), 0, 0, 0, cf->getPolarity(), false, static_cast<int>(Constants::CamRelation::DEFAULT));
 					bossDamaged = (Level::be->collisionCallbacks[Level::be->currentPattern])(Level::be, &temp, 10);
 					temp.deactivate();
 					if(bossDamaged)

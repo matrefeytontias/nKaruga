@@ -22,7 +22,7 @@ Enemy::Enemy() : Entity()
 	prop = false;
 	damageable = false;
 	visible = true;
-	shipImgId = static_cast<int>(LUTs::BaseImageId::NONE);
+	shipImgId = static_cast<int>(LUTs::BaseImageId::DEFAULT);
 	callback = NULL;
 	spawned = 0;
 	flash = false;

@@ -38,7 +38,7 @@ void LUTs::buildGameLUTs()
 {
 	/* GFX */
 	// Base images
-	image_entries[static_cast<int>(LUTs::BaseImageId::NONE)] = image_null;
+	image_entries[static_cast<int>(LUTs::BaseImageId::DEFAULT)] = image_null;
 	image_entries[static_cast<int>(LUTs::BaseImageId::PLAYER_SHIP_LIGHT)] = image_player_ship_light;
 	image_entries[static_cast<int>(LUTs::BaseImageId::PLAYER_SHIP_SHADOW)] = image_player_ship_shadow;
 	image_entries[static_cast<int>(LUTs::BaseImageId::PLAYER_SHIP_POLARITYSWITCH_0_LIGHT)] = image_player_ship_polarityswitch_0_light;

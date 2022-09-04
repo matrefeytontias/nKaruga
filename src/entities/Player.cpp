@@ -47,11 +47,11 @@ void Player::handle(KeyEvent kEv)
 		r.x = fixtoi(x);
 		r.y = fixtoi(y);
 		
-		DC->add(img[((isSwitchingPolarity / 4) * 2) + polarity], &r, false, static_cast<int>(Constants::CamRelation::NONE));
+		DC->add(img[((isSwitchingPolarity / 4) * 2) + polarity], &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
 		
 		if(deathCounter)
 		{
-			DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_INVINCIBLE_LIGHT, polarity), &r, false, static_cast<int>(Constants::CamRelation::NONE));
+			DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_INVINCIBLE_LIGHT, polarity), &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
 			deathCounter--;
 		}
 		
@@ -113,8 +113,8 @@ void Player::handle(KeyEvent kEv)
 				if(fireRepeat)
 				{
 					// fire 2 bullets if the key is being held
-					Level::bArray->add(x - itofix(img[0][0]) / 4, y, 192, itofix(6), static_cast<int>(LUTs::BaseImageId::PLAYER_BULLET_LIGHT), polarity, false, static_cast<int>(Constants::CamRelation::NONE));
-					Level::bArray->add(x + itofix(img[0][0]) / 4, y, 192, itofix(6), static_cast<int>(LUTs::BaseImageId::PLAYER_BULLET_LIGHT), polarity, false, static_cast<int>(Constants::CamRelation::NONE));
+					Level::bArray->add(x - itofix(img[0][0]) / 4, y, 192, itofix(6), static_cast<int>(LUTs::BaseImageId::PLAYER_BULLET_LIGHT), polarity, false, static_cast<int>(Constants::CamRelation::DEFAULT));
+					Level::bArray->add(x + itofix(img[0][0]) / 4, y, 192, itofix(6), static_cast<int>(LUTs::BaseImageId::PLAYER_BULLET_LIGHT), polarity, false, static_cast<int>(Constants::CamRelation::DEFAULT));
 					fireDelay = 4;
 					int x1 = x - itofix(img[0][0]) / 4;
 					int x2 = x + itofix(img[0][0]) / 4;
@@ -127,7 +127,7 @@ void Player::handle(KeyEvent kEv)
 				else
 				{
 					// fire 1 bullet
-					Level::bArray->add(x, y, 192, itofix(6), static_cast<int>(LUTs::BaseImageId::PLAYER_BULLET_LIGHT), polarity, false, static_cast<int>(Constants::CamRelation::NONE));
+					Level::bArray->add(x, y, 192, itofix(6), static_cast<int>(LUTs::BaseImageId::PLAYER_BULLET_LIGHT), polarity, false, static_cast<int>(Constants::CamRelation::DEFAULT));
 					fireDelay = 8;
 					fireRepeat = true;
 					for(int i = 0; i < 8; i++)
@@ -151,7 +151,7 @@ void Player::handle(KeyEvent kEv)
 		{
 			r.x = fixtoi(x);
 			r.y = fixtoi(y);
-			DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_EXPLOSION_0, deathCounter), &r, false, static_cast<int>(Constants::CamRelation::NONE));
+			DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_EXPLOSION_0, deathCounter), &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
 			// Death animation
 			// Uses frameskipping as a counter
 			//if(!(G_skipFrame % 8))
@@ -172,7 +172,7 @@ void Player::handle(KeyEvent kEv)
 		{
 			r.x = fixtoi(x);
 			r.y = fixtoi(y);
-			DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_LIGHT), &r, false, static_cast<int>(Constants::CamRelation::NONE));
+			DC->add(LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_LIGHT), &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
 			y -= itofix(2);
 		}
 		else active = true;

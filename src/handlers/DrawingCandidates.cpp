@@ -9,7 +9,7 @@ DrawingCandidates::DrawingCandidates()
 {
 	candidatesCount = 0;
 	cam.absX = cam.absY = cam.relX = cam.relY = 0;
-	cameraPath = LUTs::camTraveling(LUTs::CamTravelingId::CameraPath_c1);
+	cameraPath = LUTs::camTraveling(LUTs::CamTravelingId::CHAPTER1);
 }
 
 DrawingCandidates::~DrawingCandidates()

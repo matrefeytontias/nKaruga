@@ -134,7 +134,7 @@ void PowerFragment::draw()
 	r.x = fixtoi(x);
 	r.y = fixtoi(y);
 	
-	DC->add(img, &r, false, static_cast<int>(Constants::CamRelation::NONE));
+	DC->add(img, &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
 	
 	for(int i = 0; i < FRAGMENT_TRAILING; i++)
 	{
@@ -142,6 +142,6 @@ void PowerFragment::draw()
 		r.y = fixtoi(previousY[i]);
 		DC->add(LUTs::baseImage(polarity ? LUTs::BaseImageId::PLAYER_HOMING_BULLET_SHADOW_1 : LUTs::BaseImageId::PLAYER_HOMING_BULLET_LIGHT_1,
 								i / ((FRAGMENT_TRAILING + 1) / 2)),
-				&r, false, static_cast<int>(Constants::CamRelation::NONE));
+				&r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
 	}
 }
