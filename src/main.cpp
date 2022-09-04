@@ -264,7 +264,7 @@ void playGame()
 
 	// Reset the level stream
 	Level::counter = 0;
-	Level::counter = 2619; // DBG : start at level 2
+	// Level::counter = 2619; // DBG : start at level 2
 	pauseTimer = 0;
 	GS->hasFiredOnce = false;
 

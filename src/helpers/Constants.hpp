@@ -479,4 +479,5 @@ private:
 	static background_traveling bgTraveling_entries[static_cast<int>(BgTravelingId::COUNT)];
 	static Mix_Chunk* sound_entries[static_cast<int>(SoundId::COUNT)];
 	static Mix_Music* music_entries[static_cast<int>(MusicId::COUNT)];
+	static bool initialized;
 };

@@ -25,7 +25,6 @@ public:
 	static bool gameEnded;
 	static int counter, timer, waveIndex, waveTimer; // level counter, pause timer (for wait commands), wave index, wave timer
 	// Important global entities
-	// TODO : none of these should be here
 	static Player* p;
 	static BulletArray* bArray;
 	static EnemiesArray* enemiesArray;
