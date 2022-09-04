@@ -47,7 +47,6 @@ inline void writeToConfig(FILE* out)
 	writeKeyToConfig(out, &GP->keys.pause);
 	fputc(static_cast<int>(GP->difficulty), out);
 	fputc(GP->usingArrows, out);
-	fputc(GP->displayBg, out);
 }
 
 inline void readFromConfig(FILE* in)
@@ -72,7 +71,6 @@ inline void readFromConfig(FILE* in)
 		GP->keys.right = SDL_SCANCODE_D;
 		GP->keys.up = SDL_SCANCODE_W;
 	}
-	GP->displayBg = !!fgetc(in);
 }
 
 int main(int argc, char** argv)

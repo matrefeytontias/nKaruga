@@ -71,10 +71,6 @@ public:
 	// TODO : don't need that
 	bool fireback;
 	bool hardMode;
-	// Whether or not to display the scrolling background.
-	// TODO : legacy option for monochrome TI-Nspire, decide
-	// what to do with it.
-	bool displayBg;
 
 	// TODO : handle keybinding and default bindings via backend
 	struct KeyBindings

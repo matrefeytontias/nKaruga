@@ -41,5 +41,5 @@ void GameParameters::init()
 }
 
 GameParameters::GameParameters() : usingArrows(true), difficulty(Constants::DifficultySetting::EASY),
-fireback(false), hardMode(false), displayBg(true), keys({})
+fireback(false), hardMode(false), keys({})
 { }
