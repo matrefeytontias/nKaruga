@@ -114,8 +114,8 @@ void Player::handle(KeyEvent kEv)
 				if(fireRepeat)
 				{
 					// fire 2 bullets if the key is being held
-					Level::bArray->add(x - itofix(img[0][0]) / 4, y, 192, itofix(6), static_cast<int>(LUTs::BaseImageId::PLAYER_BULLET_LIGHT), polarity, false, Constants::CamRelation::DEFAULT);
-					Level::bArray->add(x + itofix(img[0][0]) / 4, y, 192, itofix(6), static_cast<int>(LUTs::BaseImageId::PLAYER_BULLET_LIGHT), polarity, false, Constants::CamRelation::DEFAULT);
+					Level::bArray->add(x - itofix(img[0][0]) / 4, y, 192, itofix(6), LUTs::BaseImageId::PLAYER_BULLET_LIGHT, polarity, false, Constants::CamRelation::DEFAULT);
+					Level::bArray->add(x + itofix(img[0][0]) / 4, y, 192, itofix(6), LUTs::BaseImageId::PLAYER_BULLET_LIGHT, polarity, false, Constants::CamRelation::DEFAULT);
 					fireDelay = 4;
 					int x1 = x - itofix(img[0][0]) / 4;
 					int x2 = x + itofix(img[0][0]) / 4;
@@ -128,7 +128,7 @@ void Player::handle(KeyEvent kEv)
 				else
 				{
 					// fire 1 bullet
-					Level::bArray->add(x, y, 192, itofix(6), static_cast<int>(LUTs::BaseImageId::PLAYER_BULLET_LIGHT), polarity, false, Constants::CamRelation::DEFAULT);
+					Level::bArray->add(x, y, 192, itofix(6), LUTs::BaseImageId::PLAYER_BULLET_LIGHT, polarity, false, Constants::CamRelation::DEFAULT);
 					fireDelay = 8;
 					fireRepeat = true;
 					for(int i = 0; i < 8; i++)

@@ -327,8 +327,7 @@ void BulletArray::handle()
 }
 
 // TODO : Add some particles each time a bullet is fired
-// TOOD : LUTs::BaseImageId imgId
-void BulletArray::add(Fixed _x, Fixed _y, Fixed a, Fixed r, int imgId, bool _p, bool _h, Constants::CamRelation camRelation)
+void BulletArray::add(Fixed _x, Fixed _y, Fixed a, Fixed r, LUTs::BaseImageId imgId, bool _p, bool _h, Constants::CamRelation camRelation)
 {
 	if(bulletCount < Constants::MAX_BULLET)
 	{
@@ -337,8 +336,9 @@ void BulletArray::add(Fixed _x, Fixed _y, Fixed a, Fixed r, int imgId, bool _p, 
 		// Only handle sound for on-screen enemy bullets
 		if (_h && _x >= 0 && _x <= itofix(320) && _y >= 0 && _y <= itofix(240))
 		{
-			// There's one sound per bullet type
-			int d = (imgId - static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT)) / 2;
+			// There's one sound per bullet type.
+			// Divide by 2 to account for light and shadow variants.
+			int d = (static_cast<int>(imgId) - static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT)) / 2;
 			GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_ENEMY_0, d));
 		}
 	}

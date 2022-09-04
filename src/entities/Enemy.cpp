@@ -149,7 +149,7 @@ bool Enemy::damage(bool _pol, int amount)
 					Fixed angle = angleToEntity(Level::p);
 					int famount = _pol != polarity ? fireback / 2 : fireback;
 					for (int i = 0; i < famount; i++)
-						Level::bArray->add(getx(), gety(), angle + (rand() % 16) - 8, itofix(4) + (rand() % 512) - 256, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT), polarity, true, getCamRelation());
+						Level::bArray->add(getx(), gety(), angle + (rand() % 16) - 8, itofix(4) + (rand() % 512) - 256, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, polarity, true, getCamRelation());
 				}
 			}
 			diedThisFrame = true;
@@ -315,18 +315,18 @@ void Enemy::beAbox()
 			Fixed a = (Fixed)(atan2f((float)(dy + r), (float)dx) * 128.f / M_PI);
 			if (!(internal[2] & 1))
 				for (int i = 0; i < 3; i++)
-					Level::bArray->add(x + itofix(i - 1) * 10, y + itofix(24), a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
+					Level::bArray->add(x + itofix(i - 1) * 10, y + itofix(24), a, r, LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, polarity, true, getCamRelation());
 			else
-				Level::bArray->add(x, y + itofix(24), a, 192, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
+				Level::bArray->add(x, y + itofix(24), a, 192, LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, polarity, true, getCamRelation());
 		}
 		if (internal[0] & 2)
 		{
 			Fixed a = 128 - (Fixed)(asinf((float)dy / (float)r) * 128.f / M_PI);
 			if (!(internal[2] & 2))
 				for (int i = 0; i < 3; i++)
-					Level::bArray->add(x - itofix(24), y + itofix(i - 1) * 10, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
+					Level::bArray->add(x - itofix(24), y + itofix(i - 1) * 10, a, r, LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, polarity, true, getCamRelation());
 			else
-				Level::bArray->add(x - itofix(24), y, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
+				Level::bArray->add(x - itofix(24), y, a, r, LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, polarity, true, getCamRelation());
 		}
 		if (internal[0] & 4)
 		{
@@ -334,18 +334,18 @@ void Enemy::beAbox()
 
 			if (!(internal[2] & 4))
 				for (int i = 0; i < 3; i++)
-					Level::bArray->add(x + itofix(24), y + itofix(i - 1) * 10, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
+					Level::bArray->add(x + itofix(24), y + itofix(i - 1) * 10, a, r, LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, polarity, true, getCamRelation());
 			else
-				Level::bArray->add(x + itofix(24), y, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
+				Level::bArray->add(x + itofix(24), y, a, r, LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, polarity, true, getCamRelation());
 		}
 		if (internal[0] & 8)
 		{
 			Fixed a = (Fixed)(atan2f((float)(dy - r), (float)dx) * 128.f / M_PI);
 			if (!(internal[2] & 8))
 				for (int i = 0; i < 3; i++)
-					Level::bArray->add(x + itofix(i - 1) * 10, y - itofix(24), a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
+					Level::bArray->add(x + itofix(i - 1) * 10, y - itofix(24), a, r, LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, polarity, true, getCamRelation());
 			else
-				Level::bArray->add(x, y - itofix(24), a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
+				Level::bArray->add(x, y - itofix(24), a, r, LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, polarity, true, getCamRelation());
 		}
 	}
 	// Animation
