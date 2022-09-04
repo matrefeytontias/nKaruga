@@ -822,7 +822,7 @@ void cb_Pattern_2_12(cb_args)
 	{
 		e->internal[0] ^= 1;
 		Enemy *ce = Level::enemiesArray->add(e->getx(), e->gety(), 20,
-											 static_cast<int>(e->internal[0] ? LUTs::BaseImageId::BOX_SHADOW_1 : LUTs::BaseImageId::BOX_SHADOW_1),
+											 static_cast<int>(e->internal[0] ? LUTs::BaseImageId::BOX_SHADOW_1 : LUTs::BaseImageId::BOX_LIGHT_1),
 											 static_cast<int>(LUTs::EnemyPatternId::BOX), 0, e->internal[0] ? Constants::SHADOW : Constants::LIGHT, 0, 5, false, static_cast<int>(Constants::EnemyType::BREAKABLE_PROP));
 		ce->internal[1] = 3; // move right
 	}
@@ -835,7 +835,7 @@ void cb_Pattern_2_13(cb_args)
 	{
 		e->internal[0] ^= 1;
 		Enemy *ce = Level::enemiesArray->add(e->getx(), e->gety(), 20,
-											 static_cast<int>(e->internal[0] ? LUTs::BaseImageId::BOX_SHADOW_1 : LUTs::BaseImageId::BOX_SHADOW_1),
+											 static_cast<int>(e->internal[0] ? LUTs::BaseImageId::BOX_SHADOW_1 : LUTs::BaseImageId::BOX_LIGHT_1),
 											 static_cast<int>(LUTs::EnemyPatternId::BOX), 0, e->internal[0], 0, 5, false, static_cast<int>(Constants::EnemyType::BREAKABLE_PROP));
 		ce->internal[1] = 2; // move left
 	}
@@ -870,7 +870,7 @@ void cb_Pattern_2_16(cb_args)
 		else
 		{
 			Enemy *ce = Level::enemiesArray->add(e->getx(), e->gety(), 20,
-												 static_cast<int>(e->internal[0] >> 1 ? LUTs::BaseImageId::BOX_SHADOW_1 : LUTs::BaseImageId::BOX_SHADOW_1),
+												 static_cast<int>(e->internal[0] >> 1 ? LUTs::BaseImageId::BOX_SHADOW_1 : LUTs::BaseImageId::BOX_LIGHT_1),
 												 static_cast<int>(LUTs::EnemyPatternId::BOX), 0, e->internal[0] >> 1, 0, 5, false, static_cast<int>(Constants::EnemyType::BREAKABLE_PROP));
 			ce->internal[0] = 0x6; // fire left and right
 			ce->internal[1] = 1; // move down
