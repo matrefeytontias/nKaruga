@@ -196,7 +196,6 @@ void Player::hurt()
 	active = false;
 	deathCounter = 0;
 	GS->chainStatus = 0;
-	GS->frameChainOffset = 0;
 	GS->inChainCount = 0;
 	GS->power = 0;
 	GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::PLAYER_DEATH));

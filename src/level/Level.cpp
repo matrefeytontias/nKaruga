@@ -207,7 +207,6 @@ void Level::advanceLevel()
 						bArray->clear();
 						// Reset everything chains-related
 						GS->chainStatus = 0;
-						GS->frameChainOffset = 0;
 						GS->inChainCount = 0;
 						GS->power = 0;
 						clearBufferB();

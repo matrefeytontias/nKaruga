@@ -37,8 +37,6 @@ public:
 	// All the enemies that died in the same frame.
 	// TODO : use MAX_KILLED_ENEMIES_PER_FRAME
 	int killedThisFrame[Constants::MAX_ENEMY];
-	// TODO : pretty sure this is not used anywhere
-	int frameChainOffset;
 	// How many chains were performed so far.
 	int chainStatus;
 	// How many enemies killed in this current chain.

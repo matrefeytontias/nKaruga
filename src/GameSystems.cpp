@@ -1,5 +1,7 @@
 #include "GameSystems.hpp"
 
+#include <cassert>
+
 #include "graphics/Particles.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "handlers/SoundHandler.hpp"
@@ -9,11 +11,8 @@ std::unique_ptr<GameParameters> GP;
 
 void GameSystems::init()
 {
-	if (GS == nullptr)
-		GS = std::unique_ptr<GameSystems>(new GameSystems);
-	else
-		// TODO : assert
-		(void)0;
+	assert(GS == nullptr);
+	GS = std::unique_ptr<GameSystems>(new GameSystems);
 }
 
 GameSystems::GameSystems() : minX(0), maxX(Constants::SCREEN_WIDTH), chapterTimer(0), skipFrame(0), killedThisFrame(), chainStatus(0),
@@ -37,11 +36,8 @@ int GameSystems::getChapterTimer() const
 
 void GameParameters::init()
 {
-	if (GP == nullptr)
-		GP = std::unique_ptr<GameParameters>(new GameParameters);
-	else
-		// TODO : assert
-		(void)0;
+	assert(GP == nullptr);
+	GP = std::unique_ptr<GameParameters>(new GameParameters);
 }
 
 GameParameters::GameParameters() : usingArrows(true), difficulty(Constants::DifficultySetting::EASY),

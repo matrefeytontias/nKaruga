@@ -280,7 +280,6 @@ void playGame()
 	for(int i = 0; i < 3; i++)
 		chainColor[i] = 0;
 	GS->chainStatus = 0;
-	GS->frameChainOffset = 0;
 	
 	GS->inChainCount = 0;
 	currentNotif = 0;
@@ -371,7 +370,6 @@ void playGame()
 					GS->power = 0;
 					// - chains to 0
 					GS->chainStatus = 0;
-					GS->frameChainOffset = 0;
 					GS->inChainCount = 0;
 					GS->maxChain = 0; // I know that this one hurts but it has to be done ;_;
 					// - DO NOT RESET DOT EATER ACHIEVEMENT
@@ -595,7 +593,6 @@ void playGame()
 				}
 			}
 			GS->maxChain = max(GS->chainStatus, GS->maxChain);
-			GS->frameChainOffset = 0;
 		}
 	}
 	
