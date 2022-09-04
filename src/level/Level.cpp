@@ -8,6 +8,7 @@
 #include "handlers/BulletArray.hpp"
 #include "handlers/EnemiesArray.hpp"
 #include "handlers/DrawingCandidates.hpp"
+#include "handlers/SoundHandler.hpp"
 #include "helpers/Constants.hpp"
 #include "n2DLib/n2DLib.h"
 #include "n2DLib/n2DLib_math.h"
@@ -25,7 +26,6 @@ Player* Level::p;
 BulletArray* Level::bArray;
 EnemiesArray* Level::enemiesArray;
 BossEnemy* Level::be;
-SoundHandler* Level::soundSystem;
 int Level::chapterNum;
 Enemy* Level::currentWaveEnemies[Constants::MAX_ENEMY]; // current wave's set of enemies (for 'killed' commands)
 int Level::skipCommand; // skip offset (for skip commands)
@@ -40,7 +40,6 @@ void Level::init(int n)
 	bArray = new BulletArray();
 	enemiesArray = new EnemiesArray();
 	be = new BossEnemy();
-	soundSystem = new SoundHandler();
 	counter = 0;
 	reinit(n);
 }
@@ -48,12 +47,11 @@ void Level::deinit()
 {
 	bgStack.clear();
 	while(!commandStack.empty()) commandStack.pop();
-	soundSystem->stopBgMusic();
+	GS->soundSystem->stopBgMusic();
 	delete p;
 	delete bArray;
 	delete enemiesArray;
 	delete be;
-	delete soundSystem;
 }
 
 void Level::reinit(int n)
@@ -92,7 +90,7 @@ void Level::advanceLevel()
 	{
 		do
 		{
-			continueParsing = false;
+			continueParsing = true;
 			// Load the current byte from the level stream
 			commandStack.push(counter);
 			int currentLevelByte = levelStream[counter];
@@ -103,7 +101,6 @@ void Level::advanceLevel()
 				{
 					counter += levelStream[counter] + 1;
 					skipCommand--;
-					continueParsing = true;
 				}
 				else
 				{
@@ -132,6 +129,7 @@ void Level::advanceLevel()
 						// Wait some frames
 						timer = levelStream[counter + 1];
 						counter += 2;
+						continueParsing = false;
 					}
 					else if (currentLevelByte == LVLSTR_WAITABS)
 					{
@@ -140,6 +138,7 @@ void Level::advanceLevel()
 							counter -= 2;
 						else
 							counter += 2;
+						continueParsing = false;
 					}
 					else if (currentLevelByte == LVLSTR_WAITCAMERA)
 					{
@@ -148,24 +147,22 @@ void Level::advanceLevel()
 							counter += 3;
 						else
 							counter -= 2;
+						continueParsing = false;
 					}
 					else if (currentLevelByte == LVLSTR_SKIP)
 					{
 						if (waveTimer > levelStream[++counter])
 							skipCommand = levelStream[counter + 1];
 						counter += 2;
-						continueParsing = true;
 					}
 					else if (currentLevelByte == LVLSTR_SKIPABS)
 					{
 						if (GS->chapterTimer > levelStream[++counter])
 							skipCommand = levelStream[counter + 1];
 						counter += 2;
-						continueParsing = true;
 					}
 					else if (currentLevelByte == LVLSTR_REPEATABS)
 					{
-						printf("Global timer : %d\n", GS->chapterTimer / Constants::FPS);
 						if (GS->chapterTimer < levelStream[counter + 1])
 						{
 							int amount = levelStream[counter + 2];
@@ -181,6 +178,7 @@ void Level::advanceLevel()
 						// Wait for every enemy to be killed before progressing
 						if (enemiesArray->enemiesKilled()) counter++;
 						else counter -= 2;
+						continueParsing = false;
 					}
 					else if (currentLevelByte == LVLSTR_BACKGROUND)
 					{
@@ -189,7 +187,6 @@ void Level::advanceLevel()
 											  levelStream[counter + 5], levelStream[counter + 6]);
 						bgStack.push_back(bg);
 						counter += 7;
-						continueParsing = true;
 					}
 					else if (currentLevelByte == LVLSTR_RESETBG)
 					{
@@ -198,7 +195,7 @@ void Level::advanceLevel()
 					}
 					else if (currentLevelByte == LVLSTR_MUSIC)
 					{
-						soundSystem->playBgMusic(LUTs::music(static_cast<LUTs::MusicId>(levelStream[counter + 1])),
+						GS->soundSystem->playBgMusic(LUTs::music(static_cast<LUTs::MusicId>(levelStream[counter + 1])),
 												 LUTs::music(static_cast<LUTs::MusicId>(levelStream[counter + 2])));
 						counter += 3;
 					}
@@ -222,7 +219,6 @@ void Level::advanceLevel()
 						// And here we go for a new chapter
 						GS->chapterTimer = 0;
 						reinit(chapterNum);
-						
 					}
 					else if (currentLevelByte == LVLSTR_CHAPTER)
 					{
@@ -232,6 +228,7 @@ void Level::advanceLevel()
 						currentW = 0;
 						GS->chapterTimer = 0;
 						counter++;
+						continueParsing = false;
 					}
 					else if (currentLevelByte == LVLSTR_JOINT)
 					{
@@ -247,7 +244,7 @@ void Level::advanceLevel()
 						// # TODO : BETTER WAY TO DO THIS #
 						// Cinematic when the music is faded
 						fightingBoss = true;
-						soundSystem->stopBgMusic();
+						GS->soundSystem->stopBgMusic();
 						phase = Constants::GamePhase::BOSSCINEMATIC;
 						GS->bossIntroChannel = -2; // reinit the boss intro channel
 						GS->chapterTimer = 0;
@@ -256,6 +253,7 @@ void Level::advanceLevel()
 						BossData bossData = createBossData(levelStream[counter]);
 						be->activate(&bossData);
 						counter++;
+						continueParsing = false;
 					}
 					else if (currentLevelByte == LVLSTR_BKPT)
 					{
@@ -284,6 +282,7 @@ void Level::advanceLevel()
 				currentH = 0;
 				GS->chapterTimer = 0;
 				counter++;
+				continueParsing = false;
 			}
 			else if(currentLevelByte == LVLSTR_END)
 			{
@@ -297,6 +296,7 @@ void Level::advanceLevel()
 				updateScreen();
 				SDL_Delay(5000);
 				gameEnded = true;
+				continueParsing = false;
 			}
 			else
 			{
@@ -316,7 +316,6 @@ void Level::advanceLevel()
 				else
 					skipCommand--;
 				counter += 9;
-				continueParsing = true;
 			}
 		} while(continueParsing);
 	}

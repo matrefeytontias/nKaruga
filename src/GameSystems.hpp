@@ -6,6 +6,7 @@
 
 class DrawingCandidates;
 class Particles;
+class SoundHandler;
 
 // Used for keeping track of various elements pertaining
 // to a running game.
@@ -16,6 +17,7 @@ public:
 
 	std::unique_ptr<DrawingCandidates> DC;
 	std::unique_ptr<Particles> particles;
+	std::unique_ptr<SoundHandler> soundSystem;
 
 	void setPlayAreaSize(int minX, int maxX);
 	int getChapterTimer() const;

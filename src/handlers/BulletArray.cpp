@@ -2,6 +2,7 @@
 
 #include "utils.hpp"
 #include "graphics/Particles.hpp"
+#include "handlers/SoundHandler.hpp"
 #include "level/Level.hpp"
 #include "helpers/Constants.hpp"
 #include "n2DLib/n2DLib.h"
@@ -338,7 +339,7 @@ void BulletArray::add(Fixed _x, Fixed _y, Fixed a, Fixed r, int imgId, bool _p, 
 		{
 			// There's one sound per bullet type
 			int d = (imgId - static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT)) / 2;
-			Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_ENEMY_0, d));
+			GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_ENEMY_0, d));
 		}
 	}
 }
@@ -358,7 +359,7 @@ void BulletArray::add_homing(Fixed _x, Fixed _y, Fixed angle, Player* target, bo
 	{
 		data_homing[homingCount].activate(_x, _y, angle, target, _p);
 		homingCount++;
-		Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_ENEMY_HOMING));
+		GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_ENEMY_HOMING));
 	}
 }
 
@@ -374,7 +375,7 @@ void BulletArray::deactivate(int n, bool playSound)
 	data[n].deactivate();
 	for(int i = n; i < bulletCount; i++)
 		data[i] = data[i + 1];
-	if(playSound) Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_IMPACT));
+	if(playSound) GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_IMPACT));
 	//data[bulletCount].deactivate();
 }
 

@@ -8,6 +8,7 @@
 #include "graphics/ExplosionEffect.hpp"
 #include "graphics/Particles.hpp"
 #include "handlers/DrawingCandidates.hpp"
+#include "handlers/SoundHandler.hpp"
 #include "helpers/Constants.hpp"
 #include "level/Level.hpp"
 #include "menu/Menu.hpp"
@@ -83,23 +84,15 @@ int main(int argc, char** argv)
 	// TODO : make things order-independent as right now they are not,
 	// or at least throw when something is not right.
 
-	// TODO : move SoundHandler out of Level
-	// so this call can gtfo.
-	// In short, Level::init inits (among other things)
-	// the sound handler which inits SDL_mixer, which
-	// buildGameLUTs needs to load sound files.
-	// initBuffering only then initializes SDL.
-	// It is also called later when the LUTs are
-	// loaded so it can load images and whatnot.
-	// It's all pretty stupid really.
-	Level::init(1);
+	GameSystems::init();
+	GameParameters::init();
 
 	initBuffering();
+
 	printf("Building game LUTs ...\n");
 	LUTs::buildGameLUTs();
 	printf("Done\n");
-	GameParameters::init();
-	GameSystems::init();
+
 	initExplosionEngine();
 
 	int blink = 0;
@@ -204,7 +197,7 @@ int main(int argc, char** argv)
 					readFromConfig(configFile);
 					fclose(configFile);
 				}
-				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_START));
+				GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_START));
 				clearBufferB();
 				updateScreen();
 				SDL_Delay(1000);
@@ -222,7 +215,7 @@ int main(int argc, char** argv)
 	
 	LUTs::freeGameLUTs();
 
-	// delete Level::soundSystem;
+	// delete GS->soundSystem;
 	
 	deinitExplosionEngine();
 	deinitBuffering();
@@ -271,7 +264,7 @@ void playGame()
 
 	// Reset the level stream
 	Level::counter = 0;
-	// Level::counter = 2619; // DBG : start at level 2
+	Level::counter = 2619; // DBG : start at level 2
 	pauseTimer = 0;
 	GS->hasFiredOnce = false;
 
@@ -312,11 +305,11 @@ void playGame()
 		Level::p->handle(kEv);
 		
 		Level::bArray->handle();
-		
+
 		// Draw everything that has to be drawn
 		GS->DC->flush();
 		// Update sound system
-		Level::soundSystem->update();
+		GS->soundSystem->update();
 		
 		if(Level::phase == Constants::GamePhase::PLAY && !Level::fightingBoss)
 			Level::advanceLevel();
@@ -324,8 +317,8 @@ void playGame()
 			Level::executeIntro();
 		else if(Level::phase == Constants::GamePhase::BOSSFIGHT)
 		{
-			if (!Level::soundSystem->musicPlaying())
-				Level::soundSystem->playBgMusic(NULL, LUTs::music(LUTs::MusicId::CHAPTER1_BOSS));
+			if (!GS->soundSystem->musicPlaying())
+				GS->soundSystem->playBgMusic(NULL, LUTs::music(LUTs::MusicId::CHAPTER1_BOSS));
 			if(Level::be->handle())
 			{
 				Level::phase = Constants::GamePhase::BOSSEXPLODEINIT;
@@ -339,7 +332,7 @@ void playGame()
 		{
 			if (Level::phase == Constants::GamePhase::BOSSCINEMATIC && GS->bossIntroChannel == -2)
 			{
-				GS->bossIntroChannel = Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BOSS_ALERT));
+				GS->bossIntroChannel = GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BOSS_ALERT));
 				Mix_ChannelFinished(bossIntroDone);
 				GS->runBoss = true;
 				if (GS->bossIntroChannel == -1)
@@ -392,7 +385,7 @@ void playGame()
 				}
 			}
 		}
-		
+
 		// Things drawn passed this point MUST NOT be candidates
 		
 		GS->particles->handle();
@@ -456,7 +449,7 @@ void playGame()
 				drawString(&statsRect.x, &statsRect.y, (320 - stringWidth(Constants::RESULTS_TEXT[1])) / 2, Constants::RESULTS_TEXT[0], 0xffff, 0);
 				if (GS->chapterTimer > 64)
 				{
-					Level::soundSystem->fadeOutMusic(2000, NULL);
+					GS->soundSystem->fadeOutMusic(2000, NULL);
 					// Boss bonus
 					drawString(&statsRect.x, &statsRect.y, (320 - numberWidth(Level::be->getTimeout() * 10000)) / 2, Constants::RESULTS_TEXT[1], 0xffff, 0);
 					drawDecimal(&statsRect.x, &statsRect.y, Level::be->getTimeout() * 10000, 0xffff, 0);
@@ -498,7 +491,7 @@ void playGame()
 		else if (Level::phase == Constants::GamePhase::BOSSCINEMATIC)
 		{
 			drawSprite(LUTs::baseImage(LUTs::BaseImageId::BOSS_WARNING), 0, 72, 0, 0);
-			// Level::soundSystem->bgChannel->setVolume(1.);
+			// GS->soundSystem->bgChannel->setVolume(1.);
 		}
 		else if (Level::phase == Constants::GamePhase::BOSSEXPLODEINIT)
 		{
@@ -516,7 +509,7 @@ void playGame()
 		{
 			if (KPAUSE(kEv))
 			{
-				Level::soundSystem->setPausedBgMusic(true);
+				GS->soundSystem->setPausedBgMusic(true);
 				// Pause the game until another pauseKey is pressed
 				wait_no_key_pressed(GP->keys.pause);
 
@@ -542,7 +535,7 @@ void playGame()
 				}
 				wait_no_key_pressed(GP->keys.pause);
 				pauseTimer = 5;
-				Level::soundSystem->setPausedBgMusic(false);
+				GS->soundSystem->setPausedBgMusic(false);
 			}
 		}
 		else
@@ -597,7 +590,7 @@ void playGame()
 							}
 						}
 						GS->chainStatus++;
-						Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::PLAYER_CHAIN));
+						GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::PLAYER_CHAIN));
 					}
 					GS->killedThisFrame[i] = -1;
 				}

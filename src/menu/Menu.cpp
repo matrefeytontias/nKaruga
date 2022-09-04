@@ -4,6 +4,7 @@
 
 #include "utils.hpp"
 #include "level/Level.hpp"
+#include "handlers/SoundHandler.hpp"
 #include "helpers/Constants.hpp"
 #include "n2DLib/n2DLib.h"
 #include "n2DLib/n2DLib_math.h"
@@ -119,7 +120,7 @@ int Menu::run()
 		{
 			if (!pressed[0] && choice < num - 1)
 			{
-				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_CURSOR));
+				GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_CURSOR));
 				pressed[0] = true;
 				choice++;
 			}
@@ -131,7 +132,7 @@ int Menu::run()
 		{
 			if (!pressed[1] && choice > 0)
 			{
-				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_CURSOR));
+				GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_CURSOR));
 				pressed[1] = true;
 				choice--;
 			}
@@ -146,7 +147,7 @@ int Menu::run()
 				pressed[2] = true;
 				if (apply(choice))
 				{
-					Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_SELECT));
+					GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_SELECT));
 					return choice;
 				}
 			}
@@ -156,7 +157,7 @@ int Menu::run()
 
 		if (isKeyPressed(SDL_SCANCODE_ESCAPE))
 		{
-			Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_BACK));
+			GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_BACK));
 			return -1;
 		}
 	}

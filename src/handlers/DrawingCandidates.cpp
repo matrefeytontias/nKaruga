@@ -9,7 +9,7 @@ DrawingCandidates::DrawingCandidates()
 {
 	candidatesCount = 0;
 	cam.absX = cam.absY = cam.relX = cam.relY = 0;
-	cameraPath = LUTs::camTraveling(LUTs::CamTravelingId::CHAPTER1);
+	cameraPath = nullptr;
 }
 
 DrawingCandidates::~DrawingCandidates()
@@ -39,7 +39,8 @@ void DrawingCandidates::flush()
 
 	candidatesCount = 0;
 	// Update camera
-	(cameraPath)(&cam);
+	if(cameraPath != nullptr)
+		(cameraPath)(&cam);
 }
 
 // TODO : LUTs::CamTravelingId id

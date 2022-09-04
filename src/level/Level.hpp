@@ -7,7 +7,6 @@
 #include "entities/Player.hpp"
 #include "handlers/BulletArray.hpp"
 #include "handlers/EnemiesArray.hpp"
-#include "handlers/SoundHandler.hpp"
 #include "helpers/Constants.hpp"
 
 class BackgroundScroller;
@@ -31,7 +30,6 @@ public:
 	static BulletArray* bArray;
 	static EnemiesArray* enemiesArray;
 	static BossEnemy* be;
-	static SoundHandler* soundSystem;
 private:
 	static int chapterNum;
 	static Enemy* currentWaveEnemies[Constants::MAX_ENEMY]; // current wave's set of enemies (for 'killed' commands)

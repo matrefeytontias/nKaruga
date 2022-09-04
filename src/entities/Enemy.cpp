@@ -4,6 +4,7 @@
 
 #include "types.h"
 #include "handlers/DrawingCandidates.hpp"
+#include "handlers/SoundHandler.hpp"
 #include "helpers/Joint.hpp"
 #include "n2DLib/n2DLib_math.h"
 #include "level/Level.hpp"
@@ -143,7 +144,7 @@ bool Enemy::damage(bool _pol, int amount)
 
 		if (HP <= 0)
 		{
-			Level::soundSystem->quickPlaySFX(LUTs::sound(maxHP > 20 ? LUTs::SoundId::ENEMY_EXP_BIG : LUTs::SoundId::ENEMY_EXP_SMALL));
+			GS->soundSystem->quickPlaySFX(LUTs::sound(maxHP > 20 ? LUTs::SoundId::ENEMY_EXP_BIG : LUTs::SoundId::ENEMY_EXP_SMALL));
 			if (GP->fireback)
 			{
 				if (_pol == polarity || GP->hardMode)

@@ -3,6 +3,7 @@
 #include "GameSystems.hpp"
 #include "graphics/Particles.hpp"
 #include "handlers/DrawingCandidates.hpp"
+#include "handlers/SoundHandler.hpp"
 #include "helpers/Constants.hpp"
 #include "level/Level.hpp"
 #include "n2DLib/n2DLib_math.h"
@@ -86,7 +87,7 @@ void Player::handle(KeyEvent kEv)
 			if (!polarityRepeat)
 			{
 				switchPolarity();
-				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::PLAYER_SWITCH));
+				GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::PLAYER_SWITCH));
 			}
 			polarityRepeat = true;
 		}
@@ -97,7 +98,7 @@ void Player::handle(KeyEvent kEv)
 		{
 			if(GS->power > 9)
 			{
-				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_FRAGMENT));
+				GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_FRAGMENT));
 				GS->hasFiredOnce = true;
 				for(int i = 0; i < GS->power / 10; i++)
 					Level::bArray->add_fragment(x, y, 64 + ((i % 2) ? 10 + (i / 2) * 21 : -10 - (i / 2) * 21), this, polarity, false);
@@ -133,7 +134,7 @@ void Player::handle(KeyEvent kEv)
 					for(int i = 0; i < 8; i++)
 						GS->particles->add(x, y, 192 + (rand() % 32) - 16, itofix(2), polarity, 8);
 				}
-				Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_PLAYER_BULLET));
+				GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_PLAYER_BULLET));
 			}
 		}
 		else
@@ -198,7 +199,7 @@ void Player::hurt()
 	GS->frameChainOffset = 0;
 	GS->inChainCount = 0;
 	GS->power = 0;
-	Level::soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::PLAYER_DEATH));
+	GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::PLAYER_DEATH));
 }
 
 int Player::getLives()
