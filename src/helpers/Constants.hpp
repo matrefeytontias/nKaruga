@@ -87,6 +87,10 @@ struct Constants
 	static constexpr int SCORE_HIT_OP = 40;
 	static constexpr int SCORE_ABSORB = 100;
 
+	// Particles
+	static constexpr int MAX_PARTICLE = 1024;
+	static constexpr int PARTICLE_RADIUS = 4;
+
 	// Menu items
 	static constexpr const char* BOOLEAN_STRINGS[] = { "no\n", "yes\n" };
 	static constexpr int TITLE_OPTIONS = 4;

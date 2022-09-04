@@ -1,10 +1,7 @@
 #pragma once
 
 #include "types.h"
-
-// TODO : move in Constants.hpp
-#define MAX_PARTICLE 1024
-#define PARTICLE_RADIUS 4
+#include "helpers/Constants.hpp"
 
 // Particles
 // Because they are pretty
@@ -17,12 +14,12 @@ public:
 	void pulse(Fixed x, Fixed y, bool polarity);
 	void handle();
 private:
-	Fixed x[MAX_PARTICLE];
-	Fixed y[MAX_PARTICLE];
-	Fixed dx[MAX_PARTICLE];
-	Fixed dy[MAX_PARTICLE];
-	int time[MAX_PARTICLE];
-	int dt[MAX_PARTICLE];
-	bool polarity[MAX_PARTICLE];
+	Fixed x[Constants::MAX_PARTICLE];
+	Fixed y[Constants::MAX_PARTICLE];
+	Fixed dx[Constants::MAX_PARTICLE];
+	Fixed dy[Constants::MAX_PARTICLE];
+	int time[Constants::MAX_PARTICLE];
+	int dt[Constants::MAX_PARTICLE];
+	bool polarity[Constants::MAX_PARTICLE];
 	int counter;
 };

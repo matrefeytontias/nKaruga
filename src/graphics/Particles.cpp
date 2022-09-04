@@ -7,7 +7,7 @@
 
 Particles::Particles()
 {
-	for(int i = 0; i < MAX_PARTICLE; i++)
+	for(int i = 0; i < Constants::MAX_PARTICLE; i++)
 		time[i] = 0;
 	counter = 0;
 }
@@ -26,8 +26,8 @@ void Particles::add(Fixed _x, Fixed _y, Fixed _a, Fixed _r, bool _p, int lifetim
 	dy[counter] = fixmul(fixsin(_a), ratio);
 	polarity[counter] = _p;
 	time[counter] = lifetime;
-	dt[counter] = lifetime / PARTICLE_RADIUS;
-	counter = (counter + 1) % MAX_PARTICLE;
+	dt[counter] = lifetime / Constants::PARTICLE_RADIUS;
+	counter = (counter + 1) % Constants::MAX_PARTICLE;
 }
 
 void Particles::pulse(Fixed _x, Fixed _y, bool _p)
@@ -40,7 +40,7 @@ void Particles::pulse(Fixed _x, Fixed _y, bool _p)
 
 void Particles::handle()
 {
-	for(int i = 0; i < MAX_PARTICLE; i++)
+	for(int i = 0; i < Constants::MAX_PARTICLE; i++)
 	{
 		if(time[i])
 		{
