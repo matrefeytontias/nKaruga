@@ -83,6 +83,8 @@ int main(int argc, char** argv)
 	// Init things
 	// TODO : make things order-independent as right now they are not,
 	// or at least throw when something is not right.
+	// Dependencies left :
+	// - LUTs::buildGameLUTs needs SDL_mixer
 
 	GameSystems::init();
 	GameParameters::init();
@@ -126,6 +128,7 @@ int main(int argc, char** argv)
 	clearBufferW();
 	timer_load(1, 0);
 
+	// TODO : do input via n2DLib
 	while(!donePlaying)
 	{
 		const Uint8 *keys = SDL_GetKeyboardState(NULL);
@@ -146,11 +149,7 @@ int main(int argc, char** argv)
 		}
 		else if(openedMenu)
 		{
-			void* v[4]; // = { NULL, &GP->difficulty, &GP->usingArrows, NULL };
-			v[0] = NULL;
-			v[1] = &GP->difficulty;
-			v[2] = &GP->usingArrows;
-			v[3] = NULL;
+			void* v[4] = { NULL, &GP->difficulty, &GP->usingArrows, NULL };
 			MenuItem items[Constants::TITLE_OPTIONS];
 			for (int i = 0; i < Constants::TITLE_OPTIONS; i++)
 			{
