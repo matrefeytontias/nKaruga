@@ -8,7 +8,7 @@ Entity::Entity()
 {
 	x = y = 0;
 	active = false;
-	camRelation = static_cast<int>(Constants::CamRelation::DEFAULT);
+	camRelation = Constants::CamRelation::DEFAULT;
 	isEnemy = false;
 	isBoss = false;
 }
@@ -72,24 +72,25 @@ void Entity::deactivate()
 	active = false;
 }
 
-int Entity::getCamRel()
+Constants::CamRelation Entity::getCamRelation()
 {
 	return camRelation;
 }
 
+// TODO : use float for everything angular
 Fixed Entity::angleToEntity(Entity *e)
 {
-	int x1 = fToScreenX(getx(), getCamRel()),
-		y1 = fToScreenY(gety(), getCamRel()),
-		x2 = fToScreenX(e->getx(), e->getCamRel()),
-		y2 = fToScreenY(e->gety(), e->getCamRel());
+	int x1 = fToScreenX(getx(), getCamRelation()),
+		y1 = fToScreenY(gety(), getCamRelation()),
+		x2 = fToScreenX(e->getx(), e->getCamRelation()),
+		y2 = fToScreenY(e->gety(), e->getCamRelation());
 	return e->isActive() ? (Fixed)(atan2((double)(y2 - y1), (double)(x2 - x1)) * 128. / M_PI) & 0xff : -1;
 }
 
 Fixed Entity::angleToXY(Fixed x, Fixed y)
 {
-	int x1 = fToScreenX(getx(), getCamRel()),
-		y1 = fToScreenY(gety(), getCamRel());
+	int x1 = fToScreenX(getx(), getCamRelation()),
+		y1 = fToScreenY(gety(), getCamRelation());
 	return (Fixed)(atan2((double)(y - y1), (double)(x - x1)) * 128. / M_PI) & 0xff;
 }
 

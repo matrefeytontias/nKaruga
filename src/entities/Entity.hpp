@@ -1,6 +1,7 @@
 #pragma once
 
 #include "types.h"
+#include "helpers/Constants.hpp"
 
 class Entity
 {
@@ -18,7 +19,7 @@ public:
 	bool isActive();
 	void activate();
 	void deactivate();
-	int getCamRel();
+	Constants::CamRelation getCamRelation();
 	Fixed angleToEntity(Entity*);
 	Fixed angleToXY(Fixed x, Fixed y);
 	Fixed distance2ToEntity(Entity*);
@@ -28,7 +29,6 @@ public:
 	bool waitFrames(int frames);
 protected:
 	bool active;
-	// TODO : Constants::CamRelation camRelation
-	int camRelation;
+	Constants::CamRelation camRelation;
 	Fixed x, y;
 };

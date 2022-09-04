@@ -22,7 +22,7 @@ Rect* Bullet::makeRect()
 	return &r;
 }
 
-void Bullet::activate(Fixed _x, Fixed _y, Fixed _a, Fixed _r, LUTs::BaseImageId imgId, bool _p, bool _h, int _camRel)
+void Bullet::activate(Fixed _x, Fixed _y, Fixed _a, Fixed _r, LUTs::BaseImageId imgId, bool _p, bool _h, Constants::CamRelation _camRel)
 {
 	active = true;
 	polarity = _p;

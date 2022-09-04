@@ -16,6 +16,8 @@
 
 #include "gfx/kanji.h"
 
+// #define START_LVL2
+
 void playGame();
 
 static unsigned short image_cursor[] = { 5, 8, 1,
@@ -261,7 +263,9 @@ void playGame()
 
 	// Reset the level stream
 	Level::counter = 0;
-	// Level::counter = 2619; // DBG : start at level 2
+#ifdef START_LVL2
+	Level::counter = 2619; // DBG : start at level 2
+#endif
 	pauseTimer = 0;
 	GS->hasFiredOnce = false;
 

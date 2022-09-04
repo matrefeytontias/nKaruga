@@ -59,8 +59,8 @@ void Enemy::handle()
 			
 			er.x = fixtoi(getx());
 			er.y = fixtoi(gety());
-			screenRect.x = fToScreenX(getx(), getCamRel());
-			screenRect.y = fToScreenY(gety(), getCamRel());
+			screenRect.x = fToScreenX(getx(), getCamRelation());
+			screenRect.y = fToScreenY(gety(), getCamRelation());
 			
 			spawned -= !!spawned;
 			// Have a relatively big threshold for off-screen movement
@@ -75,11 +75,11 @@ void Enemy::handle()
 				// then the enemy image
 				if(hasRotation)
 				{
-					GS->DC->add(img, &er, NULL, rotationAngle, flash, getCamRel());
+					GS->DC->add(img, &er, NULL, rotationAngle, flash, getCamRelation());
 				}
 				else
 				{
-					GS->DC->add(img, &er, flash, getCamRel());
+					GS->DC->add(img, &er, flash, getCamRelation());
 				}
 				flash = false;
 			}
@@ -122,7 +122,7 @@ void Enemy::activate(int _x, int _y, int _HP, LUTs::BaseImageId _shipImgId, LUTs
 	prop = type != Constants::EnemyType::ENEMY;
 	damageable = type != Constants::EnemyType::PROP && !ghost;
 	active = true;
-	camRelation = prop ? static_cast<int>(Constants::CamRelation::ABSOLUTE) : static_cast<int>(Constants::CamRelation::RELATIVE);
+	camRelation = prop ? Constants::CamRelation::ABSOLUTE : Constants::CamRelation::RELATIVE;
 	diedThisFrame = false;
 	spawned = SPAWN_DELAY;
 	flash = false;
@@ -149,7 +149,7 @@ bool Enemy::damage(bool _pol, int amount)
 					Fixed angle = angleToEntity(Level::p);
 					int famount = _pol != polarity ? fireback / 2 : fireback;
 					for (int i = 0; i < famount; i++)
-						Level::bArray->add(getx(), gety(), angle + (rand() % 16) - 8, itofix(4) + (rand() % 512) - 256, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT), polarity, true, getCamRel());
+						Level::bArray->add(getx(), gety(), angle + (rand() % 16) - 8, itofix(4) + (rand() % 512) - 256, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT), polarity, true, getCamRelation());
 				}
 			}
 			diedThisFrame = true;
@@ -175,7 +175,7 @@ void Enemy::joint(Entity *target, int targetX, int targetY, int targetCX, int ta
 
 bool Enemy::collide(Fixed _x, Fixed _y, Fixed _cx, Fixed _cy)
 {
-	Fixed x = fToScreenX(getx(), getCamRel()), y = fToScreenY(gety(), getCamRel());
+	Fixed x = fToScreenX(getx(), getCamRelation()), y = fToScreenY(gety(), getCamRelation());
 	Fixed w = itofix(img[0]), h = itofix(img[1]);
 	Rect temp;
 	rotate(_x, _y, x + _cx, y + _cy, hasRotation ? -rotationAngle : 0, &temp);
@@ -315,18 +315,18 @@ void Enemy::beAbox()
 			Fixed a = (Fixed)(atan2((float)dy + r, (float)dx) * 128 / M_PI);
 			if (!(internal[2] & 1))
 				for (int i = 0; i < 3; i++)
-					Level::bArray->add(x + itofix(i - 1) * 10, y + itofix(24), a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
+					Level::bArray->add(x + itofix(i - 1) * 10, y + itofix(24), a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
 			else
-				Level::bArray->add(x, y + itofix(24), a, 192, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
+				Level::bArray->add(x, y + itofix(24), a, 192, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
 		}
 		if (internal[0] & 2)
 		{
 			Fixed a = 128 - (Fixed)(asin((float)dy / (float)r) * 128 / M_PI);
 			if (!(internal[2] & 2))
 				for (int i = 0; i < 3; i++)
-					Level::bArray->add(x - itofix(24), y + itofix(i - 1) * 10, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
+					Level::bArray->add(x - itofix(24), y + itofix(i - 1) * 10, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
 			else
-				Level::bArray->add(x - itofix(24), y, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
+				Level::bArray->add(x - itofix(24), y, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
 		}
 		if (internal[0] & 4)
 		{
@@ -334,18 +334,18 @@ void Enemy::beAbox()
 
 			if (!(internal[2] & 4))
 				for (int i = 0; i < 3; i++)
-					Level::bArray->add(x + itofix(24), y + itofix(i - 1) * 10, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
+					Level::bArray->add(x + itofix(24), y + itofix(i - 1) * 10, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
 			else
-				Level::bArray->add(x + itofix(24), y, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
+				Level::bArray->add(x + itofix(24), y, a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
 		}
 		if (internal[0] & 8)
 		{
 			Fixed a = (Fixed)(atan2((float)dy - r, (float)dx) * 128 / M_PI);
 			if (!(internal[2] & 8))
 				for (int i = 0; i < 3; i++)
-					Level::bArray->add(x + itofix(i - 1) * 10, y - itofix(24), a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
+					Level::bArray->add(x + itofix(i - 1) * 10, y - itofix(24), a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
 			else
-				Level::bArray->add(x, y - itofix(24), a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRel());
+				Level::bArray->add(x, y - itofix(24), a, r, static_cast<int>(LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT), polarity, true, getCamRelation());
 		}
 	}
 	// Animation
@@ -362,12 +362,12 @@ void Enemy::beAbox()
 		img = LUTs::baseImage(static_cast<LUTs::BaseImageId>(shipImgId), internal[4]);
 	}
 	// a box is also a prop
-	if (fToScreenY(y, getCamRel()) > itofix(300))
+	if (fToScreenY(y, getCamRelation()) > itofix(300))
 		deactivate();
 }
 
 void Enemy::beAprop()
 {
-	if (fToScreenY(y, getCamRel()) > itofix(300) || fToScreenX(x, getCamRel()) < itofix(-100) || fToScreenX(x, getCamRel()) > itofix(400))
+	if (fToScreenY(y, getCamRelation()) > itofix(300) || fToScreenX(x, getCamRelation()) < itofix(-100) || fToScreenX(x, getCamRelation()) > itofix(400))
 		deactivate();
 }

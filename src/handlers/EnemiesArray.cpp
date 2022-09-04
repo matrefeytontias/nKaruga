@@ -42,8 +42,8 @@ void EnemiesArray::handle()
 		{
 			GS->killedThisFrame[i] = data[i].getPolarity();
 			deadEnemies.activate(&data[i], i);
-			explosionsAnims[currentExplosion].activate(iToScreenX(fixtoi(data[i].getx()), data[i].getCamRel()),
-													   iToScreenY(fixtoi(data[i].gety()), data[i].getCamRel()),
+			explosionsAnims[currentExplosion].activate(iToScreenX(fixtoi(data[i].getx()), data[i].getCamRelation()),
+													   iToScreenY(fixtoi(data[i].gety()), data[i].getCamRelation()),
 													   data[i].getPolarity());
 			currentExplosion++;
 			currentExplosion %= Constants::MAX_ENEMY;

@@ -11,7 +11,7 @@ public:
 	Bullet();
 	~Bullet();
 	Rect* makeRect();
-	void activate(Fixed x, Fixed y, Fixed a, Fixed r, LUTs::BaseImageId imageID, bool polarity, bool hurtsPlayer, int camRelation);
+	void activate(Fixed x, Fixed y, Fixed a, Fixed r, LUTs::BaseImageId imageID, bool polarity, bool hurtsPlayer, Constants::CamRelation camRelation);
 	bool getPolarity();
 	bool hurtsPlayer();
 	bool handle();

@@ -72,7 +72,7 @@ void Homing::draw()
 	r.y = fixtoi(y);
 	
 	// TODO : cache image in `activate` as polarity doesn't change during lifetime
-	GS->DC->add(LUTs::baseImage(polarity ? LUTs::BaseImageId::ENEMY_HOMING_BULLET_SHADOW : LUTs::BaseImageId::ENEMY_HOMING_BULLET_LIGHT), &r, false, static_cast<int>(Constants::CamRelation::DEFAULT));
+	GS->DC->add(LUTs::baseImage(polarity ? LUTs::BaseImageId::ENEMY_HOMING_BULLET_SHADOW : LUTs::BaseImageId::ENEMY_HOMING_BULLET_LIGHT), &r, false, Constants::CamRelation::DEFAULT);
 	
 	for(int i = 0; i < HOMING_TRAILING; i++)
 	{

@@ -17,13 +17,13 @@ DrawingCandidates::~DrawingCandidates()
 	
 }
 
-void DrawingCandidates::add(unsigned short *img, Rect *pos, bool flash, int camRelation)
+void DrawingCandidates::add(unsigned short *img, Rect *pos, bool flash, Constants::CamRelation camRelation)
 {
 	data[candidatesCount].activate(img, pos, flash, camRelation);
 	candidatesCount++;
 }
 
-void DrawingCandidates::add(unsigned short *img, Rect *pos, Rect *center, Fixed angle, bool flash, int camRelation)
+void DrawingCandidates::add(unsigned short *img, Rect *pos, Rect *center, Fixed angle, bool flash, Constants::CamRelation camRelation)
 {
 	data[candidatesCount].activate(img, pos, center, angle, flash, camRelation);
 	candidatesCount++;

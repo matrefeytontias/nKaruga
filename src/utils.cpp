@@ -46,8 +46,8 @@ Enemy* findNearestEnemy(Fixed x, Fixed y)
 			ce = &Level::enemiesArray->data[i];
 			if(ce->isActive() && ce->isDamageable())
 			{
-				concurrentDistance = distance(iToScreenX(fixtoi(ce->getx()), ce->getCamRel()),
-											  iToScreenY(fixtoi(ce->gety()), ce->getCamRel()),
+				concurrentDistance = distance(iToScreenX(fixtoi(ce->getx()), ce->getCamRelation()),
+											  iToScreenY(fixtoi(ce->gety()), ce->getCamRelation()),
 											  fixtoi(x), fixtoi(y));
 				if(concurrentDistance < lastDistance)
 				{
@@ -84,19 +84,19 @@ KeyEvent getk(void)
 #undef setbit
 }
 
-int iToScreenX(int x, int camRelation)
+int iToScreenX(int x, Constants::CamRelation camRelation)
 {
-	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? x - GS->DC->cam.absX : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? x - GS->DC->cam.relX : x));
+	return (camRelation == Constants::CamRelation::ABSOLUTE ? x - GS->DC->cam.absX : (camRelation == Constants::CamRelation::RELATIVE ? x - GS->DC->cam.relX : x));
 }
-int iToScreenY(int y, int camRelation)
+int iToScreenY(int y, Constants::CamRelation camRelation)
 {
-	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? y - GS->DC->cam.absY : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? y - GS->DC->cam.relY : y));
+	return (camRelation == Constants::CamRelation::ABSOLUTE ? y - GS->DC->cam.absY : (camRelation == Constants::CamRelation::RELATIVE ? y - GS->DC->cam.relY : y));
 }
-Fixed fToScreenX(Fixed x, int camRelation)
+Fixed fToScreenX(Fixed x, Constants::CamRelation camRelation)
 {
-	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? x - itofix(GS->DC->cam.absX) : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? x - itofix(GS->DC->cam.relX) : x));
+	return (camRelation == Constants::CamRelation::ABSOLUTE ? x - itofix(GS->DC->cam.absX) : (camRelation == Constants::CamRelation::RELATIVE ? x - itofix(GS->DC->cam.relX) : x));
 }
-Fixed fToScreenY(Fixed y, int camRelation)
+Fixed fToScreenY(Fixed y, Constants::CamRelation camRelation)
 {
-	return (camRelation == static_cast<int>(Constants::CamRelation::ABSOLUTE) ? y - itofix(GS->DC->cam.absY) : (camRelation == static_cast<int>(Constants::CamRelation::RELATIVE) ? y - itofix(GS->DC->cam.relY) : y));
+	return (camRelation == Constants::CamRelation::ABSOLUTE ? y - itofix(GS->DC->cam.absY) : (camRelation == Constants::CamRelation::RELATIVE ? y - itofix(GS->DC->cam.relY) : y));
 }

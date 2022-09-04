@@ -11,8 +11,8 @@ class DrawingCandidates
 public:
 	DrawingCandidates();
 	~DrawingCandidates();
-	void add(unsigned short* img, Rect* pos, bool flash, int camRelation);
-	void add(unsigned short* img, Rect* pos, Rect* center, Fixed angle, bool flash, int camRelation);
+	void add(unsigned short* img, Rect* pos, bool flash, Constants::CamRelation camRelation);
+	void add(unsigned short* img, Rect* pos, Rect* center, Fixed angle, bool flash, Constants::CamRelation camRelation);
 	void flush();
 	void loadCameraPath(int id);
 	Camera cam;

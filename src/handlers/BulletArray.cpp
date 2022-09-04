@@ -159,10 +159,10 @@ void BulletArray::handle()
 						Enemy *ce = &Level::enemiesArray->data[i];
 						if(ce->isActive() && (ce->isDamageable() || !ce->isProp()))
 						{
-							if(cf->getx() - itofix(4) <= fToScreenX(ce->getx(), ce->getCamRel()) + itofix(ce->img[0] / 2) &&
-							cf->getx() + itofix(4) >= fToScreenX(ce->getx(), ce->getCamRel()) - itofix(ce->img[0] / 2) &&
-							cf->gety() - itofix(4) <= fToScreenY(ce->gety(), ce->getCamRel()) + itofix(ce->img[1] / 2) &&
-							cf->gety() + itofix(4) >= fToScreenY(ce->gety(), ce->getCamRel()) - itofix(ce->img[1] / 2))
+							if(cf->getx() - itofix(4) <= fToScreenX(ce->getx(), ce->getCamRelation()) + itofix(ce->img[0] / 2) &&
+							cf->getx() + itofix(4) >= fToScreenX(ce->getx(), ce->getCamRelation()) - itofix(ce->img[0] / 2) &&
+							cf->gety() - itofix(4) <= fToScreenY(ce->gety(), ce->getCamRelation()) + itofix(ce->img[1] / 2) &&
+							cf->gety() + itofix(4) >= fToScreenY(ce->gety(), ce->getCamRelation()) - itofix(ce->img[1] / 2))
 							{
 								if(ce->damage(cf->getPolarity(), 10))
 									GS->score += cf->getPolarity() != ce->getPolarity() ? Constants::SCORE_HIT_OP : Constants::SCORE_HIT;
@@ -177,7 +177,7 @@ void BulletArray::handle()
 				{
 					// Create a placeholder bullet to pass to the collision callback
 					Bullet temp;
-					temp.activate(cf->getx(), cf->gety(), 0, 0, LUTs::BaseImageId::DEFAULT, cf->getPolarity(), false, static_cast<int>(Constants::CamRelation::DEFAULT));
+					temp.activate(cf->getx(), cf->gety(), 0, 0, LUTs::BaseImageId::DEFAULT, cf->getPolarity(), false, Constants::CamRelation::DEFAULT);
 					bossDamaged = (Level::be->collisionCallbacks[Level::be->currentPattern])(Level::be, &temp, 10);
 					temp.deactivate();
 					if(bossDamaged)
@@ -328,7 +328,7 @@ void BulletArray::handle()
 
 // TODO : Add some particles each time a bullet is fired
 // TOOD : LUTs::BaseImageId imgId
-void BulletArray::add(Fixed _x, Fixed _y, Fixed a, Fixed r, int imgId, bool _p, bool _h, int camRelation)
+void BulletArray::add(Fixed _x, Fixed _y, Fixed a, Fixed r, int imgId, bool _p, bool _h, Constants::CamRelation camRelation)
 {
 	if(bulletCount < Constants::MAX_BULLET)
 	{
