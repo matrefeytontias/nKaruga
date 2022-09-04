@@ -1086,7 +1086,7 @@ int boss2_ccb(BossEnemy *be, Bullet *b, int amount)
  */
 
 /*
- * Boss 1 : # TODO #
+ * Boss 1
  */
 
 // Hitbox : sword + body

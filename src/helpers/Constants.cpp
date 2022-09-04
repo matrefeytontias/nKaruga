@@ -290,29 +290,34 @@ background_traveling LUTs::bgTraveling(BgTravelingId entry)
 uint16_t* LUTs::baseImage(BaseImageId entry, unsigned int add)
 {
 	assert(initialized);
+	assert(static_cast<int>(entry) + add < static_cast<int>(BaseImageId::COUNT));
 	return image_entries[static_cast<int>(entry) + add];
 }
 
 uint16_t* LUTs::bossImage(BossImageId entry, unsigned int add)
 {
 	assert(initialized);
+	assert(static_cast<int>(entry) + add < static_cast<int>(BossImageId::COUNT));
 	return bossImage_entries[static_cast<int>(entry) + add];
 }
 
 uint16_t* LUTs::backgroundImage(BgImageId entry, unsigned int add)
 {
 	assert(initialized);
+	assert(static_cast<int>(entry) + add < static_cast<int>(BgImageId::COUNT));
 	return bgImage_entries[static_cast<int>(entry) + add];
 }
 
 Mix_Chunk* LUTs::sound(SoundId entry, unsigned int add)
 {
 	assert(initialized);
+	assert(static_cast<int>(entry) + add < static_cast<int>(SoundId::COUNT));
 	return sound_entries[static_cast<int>(entry) + add];
 }
 
 Mix_Music* LUTs::music(MusicId entry, unsigned int add)
 {
 	assert(initialized);
+	assert(static_cast<int>(entry) + add < static_cast<int>(MusicId::COUNT));
 	return music_entries[static_cast<int>(entry) + add];
 }

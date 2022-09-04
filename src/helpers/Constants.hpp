@@ -467,7 +467,6 @@ struct LUTs
 	static background_traveling bgTraveling(BgTravelingId entry);
 	// Additional versions with offsets to ease animation and programmatic
 	// selection of images. TODO : find a better system maybe ?
-	// TODO : check bounds with "entry + add"
 	static uint16_t* baseImage(BaseImageId entry, unsigned int add);
 	static uint16_t* bossImage(BossImageId entry, unsigned int add);
 	static uint16_t* backgroundImage(BgImageId entry, unsigned int add);

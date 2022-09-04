@@ -250,7 +250,7 @@ void playGame()
 	int currentW = 0, currentH = 0, chapterNum = 0, dX = 0, dY = 0;
 	bool drawPowerSlot = true;
 
-	// TODO : figure out if this should be here
+	// TODO : refactor so Level isn't static and its lifetime makes sense
 	Level::init(1);
 
 	ChainNotif chainNotifsArray[Constants::MAX_ENEMY];
