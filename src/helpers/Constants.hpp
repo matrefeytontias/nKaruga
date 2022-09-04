@@ -465,8 +465,14 @@ struct LUTs
 	static enemy_pattern enemyPattern(EnemyPatternId entry);
 	static camera_traveling camTraveling(CamTravelingId entry);
 	static background_traveling bgTraveling(BgTravelingId entry);
-	// Additional versions with offsets to ease animation and programmatic
+	// Index offsetting functions to ease animation and programmatic
 	// selection of images. TODO : find a better system maybe ?
+	static BaseImageId offset(BaseImageId id, unsigned int add);
+	static BossImageId offset(BossImageId id, unsigned int add);
+	static BgImageId offset(BgImageId id, unsigned int add);
+	static SoundId offset(SoundId id, unsigned int add);
+	static MusicId offset(MusicId id, unsigned int add);
+	// Shortform functions that amount to lookup(offset(x, a))
 	static uint16_t* baseImage(BaseImageId entry, unsigned int add);
 	static uint16_t* bossImage(BossImageId entry, unsigned int add);
 	static uint16_t* backgroundImage(BgImageId entry, unsigned int add);
