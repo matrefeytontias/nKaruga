@@ -102,8 +102,7 @@ void Enemy::handle()
 
 #define SPAWN_DELAY 512
 
-// TODO : Constants::EnemyType type
-void Enemy::activate(int _x, int _y, int _HP, LUTs::BaseImageId _shipImgId, LUTs::EnemyPatternId patternId, int _waveIndex, bool _polarity, bool _hasRotation, int _f, bool _ghost, int type)
+void Enemy::activate(int _x, int _y, int _HP, LUTs::BaseImageId _shipImgId, LUTs::EnemyPatternId patternId, int _waveIndex, bool _polarity, bool _hasRotation, int _f, bool _ghost, Constants::EnemyType type)
 {
 	maxHP = HP = _HP;
 	x = _x;
@@ -120,8 +119,8 @@ void Enemy::activate(int _x, int _y, int _HP, LUTs::BaseImageId _shipImgId, LUTs
 	for(int i = 0; i < 6; i++)
 		internal[i] = 0;
 	ghost = _ghost;
-	prop = type != static_cast<int>(Constants::EnemyType::ENEMY);
-	damageable = type != static_cast<int>(Constants::EnemyType::PROP) && !ghost;
+	prop = type != Constants::EnemyType::ENEMY;
+	damageable = type != Constants::EnemyType::PROP && !ghost;
 	active = true;
 	camRelation = prop ? static_cast<int>(Constants::CamRelation::ABSOLUTE) : static_cast<int>(Constants::CamRelation::RELATIVE);
 	diedThisFrame = false;
