@@ -23,7 +23,7 @@ Enemy::Enemy() : Entity()
 	prop = false;
 	damageable = false;
 	visible = true;
-	shipImgId = static_cast<int>(LUTs::BaseImageId::DEFAULT);
+	shipImgId = LUTs::BaseImageId::DEFAULT;
 	callback = NULL;
 	spawned = 0;
 	flash = false;
@@ -102,17 +102,16 @@ void Enemy::handle()
 
 #define SPAWN_DELAY 512
 
-// TODO : LUTs::BaseImageId _shipImgId
 // TODO : LUTs::EnemyPatternId patternId
 // TODO : Constants::EnemyType type
-void Enemy::activate(int _x, int _y, int _HP, int _shipImgId, int patternId, int _waveIndex, bool _polarity, bool _hasRotation, int _f, bool _ghost, int type)
+void Enemy::activate(int _x, int _y, int _HP, LUTs::BaseImageId _shipImgId, int patternId, int _waveIndex, bool _polarity, bool _hasRotation, int _f, bool _ghost, int type)
 {
 	maxHP = HP = _HP;
 	x = _x;
 	y = _y;
 	
 	shipImgId = _shipImgId;
-	img = LUTs::baseImage(static_cast<LUTs::BaseImageId>(shipImgId));
+	img = LUTs::baseImage(shipImgId);
 	fireback = _f;
 	polarity = _polarity;
 	hasRotation = _hasRotation;

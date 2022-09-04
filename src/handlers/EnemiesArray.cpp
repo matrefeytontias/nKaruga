@@ -26,7 +26,7 @@ Enemy* EnemiesArray::add(int x, int y, int HP, int shipImgId, int patternId, int
 		currentEnemy++;
 		currentEnemy %= Constants::MAX_ENEMY;
 	}
-	data[currentEnemy].activate(x, y, HP, shipImgId, patternId, waveIndex, polarity, hasRotation, firebackAmount, ghost, type);
+	data[currentEnemy].activate(x, y, HP, static_cast<LUTs::BaseImageId>(shipImgId), patternId, waveIndex, polarity, hasRotation, firebackAmount, ghost, type);
 	Enemy *r = &data[currentEnemy];
 	currentEnemy++;
 	currentEnemy %= Constants::MAX_ENEMY;
