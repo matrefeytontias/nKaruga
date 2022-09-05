@@ -295,9 +295,9 @@ void boss1_icb1(BossEnemy *be)
 				be->setInternal(30, 0);
 				be->setInternal(31, 0);
 				Level::enemiesArray->add(itofix(20), itofix(-20), 100, LUTs::BaseImageId::BOSS1_ENEMY_SHIP_SHADOW,
-										 static_cast<int>(LUTs::EnemyPatternId::C1_BOSS), 0, Constants::SHADOW, true, 0, false, false);
+										 LUTs::EnemyPatternId::C1_BOSS, 0, Constants::SHADOW, true, 0, false, false);
 				Level::enemiesArray->add(itofix(300), itofix(-20), 100, LUTs::BaseImageId::BOSS1_ENEMY_SHIP_SHADOW,
-										 static_cast<int>(LUTs::EnemyPatternId::C1_BOSS), 1, Constants::SHADOW, true, 0, false, false);
+										 LUTs::EnemyPatternId::C1_BOSS, 1, Constants::SHADOW, true, 0, false, false);
 				be->HP = getHPsum(be->HPperPattern, 0, be->patternsNb - 1);
 				be->readyToGo = true;
 			}
@@ -348,10 +348,10 @@ void boss1_icb2(BossEnemy *be)
 			be->setInternal(0, 0);
 			be->setInternal(31, 0);
 			Level::enemiesArray->add(itofix(20), itofix(-20), 100, LUTs::BaseImageId::BOSS1_ENEMY_SHIP_LIGHT,
-									 static_cast<int>(LUTs::EnemyPatternId::C1_BOSS), 0, Constants::LIGHT, true, 0, false, false);
+									 LUTs::EnemyPatternId::C1_BOSS, 0, Constants::LIGHT, true, 0, false, false);
 			Level::enemiesArray->add(itofix(300), itofix(-20), 100,
 									 be->currentPattern == 1 ? LUTs::BaseImageId::BOSS1_ENEMY_SHIP_LIGHT : LUTs::BaseImageId::BOSS1_ENEMY_SHIP_SHADOW,
-									 static_cast<int>(LUTs::EnemyPatternId::C1_BOSS), 1, be->currentPattern == 1 ? Constants::LIGHT : Constants::SHADOW, true, 0, false, false);
+									 LUTs::EnemyPatternId::C1_BOSS, 1, be->currentPattern == 1 ? Constants::LIGHT : Constants::SHADOW, true, 0, false, false);
 			be->HP = getHPsum(be->HPperPattern, be->currentPattern, be->patternsNb - 1);
 			be->readyToGo = true;
 		}
@@ -409,23 +409,23 @@ void boss2_icb(BossEnemy *be)
 		// Initialize ghost enemies/joints
 		be->attachedEnemies.resize(NB_GHOSTS_BOSS2);
 		// Weak point		
-		attached(boss2_ghost_leftWeakPoint) = Level::enemiesArray->add(0, 0, be->HPperBar * 2, LUTs::BaseImageId::DEFAULT, static_cast<int>(LUTs::EnemyPatternId::C2_BOSS_WEAK_POINT), 0, Constants::LIGHT, false, 0, false, static_cast<int>(Constants::EnemyType::ENEMY));
+		attached(boss2_ghost_leftWeakPoint) = Level::enemiesArray->add(0, 0, be->HPperBar * 2, LUTs::BaseImageId::DEFAULT, LUTs::EnemyPatternId::C2_BOSS_WEAK_POINT, 0, Constants::LIGHT, false, 0, false, static_cast<int>(Constants::EnemyType::ENEMY));
 		lg = attached(boss2_ghost_leftWeakPoint);
 		lg->joint(be, boss2_jointData[boss2_joint_leftShield][2], boss2_jointData[boss2_joint_leftShield][3], 0, 0, -1, -1,
 			be->bodyImg, LUTs::baseImage(LUTs::BaseImageId::DEFAULT), false);
-		attached(boss2_ghost_rightWeakPoint) = Level::enemiesArray->add(0, 0, be->HPperBar * 2, LUTs::BaseImageId::DEFAULT, static_cast<int>(LUTs::EnemyPatternId::C2_BOSS_WEAK_POINT), 0, Constants::SHADOW, false, 0, false, static_cast<int>(Constants::EnemyType::ENEMY));
+		attached(boss2_ghost_rightWeakPoint) = Level::enemiesArray->add(0, 0, be->HPperBar * 2, LUTs::BaseImageId::DEFAULT, LUTs::EnemyPatternId::C2_BOSS_WEAK_POINT, 0, Constants::SHADOW, false, 0, false, static_cast<int>(Constants::EnemyType::ENEMY));
 		rg = attached(boss2_ghost_rightWeakPoint);
 		rg->joint(be, boss2_jointData[boss2_joint_rightShield][2], boss2_jointData[boss2_joint_leftShield][3], 0, 0, -1, -1,
 			be->bodyImg, LUTs::baseImage(LUTs::BaseImageId::DEFAULT), false);
 		lg->damageable = rg->damageable = false;
 
 		// Shield joint		
-		attached(boss2_ghost_leftShield) = Level::enemiesArray->add(0, itofix(60), 1, LUTs::BaseImageId::BOSS2_LEFTSHIELD, static_cast<int>(LUTs::EnemyPatternId::C2_BOSS_SHIELD), 0, Constants::LIGHT, false, 0, false, static_cast<int>(Constants::EnemyType::ENEMY));
+		attached(boss2_ghost_leftShield) = Level::enemiesArray->add(0, itofix(60), 1, LUTs::BaseImageId::BOSS2_LEFTSHIELD, LUTs::EnemyPatternId::C2_BOSS_SHIELD, 0, Constants::LIGHT, false, 0, false, static_cast<int>(Constants::EnemyType::ENEMY));
 		lg = attached(boss2_ghost_leftShield);
 		lg->joint(be, boss2_jointData[boss2_joint_leftShield][2], boss2_jointData[boss2_joint_leftShield][3],
 			boss2_jointData[boss2_joint_leftShield][0], boss2_jointData[boss2_joint_leftShield][1], -1, -1, be->bodyImg,
 				  LUTs::baseImage(LUTs::BaseImageId::BOSS2_LEFTSHIELD), false);
-		attached(boss2_ghost_rightShield) = Level::enemiesArray->add(0, itofix(60), 1, LUTs::BaseImageId::BOSS2_RIGHTSHIELD, static_cast<int>(LUTs::EnemyPatternId::C2_BOSS_SHIELD), 0, Constants::SHADOW, false, 0, false, static_cast<int>(Constants::EnemyType::ENEMY));
+		attached(boss2_ghost_rightShield) = Level::enemiesArray->add(0, itofix(60), 1, LUTs::BaseImageId::BOSS2_RIGHTSHIELD, LUTs::EnemyPatternId::C2_BOSS_SHIELD, 0, Constants::SHADOW, false, 0, false, static_cast<int>(Constants::EnemyType::ENEMY));
 		rg = attached(boss2_ghost_rightShield);
 		rg->joint(be, boss2_jointData[boss2_joint_rightShield][2], boss2_jointData[boss2_joint_rightShield][3],
 			boss2_jointData[boss2_joint_rightShield][0], boss2_jointData[boss2_joint_rightShield][1], -1, -1, be->bodyImg,
@@ -434,12 +434,12 @@ void boss2_icb(BossEnemy *be)
 		lg->visible = rg->visible = false;
 
 		// Upper arms joints
-		attached(boss2_ghost_leftUpperArm) = Level::enemiesArray->add(0, 0, 1, LUTs::BaseImageId::BOSS2_LEFTUPPERARM, static_cast<int>(LUTs::EnemyPatternId::DEFAULT), 0, Constants::LIGHT, true, 0, false, static_cast<int>(Constants::EnemyType::ENEMY));
+		attached(boss2_ghost_leftUpperArm) = Level::enemiesArray->add(0, 0, 1, LUTs::BaseImageId::BOSS2_LEFTUPPERARM, LUTs::EnemyPatternId::DEFAULT, 0, Constants::LIGHT, true, 0, false, static_cast<int>(Constants::EnemyType::ENEMY));
 		lg = attached(boss2_ghost_leftUpperArm);
 		lg->joint(be, boss2_jointData[boss2_joint_leftUpperArm][2], boss2_jointData[boss2_joint_leftUpperArm][3],
 			boss2_jointData[boss2_joint_leftUpperArm][0], boss2_jointData[boss2_joint_leftUpperArm][1], boss2_jointData[boss2_joint_leftUpperArm][0],
 			boss2_jointData[boss2_joint_leftUpperArm][1], be->bodyImg, LUTs::bossImage(LUTs::BossImageId::BOSS2_LEFTUPPERARM), false);
-		attached(boss2_ghost_rightUpperArm) = Level::enemiesArray->add(0, 0, 1, LUTs::BaseImageId::BOSS2_RIGHTUPPERARM, static_cast<int>(LUTs::EnemyPatternId::DEFAULT), 0, Constants::LIGHT, true, 0, false, static_cast<int>(Constants::EnemyType::ENEMY));
+		attached(boss2_ghost_rightUpperArm) = Level::enemiesArray->add(0, 0, 1, LUTs::BaseImageId::BOSS2_RIGHTUPPERARM, LUTs::EnemyPatternId::DEFAULT, 0, Constants::LIGHT, true, 0, false, static_cast<int>(Constants::EnemyType::ENEMY));
 		rg = attached(boss2_ghost_rightUpperArm);
 		rg->joint(be, boss2_jointData[boss2_joint_rightUpperArm][2], boss2_jointData[boss2_joint_rightUpperArm][3],
 			boss2_jointData[boss2_joint_rightUpperArm][0], boss2_jointData[boss2_joint_rightUpperArm][1],
@@ -449,12 +449,12 @@ void boss2_icb(BossEnemy *be)
 		lg->visible = rg->visible = false;
 
 		// Arms joints
-		attached(boss2_ghost_leftArm) = Level::enemiesArray->add(0, 0, 1, LUTs::BaseImageId::DEFAULT, static_cast<int>(LUTs::EnemyPatternId::DEFAULT), 0, Constants::LIGHT, true, 0, true, static_cast<int>(Constants::EnemyType::ENEMY));
+		attached(boss2_ghost_leftArm) = Level::enemiesArray->add(0, 0, 1, LUTs::BaseImageId::DEFAULT, LUTs::EnemyPatternId::DEFAULT, 0, Constants::LIGHT, true, 0, true, static_cast<int>(Constants::EnemyType::ENEMY));
 		lg = attached(boss2_ghost_leftArm);
 		lg->joint(attached(boss2_ghost_leftUpperArm), boss2_jointData[boss2_joint_leftArm][2], boss2_jointData[boss2_joint_leftArm][3],
 			boss2_jointData[boss2_joint_leftUpperArm][0], boss2_jointData[boss2_joint_leftUpperArm][1], boss2_jointData[boss2_joint_leftArm][0],
 			boss2_jointData[boss2_joint_leftArm][1], -1, -1, LUTs::bossImage(LUTs::BossImageId::BOSS2_LEFTUPPERARM), LUTs::bossImage(LUTs::BossImageId::BOSS2_LEFTARM), false);
-		attached(boss2_ghost_rightArm) = Level::enemiesArray->add(0, 0, 1, LUTs::BaseImageId::DEFAULT, static_cast<int>(LUTs::EnemyPatternId::DEFAULT), 0, Constants::SHADOW, true, 0, true, static_cast<int>(Constants::EnemyType::ENEMY));
+		attached(boss2_ghost_rightArm) = Level::enemiesArray->add(0, 0, 1, LUTs::BaseImageId::DEFAULT, LUTs::EnemyPatternId::DEFAULT, 0, Constants::SHADOW, true, 0, true, static_cast<int>(Constants::EnemyType::ENEMY));
 		rg = attached(boss2_ghost_rightArm);
 		rg->joint(attached(boss2_ghost_rightUpperArm), boss2_jointData[boss2_joint_rightArm][2], boss2_jointData[boss2_joint_rightArm][3],
 			boss2_jointData[boss2_joint_rightUpperArm][0], boss2_jointData[boss2_joint_rightUpperArm][1], boss2_jointData[boss2_joint_rightArm][0],
@@ -667,7 +667,7 @@ void boss1_cb(BossEnemy *be)
 			{
 				pos = getJointPoint(be, boss1_jointData, boss1_joint_leftarm_nonarmed);
 				for(int i = 0; i < 4; i++)
-					Level::enemiesArray->add(itofix(pos.x), itofix(pos.y), 1, LUTs::offset(LUTs::BaseImageId::BOSS1_GRENADE_LIGHT, fireStage % 2), static_cast<int>(LUTs::EnemyPatternId::C1_BOSS_GRENADE), i, fireStage % 2, true, 0, true, false);
+					Level::enemiesArray->add(itofix(pos.x), itofix(pos.y), 1, LUTs::offset(LUTs::BaseImageId::BOSS1_GRENADE_LIGHT, fireStage % 2), LUTs::EnemyPatternId::C1_BOSS_GRENADE, i, fireStage % 2, true, 0, true, false);
 			}
 			else if(fireStage > 6)
 			{
