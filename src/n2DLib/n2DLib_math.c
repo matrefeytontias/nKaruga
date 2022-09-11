@@ -35,28 +35,18 @@ int cube(int x)
 	return x * x * x;
 }
 
-Fixed itofix(int x)
-{
-	return x << 8;
-}
-
-int fixtoi(Fixed x)
-{
-	return x >> 8;
-}
-
 Fixed fixmul(Fixed x, Fixed y)
 {
-	// x = (xint << 8) + xdec, y = (yint << 8) + ydec
-	Fixed xdec = x & 0xff, ydec = y & 0xff, xint = x >> 8, yint = y >> 8;
-	// Like (x * y) >> 8 ; a bit slower but without any risk of overflow (noticeable when squaring and cubing)
-	return ((xint * yint) << 8) + xint * ydec + xdec * yint + ((xdec * ydec) >> 8);
+	// x = (xint << N2DLIB_FIXED_BITS) + xdec, y = (yint << N2DLIB_FIXED_BITS) + ydec
+	Fixed xdec = x & 0xff, ydec = y & 0xff, xint = x >> N2DLIB_FIXED_BITS, yint = y >> N2DLIB_FIXED_BITS;
+	// Like (x * y) >> N2DLIB_FIXED_BITS ; a bit slower but without any risk of overflow (noticeable when squaring and cubing)
+	return ((xint * yint) << N2DLIB_FIXED_BITS) + xint * ydec + xdec * yint + ((xdec * ydec) >> N2DLIB_FIXED_BITS);
 }
 
 Fixed fixdiv(Fixed x, Fixed y)
 {
 	// TODO : prevent overflow ?
-	return (x << 8) / y;
+	return (x << N2DLIB_FIXED_BITS) / y;
 }
 
 Fixed fixcos(Fixed angle)

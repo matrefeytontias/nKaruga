@@ -6,6 +6,9 @@
 extern "C" {
 #endif
 
+#define itofix(x) ((x) << N2DLIB_FIXED_BITS)
+#define fixtoi(x) ((x) >> N2DLIB_FIXED_BITS)
+
 #if !defined(min) && !defined(max)
 
 int min(int a, int b);
@@ -18,8 +21,6 @@ int sign(int x);
 int sq(int x);
 int cube(int x);
 
-Fixed itofix(int x);
-int fixtoi(Fixed x);
 Fixed fixmul(Fixed x, Fixed y);
 Fixed fixdiv(Fixed x, Fixed y);
 Fixed fixcos(Fixed angle);
