@@ -31,50 +31,6 @@ static unsigned short image_cursor[] = { 5, 8, 1,
 0, 0, 1, 1, 1
 };
 
-inline void writeKeyToConfig(FILE* out, t_key* key)
-{
-	fputc(*key, out);
-}
-
-inline void readKeyFromConfig(FILE* in, t_key* key)
-{
-	*key = fgetc(in);
-}
-
-inline void writeToConfig(FILE* out)
-{
-	writeKeyToConfig(out, &GP->keys.fire);
-	writeKeyToConfig(out, &GP->keys.polarity);
-	writeKeyToConfig(out, &GP->keys.fragment);
-	writeKeyToConfig(out, &GP->keys.pause);
-	fputc(static_cast<int>(GP->difficulty), out);
-	fputc(GP->usingArrows, out);
-}
-
-inline void readFromConfig(FILE* in)
-{
-	readKeyFromConfig(in, &GP->keys.fire);
-	readKeyFromConfig(in, &GP->keys.polarity);
-	readKeyFromConfig(in, &GP->keys.fragment);
-	readKeyFromConfig(in, &GP->keys.pause);
-	GP->difficulty = static_cast<Constants::DifficultySetting>(fgetc(in));
-	GP->usingArrows = !!fgetc(in);
-	if (GP->usingArrows)
-	{
-		GP->keys.down = SDL_SCANCODE_DOWN;
-		GP->keys.left = SDL_SCANCODE_LEFT;
-		GP->keys.right = SDL_SCANCODE_RIGHT;
-		GP->keys.up = SDL_SCANCODE_UP;
-	}
-	else
-	{
-		GP->keys.down = SDL_SCANCODE_S;
-		GP->keys.left = SDL_SCANCODE_A;
-		GP->keys.right = SDL_SCANCODE_D;
-		GP->keys.up = SDL_SCANCODE_W;
-	}
-}
-
 int main(int argc, char** argv)
 {
 	UNUSED(argc);
@@ -104,24 +60,8 @@ int main(int argc, char** argv)
 	t_key* customKeys = &GP->keys.fire;
 	int choice = 0;
 	
-	configFile = fopen(Constants::CONFIG_FILENAME, "rb");
-	if(configFile)
-	{
-		readFromConfig(configFile);
-		fclose(configFile);
-	}
-	else
-	{
-		GP->keys.fire = SDL_SCANCODE_I;
-		GP->keys.polarity = SDL_SCANCODE_O;
-		GP->keys.fragment = SDL_SCANCODE_P;
-		GP->keys.pause = SDL_SCANCODE_M;
-		GP->keys.down = SDL_SCANCODE_S;
-		GP->keys.left = SDL_SCANCODE_A;
-		GP->keys.right = SDL_SCANCODE_D;
-		GP->keys.up = SDL_SCANCODE_W;
-	}
-	
+	GP->loadSettings();
+
 	// Mix_Volume(-1, 0);
 	// Mix_VolumeMusic(0);
 	
@@ -179,23 +119,13 @@ int main(int argc, char** argv)
 					while (!get_key_pressed(customKeys + i)) updateKeys();
 					wait_no_key_pressed(customKeys[i]);
 				}
-				configFile = fopen(Constants::CONFIG_FILENAME, "wb");
-				if (configFile)
-				{
-					writeToConfig(configFile);
-					fclose(configFile);
-				}
+				GP->saveSettings();
 			}
 			else if (!choice)
 			{
-				configFile = fopen(Constants::CONFIG_FILENAME, "w+");
-				if (configFile)
-				{
-					writeToConfig(configFile);
-					fseek(configFile, 0, SEEK_SET);
-					readFromConfig(configFile);
-					fclose(configFile);
-				}
+				if (GP->usingArrows)
+					Backend::getArrowMovementKeyBindings(GP->keys);
+				GP->saveSettings();
 				GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_START));
 				clearBufferB();
 				updateScreen();

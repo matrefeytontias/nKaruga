@@ -2,7 +2,10 @@
 
 #include <memory>
 
+#include "backend/backends.h"
 #include "helpers/Constants.hpp"
+
+typedef struct _iobuf FILE;
 
 class DrawingCandidates;
 class Particles;
@@ -63,6 +66,9 @@ class GameParameters
 public:
 	static void init();
 
+	void loadSettings();
+	void saveSettings() const;
+
 	// Whether the control scheme uses arrow keys or custom-bound keys.
 	bool usingArrows;
 	// The current game's difficulty setting.
@@ -71,14 +77,9 @@ public:
 	// TODO : don't need that
 	bool fireback;
 	bool hardMode;
-
-	// TODO : handle keybinding and default bindings via backend
-	struct KeyBindings
-	{
-		t_key down, left, right, up, fire, polarity, fragment, pause;
-	};
 	
-	KeyBindings keys;
+	Backend::KeyBindings keys;
+
 private:
 	GameParameters();
 };

@@ -2,7 +2,10 @@ cmake_minimum_required(VERSION 3.13)
 
 project(nKarugaProject LANGUAGES C CXX)
 
-set(SOURCES ${SOURCES}
+set(PLATFORM "Windows" CACHE STRING "Platform to build nKaruga for")
+set_property(CACHE PLATFORM PROPERTY STRINGS Windows)
+
+set(SOURCES
 # Game source - headers
     src/GameSystems.hpp
     
@@ -98,9 +101,18 @@ set(SOURCES ${SOURCES}
     src/sfx/list.h
 )
 
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src PREFIX "Source Files" FILES ${SOURCES})
+# Gather backend files depending on platform cache variable
 
-add_executable(nKaruga ${SOURCES} icon.rc)
+set(BACKEND_SOURCES src/backend/backends.h)
+
+if(${PLATFORM} STREQUAL "Windows")
+    set(BACKEND_SOURCES ${BACKEND_SOURCES} src/backend/backend_win.cpp)
+endif()
+
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src PREFIX "Source Files" FILES ${SOURCES})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src/backend PREFIX "Backend Files" FILES ${BACKEND_SOURCES})
+
+add_executable(nKaruga ${SOURCES} ${BACKEND_SOURCES} icon.rc)
 
 target_compile_features(nKaruga PRIVATE cxx_std_11)
 

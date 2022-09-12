@@ -1,6 +1,7 @@
 #include "GameSystems.hpp"
 
 #include <cassert>
+#include <cstdio>
 
 #include "graphics/Particles.hpp"
 #include "handlers/DrawingCandidates.hpp"
@@ -41,5 +42,46 @@ void GameParameters::init()
 }
 
 GameParameters::GameParameters() : usingArrows(true), difficulty(Constants::DifficultySetting::EASY),
-fireback(false), hardMode(false), keys({})
-{ }
+fireback(false), hardMode(false), keys()
+{
+	Backend::getDefaultActionKeyBindings(keys);
+	Backend::getDefaultMovementKeyBindings(keys);
+}
+
+void GameParameters::loadSettings()
+{
+	FILE* in = fopen(Constants::CONFIG_FILENAME, "rb");
+
+	if (in)
+	{
+		keys.fire = fgetc(in);
+		keys.polarity = fgetc(in);
+		keys.fragment = fgetc(in);
+		keys.pause = fgetc(in);
+		difficulty = static_cast<Constants::DifficultySetting>(fgetc(in));
+		usingArrows = !!fgetc(in);
+		if (usingArrows)
+			Backend::getArrowMovementKeyBindings(keys);
+		else
+			Backend::getDefaultMovementKeyBindings(keys);
+
+		fclose(in);
+	}
+}
+
+void GameParameters::saveSettings() const
+{
+	FILE* out = fopen(Constants::CONFIG_FILENAME, "w");
+
+	if (out)
+	{
+		fputc(keys.fire, out);
+		fputc(keys.polarity, out);
+		fputc(keys.fragment, out);
+		fputc(keys.pause, out);
+		fputc(static_cast<int>(difficulty), out);
+		fputc(usingArrows, out);
+		
+		fclose(out);
+	}
+}
