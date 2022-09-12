@@ -29,3 +29,8 @@ void Backend::getArrowMovementKeyBindings(KeyBindings& keys)
 	keys.right = SDL_SCANCODE_RIGHT;
 	keys.up = SDL_SCANCODE_UP;
 }
+
+bool Backend::canBindControls()
+{
+	return true;
+}

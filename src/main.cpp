@@ -89,6 +89,7 @@ int main(int argc, char** argv)
 		}
 		else if(openedMenu)
 		{
+			// TODO : check Backend::canBindControls before offering to bind controls
 			void* v[4] = { NULL, &GP->difficulty, &GP->usingArrows, NULL };
 			MenuItem items[Constants::TITLE_OPTIONS];
 			for (int i = 0; i < Constants::TITLE_OPTIONS; i++)
