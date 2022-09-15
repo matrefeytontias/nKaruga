@@ -65,10 +65,12 @@ bool collidePointRect(Fixed px, Fixed py, Fixed x, Fixed y, int w, int h)
 	return px >= x - itofix(w) / 2 && px < x + itofix(w) / 2 && py >= y - itofix(h) / 2 && py < y + itofix(h) / 2;
 }
 
+// TODO : figure out a better place for this to go to.
 KeyEvent getk(void)
 {
-#define setbit(pos, val) k |= val << pos
 	KeyEvent k = 0;
+
+#define setbit(pos, val) k |= val << pos
 
 	setbit(0, isKeyPressed(GP->keys.down));
 	setbit(1, isKeyPressed(GP->keys.left));
@@ -77,11 +79,13 @@ KeyEvent getk(void)
 	setbit(4, isKeyPressed(GP->keys.fire));
 	setbit(5, isKeyPressed(GP->keys.polarity));
 	setbit(6, isKeyPressed(GP->keys.fragment));
+	// TODO : get rid of this
 	setbit(7, isKeyPressed(SDL_SCANCODE_ESCAPE));
 	setbit(8, isKeyPressed(GP->keys.pause));
 
-	return k;
 #undef setbit
+
+	return k;
 }
 
 int iToScreenX(int x, Constants::CamRelation camRelation)

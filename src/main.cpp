@@ -55,10 +55,8 @@ int main(int argc, char** argv)
 
 	int blink = 0;
 	bool donePlaying = false, openedMenu = false;
-	FILE* configFile;
-	// Custom keys vars
+	// Custom keys vars accessed all in order.
 	t_key* customKeys = &GP->keys.fire;
-	int choice = 0;
 	
 	GP->loadSettings();
 
@@ -67,48 +65,45 @@ int main(int argc, char** argv)
 	
 	clearBufferW();
 	timer_load(1, 0);
+	
+	// Construct the main menu
+	bool gameStarted = false;
+	bool configuringControls = false;
+	DeepMenuItem startGameItem(Constants::TITLE_MENU_OPTIONS[0], gameStarted);
+	IntMenuItem difficultyItem(Constants::TITLE_MENU_OPTIONS[1], *reinterpret_cast<int*>(&GP->difficulty), static_cast<int>(Constants::DifficultySetting::HARD), Constants::DIFFICULTIES_NAMES);
+	BoolMenuItem useArrowsItem(Constants::TITLE_MENU_OPTIONS[2], GP->usingArrows, Constants::BOOLEAN_STRINGS[1], Constants::BOOLEAN_STRINGS[0]);
+	DeepMenuItem bindControlsItem(Constants::TITLE_MENU_OPTIONS[3], configuringControls);
+	MenuItem* mainMenuItems[] = { &startGameItem, &difficultyItem, &useArrowsItem, &bindControlsItem };
 
-	// TODO : do input via n2DLib
+	Menu mainMenu = Menu(Backend::canBindControls() ? Constants::TITLE_OPTIONS : Constants::TITLE_OPTIONS - 1, mainMenuItems);
+
 	while(!donePlaying)
 	{
-		const Uint8 *keys = SDL_GetKeyboardState(NULL);
+		KeyEvent k = getk();
 
 		drawSprite(LUTs::baseImage(LUTs::BaseImageId::TITLESCREEN), 0, 0, 0, 0);
 		if(!openedMenu)
 		{
-			int x = (320 - strlen(Constants::TITLE_STRING) * 8) / 2;
+			int x = (320 - CONSTEXPR_STRLEN(Constants::TITLE_STRING) * 8) / 2;
 			int y = 160;
 			if(blink % 1024 < 512)
 				drawString(&x, &y, x, Constants::TITLE_STRING, 0, 0xffff);
 			blink++;
-			if(isKeyPressed(SDL_SCANCODE_RETURN))
+			t_key firstKey;
+			if(get_key_pressed(&firstKey))
 			{
-				wait_no_key_pressed(SDL_SCANCODE_RETURN);
+				wait_no_key_pressed(firstKey);
 				openedMenu = true;
 			}
 		}
-		else if(openedMenu)
+		else
 		{
-			// TODO : check Backend::canBindControls before offering to bind controls
-			void* v[4] = { NULL, &GP->difficulty, &GP->usingArrows, NULL };
-			MenuItem items[Constants::TITLE_OPTIONS];
-			for (int i = 0; i < Constants::TITLE_OPTIONS; i++)
+			donePlaying = mainMenu.run(k);
+
+			// Bind keys to controls
+			if (configuringControls)
 			{
-				items[i].name = Constants::TITLE_MENU_OPTIONS[i];
-				items[i].value = v[i];
-				items[i].labels = NULL;
-				items[i].labelsNb = 0;
-			}
-			items[1].labels = Constants::DIFFICULTIES_NAMES;
-			items[1].labelsNb = 3;
-			items[2].labels = Constants::BOOLEAN_STRINGS;
-			items[2].labelsNb = 2;
-			Menu m(4, items[0], items[1], items[2], items[3]);
-			choice = m.run();
-			if (choice == -1) donePlaying = true;
-			else if (choice == 3)
-			{
-				wait_no_key_pressed(SDL_SCANCODE_RETURN);
+				wait_no_key_pressed(GP->keys.fire);
 				clearBufferB();
 				int x = 0, y = 0;
 				drawString(&x, &y, 0, "Press the key you want to bind to this\naction.\n\n", 0xffff, 0);
@@ -121,8 +116,9 @@ int main(int argc, char** argv)
 					wait_no_key_pressed(customKeys[i]);
 				}
 				GP->saveSettings();
+				configuringControls = false;
 			}
-			else if (!choice)
+			else if (gameStarted)
 			{
 				if (GP->usingArrows)
 					Backend::getArrowMovementKeyBindings(GP->keys);
@@ -134,6 +130,7 @@ int main(int argc, char** argv)
 				GP->hardMode = GP->difficulty == Constants::DifficultySetting::HARD;
 				GP->fireback = GP->difficulty == Constants::DifficultySetting::NORMAL || GP->hardMode;
 				playGame();
+				gameStarted = false;
 				openedMenu = false;
 			}
 		}

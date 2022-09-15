@@ -15,8 +15,8 @@ struct Constants
 
 	// General strings
 	static constexpr char CONFIG_FILENAME[] = "nKaruga.cfg";
-	static constexpr char TITLE_STRING[] = "Press Enter to start or Escape to quit";
-	static constexpr char CONTINUE_TEXT[] = "Continue ? (Enter/Esc : yes/no)";
+	static constexpr char TITLE_STRING[] = "Press any key";
+	static constexpr char CONTINUE_TEXT[] = "Continue ? (Fire/Polarity : yes/no)";
 
 	// Difficulty settings
 	enum struct DifficultySetting
@@ -92,13 +92,13 @@ struct Constants
 	static constexpr int PARTICLE_RADIUS = 4;
 
 	// Menu items
-	static constexpr const char* BOOLEAN_STRINGS[] = { "no\n", "yes\n" };
+	static constexpr const char* BOOLEAN_STRINGS[] = { "no", "yes" };
 	static constexpr int TITLE_OPTIONS = 4;
 	static constexpr const char* TITLE_MENU_OPTIONS[TITLE_OPTIONS] = {
-		"nPlay\n",
-		"iDifficulty:",
-		"bUse arrow keys:",
-		"nConfigure controls\n"
+		"Play",
+		"Difficulty:",
+		"Use arrow keys:",
+		"Configure controls"
 	};
 
 	static constexpr int KEYS_TO_BIND = 4;
@@ -110,9 +110,9 @@ struct Constants
 	};
 
 	static constexpr const char* DIFFICULTIES_NAMES[] = {
-		"Easy\n",
-		"Normal\n",
-		"Hard\n"
+		"Easy",
+		"Normal",
+		"Hard"
 	};
 
 	static constexpr const char* RESULTS_TEXT[6] = {

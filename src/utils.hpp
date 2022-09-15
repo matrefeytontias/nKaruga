@@ -27,3 +27,5 @@ int iToScreenX(int x, Constants::CamRelation camRelation);
 int iToScreenY(int y, Constants::CamRelation camRelation);
 Fixed fToScreenX(Fixed x, Constants::CamRelation camRelation);
 Fixed fToScreenY(Fixed y, Constants::CamRelation camRelation);
+
+#define CONSTEXPR_STRLEN(s) (sizeof(s) / sizeof(char) - 1)
