@@ -56,7 +56,7 @@ int main(int argc, char** argv)
 	int blink = 0;
 	bool donePlaying = false, openedMenu = false;
 	// Custom keys vars accessed all in order.
-	t_key* customKeys = &GP->keys.fire;
+	t_key* customKeys = &GP->keys.down;
 	
 	GP->loadSettings();
 
@@ -71,9 +71,8 @@ int main(int argc, char** argv)
 	bool configuringControls = false;
 	DeepMenuItem startGameItem(Constants::TITLE_MENU_OPTIONS[0], gameStarted);
 	IntMenuItem difficultyItem(Constants::TITLE_MENU_OPTIONS[1], *reinterpret_cast<int*>(&GP->difficulty), static_cast<int>(Constants::DifficultySetting::HARD), Constants::DIFFICULTIES_NAMES);
-	BoolMenuItem useArrowsItem(Constants::TITLE_MENU_OPTIONS[2], GP->usingArrows, Constants::BOOLEAN_STRINGS[1], Constants::BOOLEAN_STRINGS[0]);
-	DeepMenuItem bindControlsItem(Constants::TITLE_MENU_OPTIONS[3], configuringControls);
-	MenuItem* mainMenuItems[] = { &startGameItem, &difficultyItem, &useArrowsItem, &bindControlsItem };
+	DeepMenuItem bindControlsItem(Constants::TITLE_MENU_OPTIONS[2], configuringControls);
+	MenuItem* mainMenuItems[] = { &startGameItem, &difficultyItem, &bindControlsItem };
 
 	Menu mainMenu = Menu(Backend::canBindControls() ? Constants::TITLE_OPTIONS : Constants::TITLE_OPTIONS - 1, mainMenuItems);
 
@@ -120,8 +119,6 @@ int main(int argc, char** argv)
 			}
 			else if (gameStarted)
 			{
-				if (GP->usingArrows)
-					Backend::getArrowMovementKeyBindings(GP->keys);
 				GP->saveSettings();
 				GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_START));
 				clearBufferB();

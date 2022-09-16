@@ -69,8 +69,6 @@ public:
 	void loadSettings();
 	void saveSettings() const;
 
-	// Whether the control scheme uses arrow keys or custom-bound keys.
-	bool usingArrows;
 	// The current game's difficulty setting.
 	Constants::DifficultySetting difficulty;
 	// Whether enemies fire suicide bullets (normal mode and +).

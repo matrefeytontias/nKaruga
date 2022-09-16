@@ -41,11 +41,10 @@ void GameParameters::init()
 	GP = std::unique_ptr<GameParameters>(new GameParameters);
 }
 
-GameParameters::GameParameters() : usingArrows(true), difficulty(Constants::DifficultySetting::EASY),
+GameParameters::GameParameters() : difficulty(Constants::DifficultySetting::EASY),
 fireback(false), hardMode(false), keys()
 {
-	Backend::getDefaultActionKeyBindings(keys);
-	Backend::getDefaultMovementKeyBindings(keys);
+	Backend::getDefaultKeyBindings(keys);
 }
 
 void GameParameters::loadSettings()
@@ -55,16 +54,15 @@ void GameParameters::loadSettings()
 
 	if (in)
 	{
+		keys.down = fgetc(in);
+		keys.left = fgetc(in);
+		keys.right = fgetc(in);
+		keys.up = fgetc(in);
 		keys.fire = fgetc(in);
 		keys.polarity = fgetc(in);
 		keys.fragment = fgetc(in);
 		keys.pause = fgetc(in);
 		difficulty = static_cast<Constants::DifficultySetting>(fgetc(in));
-		usingArrows = !!fgetc(in);
-		if (usingArrows)
-			Backend::getArrowMovementKeyBindings(keys);
-		else
-			Backend::getDefaultMovementKeyBindings(keys);
 
 		fclose(in);
 	}
@@ -73,16 +71,19 @@ void GameParameters::loadSettings()
 void GameParameters::saveSettings() const
 {
 	FILE* out;
-	fopen_s(&out, Constants::CONFIG_FILENAME, "w");
+	fopen_s(&out, Constants::CONFIG_FILENAME, "wb");
 
 	if (out)
 	{
+		fputc(keys.down, out);
+		fputc(keys.left, out);
+		fputc(keys.right, out);
+		fputc(keys.up, out);
 		fputc(keys.fire, out);
 		fputc(keys.polarity, out);
 		fputc(keys.fragment, out);
 		fputc(keys.pause, out);
 		fputc(static_cast<int>(difficulty), out);
-		fputc(usingArrows, out);
 		
 		fclose(out);
 	}
