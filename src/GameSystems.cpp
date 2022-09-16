@@ -50,7 +50,8 @@ fireback(false), hardMode(false), keys()
 
 void GameParameters::loadSettings()
 {
-	FILE* in = fopen(Constants::CONFIG_FILENAME, "rb");
+	FILE* in;
+	fopen_s(&in, Constants::CONFIG_FILENAME, "rb");
 
 	if (in)
 	{
@@ -71,7 +72,8 @@ void GameParameters::loadSettings()
 
 void GameParameters::saveSettings() const
 {
-	FILE* out = fopen(Constants::CONFIG_FILENAME, "w");
+	FILE* out;
+	fopen_s(&out, Constants::CONFIG_FILENAME, "w");
 
 	if (out)
 	{

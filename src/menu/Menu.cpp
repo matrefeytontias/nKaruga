@@ -1,7 +1,5 @@
 #include "menu/Menu.hpp"
 
-#include <varargs.h>
-
 #include "utils.hpp"
 #include "level/Level.hpp"
 #include "handlers/SoundHandler.hpp"

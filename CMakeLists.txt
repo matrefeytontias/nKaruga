@@ -82,13 +82,7 @@ set(SOURCES
     src/types.h
     src/utils.hpp
     src/utils.cpp
-# n2DLib
-    src/n2DLib/n2DLib.h
-    src/n2DLib/n2DLib.c
-    src/n2DLib/n2DLib_font.h
-    src/n2DLib/n2DLib_math.h
-    src/n2DLib/n2DLib_math.c
-    src/n2DLib/n2DLib_types.h
+
 # TODO : get rid of these - gfx
     src/gfx/bg.h
     src/gfx/bossgfx.h
@@ -126,10 +120,35 @@ add_custom_target(CopyResources ALL
 
 ### Third-party libraries
 
+# SDL2 dev binaries
+
 set(SDL2_DIR ${CMAKE_CURRENT_LIST_DIR}/SDL2-2.24.0/cmake)
 find_package(SDL2 REQUIRED)
+
+# SDL2_mixer dev binaries
 
 set(SDL2_mixer_DIR ${CMAKE_CURRENT_LIST_DIR}/SDL2_mixer-2.6.2/cmake)
 find_package(SDL2_mixer REQUIRED)
 
-target_link_libraries(nKaruga SDL2::SDL2 SDL2::SDL2main SDL2_mixer::SDL2_mixer)
+# n2DLib
+
+set(N2DLIB_SOURCES
+    n2DLib-PC/n2DLib/n2DLib.c
+    n2DLib-PC/n2DLib/n2DLib.h
+    n2DLib-PC/n2DLib/n2DLib_font.h
+    n2DLib-PC/n2DLib/n2DLib_math.c
+    n2DLib-PC/n2DLib/n2DLib_math.h
+    n2DLib-PC/n2DLib/n2DLib_types.h
+)
+
+add_library(n2DLib STATIC ${N2DLIB_SOURCES})
+
+target_include_directories(n2DLib PUBLIC n2DLib-PC)
+
+# Link it all
+
+target_link_libraries(nKaruga n2DLib SDL2::SDL2 SDL2::SDL2main SDL2_mixer::SDL2_mixer)
+
+# n2DLib needs SDL2 currently
+
+target_link_libraries(n2DLib SDL2::SDL2)
