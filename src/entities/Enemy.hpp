@@ -47,6 +47,7 @@ public:
 	// Internal data for free use by the behaviour code
 	int internal[6];
 	// Arrays to use with n2DLib's interpolatePathFloat
+	// TODO : get rid of that shit
 	float* ax, * ay;
 	int* at;
 	void setAX(int, ...);
