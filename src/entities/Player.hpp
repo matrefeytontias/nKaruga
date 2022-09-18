@@ -7,7 +7,6 @@ class Player : public Entity
 {
 public:
 	Player();
-	~Player();
 	void reset();
 	void handle(KeyEvent k);
 	bool getPolarity();

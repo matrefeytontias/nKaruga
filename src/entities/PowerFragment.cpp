@@ -106,7 +106,7 @@ bool PowerFragment::handle()
 				{
 					dAngle = angleToEntity(targetE);
 				}
-				else if(targetB->getDistance(this) < distance(fixtoi(x), fixtoi(y), fixtoi(targetE->getx()), fixtoi(targetE->gety())))
+				else if(targetB->getDistance(this) < distance2ToEntity(targetE))
 				{
 					dAngle = targetB->getAngle(this);
 				}

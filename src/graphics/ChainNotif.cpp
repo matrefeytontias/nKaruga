@@ -7,15 +7,10 @@ ChainNotif::ChainNotif() : Entity()
 	untilDeath = 0;
 }
 
-ChainNotif::~ChainNotif()
-{
-	
-}
-
 void ChainNotif::activate(int _x, int _y, int _v)
 {
+	Entity::activate();
 	x = _x;
-	backupX = x;
 	y = _y;
 	value = _v;
 	untilDeath = 16;
@@ -24,15 +19,15 @@ void ChainNotif::activate(int _x, int _y, int _v)
 
 void ChainNotif::handle()
 {
-	if(untilDeath)
+	if(maxChain)
 	{
-		if(maxChain)
-		{
-			y -= 8;
-			drawString(&x, &y, x, "max chain\n", 0xffff, 0);
-		}
-		drawDecimal(&x, &y, value, 0xfbe0, 0xf800);
-		x = backupX;
-		untilDeath--;
+		y -= 8;
+		drawString(&x, &y, x, "max chain\n", 0xffff, 0);
 	}
+	int tempX = x;
+	drawDecimal(&tempX, &y, value, 0xfbe0, 0xf800);
+	untilDeath--;
+
+	if (!untilDeath)
+		deactivate();
 }

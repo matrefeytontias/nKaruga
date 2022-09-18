@@ -349,7 +349,8 @@ void playGame()
 		// Draw score-chaining notifs
 		if (!Level::fightingBoss)
 			for (int i = 0; i < Constants::MAX_ENEMY; i++)
-				chainNotifsArray[i].handle();
+				if(chainNotifsArray[i].isActive())
+					chainNotifsArray[i].handle();
 
 		// Draw remaining lives
 		{

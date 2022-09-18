@@ -52,7 +52,8 @@ void EnemiesArray::handle()
 void EnemiesArray::handleExplosions()
 {
 	for(int i = 0; i < Constants::MAX_ENEMY; i++)
-		explosionsAnims[i].handle();
+		if(explosionsAnims[i].isActive())
+			explosionsAnims[i].handle();
 }
 
 void EnemiesArray::resetEnemyCounter()

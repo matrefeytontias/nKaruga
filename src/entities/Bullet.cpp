@@ -10,10 +10,6 @@ Bullet::Bullet() : Entity()
 {
 }
 
-Bullet::~Bullet()
-{
-}
-
 Rect* Bullet::makeRect()
 {
 	static Rect r;
@@ -24,7 +20,6 @@ Rect* Bullet::makeRect()
 
 void Bullet::activate(Fixed _x, Fixed _y, Fixed _a, Fixed _r, LUTs::BaseImageId imgId, bool _p, bool _h, Constants::CamRelation _camRel)
 {
-	active = true;
 	polarity = _p;
 	hurtPlayer = _h;
 	camRelation = _camRel;
@@ -33,6 +28,8 @@ void Bullet::activate(Fixed _x, Fixed _y, Fixed _a, Fixed _r, LUTs::BaseImageId 
 	dx = fixmul(fixcos(_a), _r);
 	dy = fixmul(fixsin(_a), _r);
 	img = LUTs::baseImage(imgId, _p ? 1 : 0);
+
+	Entity::activate();
 }
 
 bool Bullet::getPolarity()
@@ -64,10 +61,10 @@ void Bullet::draw()
 
 Fixed Bullet::getx()
 {
-	return fToScreenX(x, camRelation);
+	return fToScreenX(Entity::getx(), camRelation);
 }
 
 Fixed Bullet::gety()
 {
-	return fToScreenY(y, camRelation);
+	return fToScreenY(Entity::gety(), camRelation);
 }

@@ -13,10 +13,6 @@ Entity::Entity()
 	isBoss = false;
 }
 
-Entity::~Entity()
-{
-}
-
 Fixed Entity::getx()
 {
 	return x;

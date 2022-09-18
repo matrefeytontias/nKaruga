@@ -84,7 +84,6 @@ class BossEnemy : public Entity
 {
 public:
 	BossEnemy();
-	~BossEnemy();
 	void activate(BossData* d); // drawing is taken care of by the callback code
 	int handle();
 	void damage(int amount);

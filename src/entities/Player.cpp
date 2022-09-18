@@ -18,9 +18,11 @@ Player::Player() : Entity()
 	img[LUTs::PlayerAnimId::LIGHT + LUTs::PlayerAnimId::SWITCHING1] = LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_POLARITYSWITCH_1_LIGHT);
 	img[LUTs::PlayerAnimId::SHADOW + LUTs::PlayerAnimId::SWITCHING1] = LUTs::baseImage(LUTs::BaseImageId::PLAYER_SHIP_POLARITYSWITCH_1_SHADOW);
 	deathCounter = 0;
-	active = true;
 	x = 0;
 	y = 0;
+	
+	Entity::activate();
+
 	reset();
 }
 
@@ -32,10 +34,6 @@ void Player::reset()
 	isSwitchingPolarity = 0;
 	fireDelay = 12;
 	lives = 4;
-}
-
-Player::~Player()
-{
 }
 
 void Player::handle(KeyEvent kEv)

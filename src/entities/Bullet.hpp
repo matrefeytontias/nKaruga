@@ -9,15 +9,14 @@ class Bullet : public Entity
 {
 public:
 	Bullet();
-	~Bullet();
 	Rect* makeRect();
 	void activate(Fixed x, Fixed y, Fixed a, Fixed r, LUTs::BaseImageId imageID, bool polarity, bool hurtsPlayer, Constants::CamRelation camRelation);
 	bool getPolarity();
 	bool hurtsPlayer();
 	bool handle();
 	void draw();
-	Fixed getx();
-	Fixed gety();
+	Fixed getx() override;
+	Fixed gety() override;
 	// speed
 	Fixed dx, dy;
 	unsigned short* img;

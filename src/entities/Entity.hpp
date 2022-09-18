@@ -9,7 +9,7 @@ class Entity
 {
 public:
 	Entity();
-	~Entity();
+	virtual ~Entity() { }
 	virtual Fixed getx();
 	virtual Fixed gety();
 	void setx(Fixed);

@@ -7,8 +7,7 @@ class ExplosionAnim : public Entity
 {
 public:
 	ExplosionAnim();
-	~ExplosionAnim();
-	void activate(int, int, bool);
+	void activate(int x, int y, bool polarity);
 	void handle();
 private:
 	int counter;

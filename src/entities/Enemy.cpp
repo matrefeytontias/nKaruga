@@ -102,7 +102,7 @@ void Enemy::handle()
 
 #define SPAWN_DELAY 512
 
-void Enemy::activate(int _x, int _y, int _HP, LUTs::BaseImageId _shipImgId, LUTs::EnemyPatternId patternId, int _waveIndex, bool _polarity, bool _hasRotation, int _f, bool _ghost, Constants::EnemyType type)
+void Enemy::activate(Fixed _x, Fixed _y, int _HP, LUTs::BaseImageId _shipImgId, LUTs::EnemyPatternId patternId, int _waveIndex, bool _polarity, bool _hasRotation, int _f, bool _ghost, Constants::EnemyType type)
 {
 	maxHP = HP = _HP;
 	x = _x;
@@ -121,12 +121,13 @@ void Enemy::activate(int _x, int _y, int _HP, LUTs::BaseImageId _shipImgId, LUTs
 	ghost = _ghost;
 	prop = type != Constants::EnemyType::ENEMY;
 	damageable = type != Constants::EnemyType::PROP && !ghost;
-	active = true;
 	camRelation = prop ? Constants::CamRelation::ABSOLUTE : Constants::CamRelation::RELATIVE;
 	diedThisFrame = false;
 	spawned = SPAWN_DELAY;
 	flash = false;
 	isJointed = false;
+
+	Entity::activate();
 }
 
 // Returns whether or not the enemy was damaged
@@ -227,6 +228,7 @@ Fixed Enemy::rawy()
 	return y;
 }
 
+// TODO : make sure this works with non-relative camera relations
 Fixed Enemy::getx()
 {
 	return isJointed ? rawx() + jointObj->getx() : rawx();

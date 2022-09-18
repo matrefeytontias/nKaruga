@@ -29,13 +29,11 @@ BossEnemy::BossEnemy() : Entity()
 	isBoss = true;
 }
 
-BossEnemy::~BossEnemy()
-{
-	
-}
-
 void BossEnemy::activate(BossData *d)
 {
+	// Do not call Entity::activate as active is bound to hurtable
+	// and this gets taken care of later down the line in the behavior
+	// code.
 	id = d->id;
 	HPperBar = d->HPperBar;
 	for(int i = 0; i < 32; i++)

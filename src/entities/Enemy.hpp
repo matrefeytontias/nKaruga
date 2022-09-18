@@ -15,7 +15,7 @@ public:
 	Enemy();
 	~Enemy();
 	void handle();
-	void activate(int x, int y, int HP, LUTs::BaseImageId shipImgId, LUTs::EnemyPatternId patternId, int waveIndex, bool polarity, bool hasRotation, int firebackAmount, bool ghost, Constants::EnemyType type);
+	void activate(Fixed x, Fixed y, int HP, LUTs::BaseImageId shipImgId, LUTs::EnemyPatternId patternId, int waveIndex, bool polarity, bool hasRotation, int firebackAmount, bool ghost, Constants::EnemyType type);
 	bool damage(bool polarity, int amount);
 	void joint(Entity* target, int targetX, int targetY, int jointX, int jointY, int jointCX, int jointCY, unsigned short* timg, unsigned short* jimg, bool diesWithJoint);
 	void joint(Entity* target, int targetX, int targetY, int targetCX, int targetCY, int jointX, int jointY, int jointCX, int jointCY, unsigned short* timg, unsigned short* jimg, bool diesWithJoint);
@@ -29,8 +29,8 @@ public:
 	bool isDamageable();
 	Fixed rawx();
 	Fixed rawy();
-	Fixed getx();
-	Fixed gety();
+	Fixed getx() override;
+	Fixed gety() override;
 	// x, y on-screen
 	// Enemy image
 	bool visible;
