@@ -211,7 +211,10 @@ void Level::advanceLevel()
 						GS->power = 0;
 						clearBufferB();
 						updateScreen();
-						SDL_Delay(1000);
+						// Wait for one second
+						timer_load(0, 1000);
+						while (timer_read(0));
+
 						counter++;
 						// Reset all camera position
 						GS->DC->cam.absX = GS->DC->cam.absY = GS->DC->cam.relX = GS->DC->cam.relY = 0;
@@ -293,7 +296,10 @@ void Level::advanceLevel()
 				clearBufferB();
 				drawSprite(image_end_of_demo, 0, 0, 0, 0);
 				updateScreen();
-				SDL_Delay(5000);
+				// Wait for 5 seconds
+				timer_load(0, 5000);
+				while (timer_read(0));
+
 				gameEnded = true;
 				continueParsing = false;
 			}
