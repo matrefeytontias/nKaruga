@@ -109,9 +109,8 @@ Fixed Entity::distance2ToXY(Fixed _x, Fixed _y)
 // Returns true when the waiting is done
 bool Entity::waitFrames(int frames)
 {
-	static int base = -1;
-	if (base == -1) base = GS->chapterTimer;
-	bool r = GS->chapterTimer - base >= frames;
-	if (r) base = -1;
+	if (waitTimer == -1) waitTimer = GS->chapterTimer;
+	bool r = GS->chapterTimer - waitTimer >= frames;
+	if (r) waitTimer = -1;
 	return r;
 }

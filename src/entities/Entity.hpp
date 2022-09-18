@@ -33,4 +33,6 @@ protected:
 	bool active;
 	Constants::CamRelation camRelation;
 	Fixed x, y;
+	// Used in waitFrames.
+	int waitTimer;
 };

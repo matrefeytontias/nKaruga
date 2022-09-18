@@ -20,7 +20,7 @@ class Enemy;
 
 Enemy* findNearestEnemy(Fixed x, Fixed y);
 bool collidePointRect(Fixed, Fixed, Fixed, Fixed, int, int);
-int distance(int x1, int y1, int x2, int y2);
+unsigned int distance(int x1, int y1, int x2, int y2);
 KeyEvent getk();
 // TODO : those should probably go in Camera.*pp
 int iToScreenX(int x, Constants::CamRelation camRelation);

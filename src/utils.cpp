@@ -8,56 +8,35 @@
 #include "n2DLib/n2DLib.h"
 #include "n2DLib/n2DLib_math.h"
 
-int distance(int x1, int y1, int x2, int y2)
+unsigned int distance(int x1, int y1, int x2, int y2)
 {
 	return sq(x1 - x2) + sq(y1 - y2);
 }
 
 Enemy* findNearestEnemy(Fixed x, Fixed y)
 {
-	static Enemy* nearest;
-	static Enemy* ce;
+	Enemy* currentEnemy;
+	Enemy* nearest = nullptr;
 	
-	// Find first if there are any living enemy
-	bool hasLivingEnemy = false;
-	
-	for(int i = 0; i < Constants::MAX_ENEMY; i++)
+	unsigned int lastDistance = -1u;
+	unsigned int concurrentDistance;
+
+	for (int i = 0; i < Constants::MAX_ENEMY; i++)
 	{
-		ce = &Level::enemiesArray->data[i];
-		if(ce->isActive() && ce->isDamageable())
+		currentEnemy = &Level::enemiesArray->data[i];
+		if (currentEnemy->isActive() && currentEnemy->isDamageable())
 		{
-			hasLivingEnemy = true;
-			nearest = ce;
-			break;
-		}
-	}
-	
-	// If not, do nothing
-	if(!hasLivingEnemy)
-		return NULL;
-	else
-	{
-		// If yes, find the actual nearest enemy
-		int lastDistance = distance(fixtoi(nearest->getx()), fixtoi(nearest->gety()), fixtoi(x), fixtoi(y));
-		int concurrentDistance;
-		
-		for(int i = 0; i < Constants::MAX_ENEMY; i++)
-		{
-			ce = &Level::enemiesArray->data[i];
-			if(ce->isActive() && ce->isDamageable())
+			concurrentDistance = distance(iToScreenX(fixtoi(currentEnemy->getx()), currentEnemy->getCamRelation()),
+										  iToScreenY(fixtoi(currentEnemy->gety()), currentEnemy->getCamRelation()),
+										  fixtoi(x), fixtoi(y));
+			if (concurrentDistance < lastDistance)
 			{
-				concurrentDistance = distance(iToScreenX(fixtoi(ce->getx()), ce->getCamRelation()),
-											  iToScreenY(fixtoi(ce->gety()), ce->getCamRelation()),
-											  fixtoi(x), fixtoi(y));
-				if(concurrentDistance < lastDistance)
-				{
-					nearest = ce;
-					lastDistance = concurrentDistance;
-				}
+				nearest = currentEnemy;
+				lastDistance = concurrentDistance;
 			}
 		}
-		return nearest;
 	}
+	return nearest;
 }
 
 bool collidePointRect(Fixed px, Fixed py, Fixed x, Fixed y, int w, int h)

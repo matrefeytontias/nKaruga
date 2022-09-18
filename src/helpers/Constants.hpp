@@ -52,6 +52,7 @@ struct Constants
 	// TODO : make this fixed
 	static constexpr int INV_CAMERA_SPEED = 3;
 
+	// TODO : make sure having both DEFAULT and RELATIVE makes sense
 	// Camera relations
 	enum struct CamRelation
 	{
