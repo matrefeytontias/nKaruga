@@ -73,7 +73,7 @@ bool Menu::run(KeyEvent k)
 		MenuItem* item = items[i];
 		const char* optionText = item->getOptionText();
 		int x = (320 - item->getTextWidth() - (optionText != nullptr ? stringWidth(optionText) : 0)) / 2;
-		int y = 120 - (numItems / 2 - i) * VSPACE;
+		int y = 120 + (i * 2 - numItems) * VSPACE / 2;
 		if (i == cursorPosition)
 		{
 			cursorX = x - 7;
