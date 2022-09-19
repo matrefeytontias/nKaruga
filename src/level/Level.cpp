@@ -184,7 +184,7 @@ void Level::advanceLevel()
 					{
 						BackgroundScroller bg(LUTs::backgroundImage(static_cast<LUTs::BgImageId>(levelStream[counter + 1])),
 											  levelStream[counter + 2], levelStream[counter + 3], levelStream[counter + 4],
-											  levelStream[counter + 5], levelStream[counter + 6]);
+											  levelStream[counter + 5], static_cast<LUTs::BgTravelingId>(levelStream[counter + 6]));
 						bgStack.push_back(bg);
 						counter += 7;
 					}

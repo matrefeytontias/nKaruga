@@ -7,7 +7,8 @@
 class BackgroundScroller
 {
 public:
-	BackgroundScroller(const unsigned short* bg, Fixed _x, Fixed _y, Fixed sscale, Fixed dscale, int bgHandleID);
+	// x is left-top corner, y is center (ugly but purpose-built)
+	BackgroundScroller(const unsigned short* bg, Fixed _x, Fixed _y, Fixed sscale, Fixed dscale, LUTs::BgTravelingId bgHandleID);
 	void draw() const;
 	void update();
 	Fixed x;

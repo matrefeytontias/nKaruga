@@ -38,7 +38,6 @@ void DrawingCandidates::flush()
 		(cameraPath)(&cam);
 }
 
-// TODO : LUTs::CamTravelingId id
 void DrawingCandidates::loadCameraPath(LUTs::CamTravelingId id)
 {
 	cameraPath = LUTs::camTraveling(id);

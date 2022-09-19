@@ -3,8 +3,7 @@
 #include "n2DLib/n2DLib.h"
 #include "n2DLib/n2DLib_math.h"
 
-// TODO : LUTs::BgTravelingId bgTravelingId
-BackgroundScroller::BackgroundScroller(const unsigned short *bg, Fixed _x, Fixed _y, Fixed sscale, Fixed dscale, int bgTravelingId) // x is left-top corner, y is center (ugly but purpose-built)
+BackgroundScroller::BackgroundScroller(const unsigned short *bg, Fixed _x, Fixed _y, Fixed sscale, Fixed dscale, LUTs::BgTravelingId bgTravelingId)
 {
 	img = &(bg[3]);
 	w = bg[0];
@@ -16,7 +15,7 @@ BackgroundScroller::BackgroundScroller(const unsigned short *bg, Fixed _x, Fixed
 	dy = 0;
 	scrollScale = sscale;
 	displayScale = dscale;
-	handle = LUTs::bgTraveling(static_cast<LUTs::BgTravelingId>(bgTravelingId));
+	handle = LUTs::bgTraveling(bgTravelingId);
 }
 
 void BackgroundScroller::draw() const
