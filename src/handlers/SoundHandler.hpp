@@ -9,12 +9,12 @@ public:
 	SoundHandler();
 	~SoundHandler();
 	void update();
-	int quickPlaySFX(Mix_Chunk* sfx);
+	int quickPlaySFX(Mix_Chunk* sfx) const;
 	int playBgMusic(Mix_Music* mainM, Mix_Music* loopM);
-	void setPausedBgMusic(bool paused);
-	int fadeOutMusic(int ms, void(*callback)());
-	int stopBgMusic();
-	bool musicPlaying();
+	void setPausedBgMusic(bool paused) const;
+	int fadeOutMusic(int ms, void(*callback)()) const;
+	int stopBgMusic() const;
+	bool musicPlaying() const;
 private:
 	static void hook_branch();
 	Mix_Music* loop;

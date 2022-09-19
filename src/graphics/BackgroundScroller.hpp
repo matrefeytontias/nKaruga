@@ -7,15 +7,14 @@
 class BackgroundScroller
 {
 public:
-	BackgroundScroller(unsigned short* bg, Fixed _x, Fixed _y, Fixed sscale, Fixed dscale, int bgHandleID);
-	~BackgroundScroller();
-	void draw();
+	BackgroundScroller(const unsigned short* bg, Fixed _x, Fixed _y, Fixed sscale, Fixed dscale, int bgHandleID);
+	void draw() const;
 	void update();
 	Fixed x;
 	Fixed y;
 	Fixed dx;
 	Fixed dy;
-	unsigned short* img;
+	const unsigned short* img;
 	Fixed w;
 	Fixed h;
 	unsigned short colorKey;

@@ -12,18 +12,13 @@ DrawingCandidates::DrawingCandidates()
 	cameraPath = nullptr;
 }
 
-DrawingCandidates::~DrawingCandidates()
-{
-	
-}
-
-void DrawingCandidates::add(unsigned short *img, Rect *pos, bool flash, Constants::CamRelation camRelation)
+void DrawingCandidates::add(const unsigned short *img, const Rect *pos, bool flash, Constants::CamRelation camRelation)
 {
 	data[candidatesCount].activate(img, pos, flash, camRelation);
 	candidatesCount++;
 }
 
-void DrawingCandidates::add(unsigned short *img, Rect *pos, Rect *center, Fixed angle, bool flash, Constants::CamRelation camRelation)
+void DrawingCandidates::add(const unsigned short *img, const Rect *pos, const Rect *center, Fixed angle, bool flash, Constants::CamRelation camRelation)
 {
 	data[candidatesCount].activate(img, pos, center, angle, flash, camRelation);
 	candidatesCount++;
@@ -44,7 +39,7 @@ void DrawingCandidates::flush()
 }
 
 // TODO : LUTs::CamTravelingId id
-void DrawingCandidates::loadCameraPath(int id)
+void DrawingCandidates::loadCameraPath(LUTs::CamTravelingId id)
 {
-	cameraPath = LUTs::camTraveling(static_cast<LUTs::CamTravelingId>(id));
+	cameraPath = LUTs::camTraveling(id);
 }

@@ -2,6 +2,7 @@
 
 #include "graphics/Camera.hpp"
 #include "graphics/DrawingCandidate.hpp"
+#include "helpers/Constants.hpp"
 #include "types.h"
 
 #define MAX_DISPLAYABLE 2000
@@ -10,11 +11,10 @@ class DrawingCandidates
 {
 public:
 	DrawingCandidates();
-	~DrawingCandidates();
-	void add(unsigned short* img, Rect* pos, bool flash, Constants::CamRelation camRelation);
-	void add(unsigned short* img, Rect* pos, Rect* center, Fixed angle, bool flash, Constants::CamRelation camRelation);
+	void add(const unsigned short* img, const Rect* pos, bool flash, Constants::CamRelation camRelation);
+	void add(const unsigned short* img, const Rect* pos, const Rect* center, Fixed angle, bool flash, Constants::CamRelation camRelation);
 	void flush();
-	void loadCameraPath(int id);
+	void loadCameraPath(LUTs::CamTravelingId id);
 	Camera cam;
 private:
 	DrawingCandidate data[MAX_DISPLAYABLE];

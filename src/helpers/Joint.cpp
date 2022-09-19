@@ -7,16 +7,12 @@
 
 Joint::Joint()
 {
-	target = NULL;
+	target = nullptr;
+	timg = jimg = nullptr;
 	targetX = targetY = targetCX = targetCY = jointX = jointY = jointCX = jointCY = 0;
 }
 
-Joint::~Joint()
-{
-
-}
-
-void Joint::activate(Entity *_target, int _targetX, int _targetY, int _jointX, int _jointY, int _jointCX, int _jointCY, unsigned short *_timg, unsigned short *_jimg)
+void Joint::activate(const Entity *_target, int _targetX, int _targetY, int _jointX, int _jointY, int _jointCX, int _jointCY, const unsigned short *_timg, const unsigned short *_jimg)
 {
 	target = _target;
 	timg = _timg;
@@ -31,7 +27,7 @@ void Joint::activate(Entity *_target, int _targetX, int _targetY, int _jointX, i
 	jointCY = _jointCY == -1 ? jimg[1] / 2 : _jointCY;
 }
 
-void Joint::activate(Entity *_target, int _targetX, int _targetY, int _targetCX, int _targetCY, int _jointX, int _jointY, int _jointCX, int _jointCY, unsigned short *_timg, unsigned short *_jimg)
+void Joint::activate(const Entity *_target, int _targetX, int _targetY, int _targetCX, int _targetCY, int _jointX, int _jointY, int _jointCX, int _jointCY, const unsigned short *_timg, const unsigned short *_jimg)
 {
 	target = _target;
 	targetX = _targetX;
@@ -47,7 +43,7 @@ void Joint::activate(Entity *_target, int _targetX, int _targetY, int _targetCX,
 }
 
 // Gives the X coordinate of the rotation center of the jointed image
-Fixed Joint::getx()
+Fixed Joint::getx() const
 {
 	if (!target->isBoss && !target->isEnemy)
 	{
@@ -77,7 +73,7 @@ Fixed Joint::getx()
 }
 
 // Gives the Y coordinate of the rotation center of the jointed image
-Fixed Joint::gety()
+Fixed Joint::gety() const
 {
 	if (!target->isBoss && !target->isEnemy)
 	{

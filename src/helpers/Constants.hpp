@@ -461,9 +461,9 @@ struct LUTs
 	static void buildGameLUTs();
 	static void freeGameLUTs();
 
-	static uint16_t* baseImage(BaseImageId entry);
-	static uint16_t* bossImage(BossImageId entry);
-	static uint16_t* backgroundImage(BgImageId entry);
+	static const uint16_t* baseImage(BaseImageId entry);
+	static const uint16_t* bossImage(BossImageId entry);
+	static const uint16_t* backgroundImage(BgImageId entry);
 	static Mix_Chunk* sound(SoundId entry);
 	static Mix_Music* music(MusicId entry);
 	static enemy_pattern enemyPattern(EnemyPatternId entry);
@@ -477,16 +477,16 @@ struct LUTs
 	static SoundId offset(SoundId id, unsigned int add);
 	static MusicId offset(MusicId id, unsigned int add);
 	// Shortform functions that amount to lookup(offset(x, a))
-	static uint16_t* baseImage(BaseImageId entry, unsigned int add);
-	static uint16_t* bossImage(BossImageId entry, unsigned int add);
-	static uint16_t* backgroundImage(BgImageId entry, unsigned int add);
+	static const uint16_t* baseImage(BaseImageId entry, unsigned int add);
+	static const uint16_t* bossImage(BossImageId entry, unsigned int add);
+	static const uint16_t* backgroundImage(BgImageId entry, unsigned int add);
 	static Mix_Chunk* sound(SoundId entry, unsigned int add);
 	static Mix_Music* music(MusicId entry, unsigned int add);
 
 private:
-	static uint16_t* image_entries[static_cast<int>(BaseImageId::COUNT)];
-	static uint16_t* bossImage_entries[static_cast<int>(BossImageId::COUNT)];
-	static uint16_t* bgImage_entries[static_cast<int>(BgImageId::COUNT)];
+	static const uint16_t* image_entries[static_cast<int>(BaseImageId::COUNT)];
+	static const uint16_t* bossImage_entries[static_cast<int>(BossImageId::COUNT)];
+	static const uint16_t* bgImage_entries[static_cast<int>(BgImageId::COUNT)];
 	static enemy_pattern enemyPattern_entries[static_cast<int>(EnemyPatternId::COUNT)];
 	static camera_traveling camTraveling_entries[static_cast<int>(CamTravelingId::COUNT)];
 	static background_traveling bgTraveling_entries[static_cast<int>(BgTravelingId::COUNT)];

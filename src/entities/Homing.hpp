@@ -13,11 +13,11 @@ class Homing : public Bullet
 public:
 	Homing();
 	~Homing();
-	void activate(Fixed x, Fixed y, Fixed initialAngle, Player* target, bool polarity);
+	void activate(Fixed x, Fixed y, Fixed initialAngle, const Player* target, bool polarity);
 	bool handle();
-	void draw();
-	Player* target;
+	void draw() const;
 private:
+	const Player* target;
 	Fixed previousX[HOMING_TRAILING];
 	Fixed previousY[HOMING_TRAILING];
 	Fixed angle;

@@ -40,25 +40,25 @@ typedef void (*boss_cb)(BossEnemy*);
 // - bullet object
 // - amount of damage to deal if the boss is hit
 // Output : amount of damage dealt, 0 for no collision, negative for collision with no damage
-typedef int (*boss_ccb)(BossEnemy*, Bullet*, int);
+typedef int (*boss_ccb)(const BossEnemy*, const Bullet*, int);
 // Player collision callback, handling whether or not the player destroys (him|her)self on the boss
 // Inputs :
 // - boss enemy to test
 // - player object
 // Output : boolean
-typedef bool (*boss_pccb)(BossEnemy*);
+typedef bool (*boss_pccb)(const BossEnemy*);
 // Distance callback, handling distance calcualtion for when the boss is being aimed by power fragments
 // Inputs :
 // - boss enemy to test
 // - power fragment object
 // Output : distance to boss
-typedef Fixed(*boss_dcb)(BossEnemy*, PowerFragment*);
+typedef Fixed(*boss_dcb)(const BossEnemy*, const PowerFragment*);
 // Angle callback, handling angle calculation for when the boss is being aimed by power fragments
 // Inputs :
 // - boss enemy to test
 // - power fragment object
 // Output : angle to boss
-typedef Fixed(*boss_acb)(BossEnemy*, PowerFragment*);
+typedef Fixed(*boss_acb)(const BossEnemy*, const PowerFragment*);
 
 typedef struct
 {
@@ -68,8 +68,8 @@ typedef struct
 	// Every following member contains this amount of data, because it's pattern-specific
 	int patternsNb;
 	// Self-explanatory
-	int* HPperPattern;
-	int* timeoutPerPattern;
+	const int* HPperPattern;
+	const int* timeoutPerPattern;
 	boss_icb* initCallbacks;
 	boss_ccb* collisionCallbacks;
 	boss_dcb* distanceCallbacks;
@@ -79,25 +79,26 @@ typedef struct
 
 BossData createBossData(int bossID);
 
-// The really big bad one
+// The really big bad one.
+// Drawing is taken care of by the callback code.
 class BossEnemy : public Entity
 {
 public:
 	BossEnemy();
-	void activate(BossData* d); // drawing is taken care of by the callback code
+	void activate(BossData* d);
 	int handle();
 	void damage(int amount);
-	bool isHurtable();
+	bool isHurtable() const;
 	void makeHurtable();
 	void setInternal(int offset, int value);
 	void incInternal(int offset);
 	void decInternal(int offset);
-	int getInternal(int offset);
-	int getTimeout();
-	Fixed getDistance(PowerFragment*);
-	Fixed getAngle(PowerFragment*);
+	int getInternal(int offset) const;
+	int getTimeout() const;
+	Fixed getDistance(const PowerFragment*) const;
+	Fixed getAngle(const PowerFragment*) const;
 	int id;
-	uint16_t *bodyImg; // image of the boss' body
+	const uint16_t *bodyImg; // image of the boss' body
 	Fixed angle;
 	bool flash;
 	int HP;
@@ -105,8 +106,8 @@ public:
 	int HPperBar;
 	int currentPattern;
 	int lastPattern;
-	int* HPperPattern;
-	int* timeoutPerPattern;
+	const int* HPperPattern;
+	const int* timeoutPerPattern;
 	int patternsNb;
 	bool readyToGo;
 	bool initCallbackCalled;

@@ -4,7 +4,7 @@
 #include "n2DLib/n2DLib_math.h"
 
 // TODO : LUTs::BgTravelingId bgTravelingId
-BackgroundScroller::BackgroundScroller(unsigned short *bg, Fixed _x, Fixed _y, Fixed sscale, Fixed dscale, int bgTravelingId) // x is left-top corner, y is center (ugly but purpose-built)
+BackgroundScroller::BackgroundScroller(const unsigned short *bg, Fixed _x, Fixed _y, Fixed sscale, Fixed dscale, int bgTravelingId) // x is left-top corner, y is center (ugly but purpose-built)
 {
 	img = &(bg[3]);
 	w = bg[0];
@@ -19,11 +19,7 @@ BackgroundScroller::BackgroundScroller(unsigned short *bg, Fixed _x, Fixed _y, F
 	handle = LUTs::bgTraveling(static_cast<LUTs::BgTravelingId>(bgTravelingId));
 }
 
-BackgroundScroller::~BackgroundScroller()
-{
-}
-
-void BackgroundScroller::draw()
+void BackgroundScroller::draw() const
 {
 	Fixed sourceX = -((x + fixmul(dx, scrollScale)) % itofix(w)) + itofix(w),
 		sourceY = -((y + fixmul(dy, scrollScale)) % itofix(h)) + itofix(h);

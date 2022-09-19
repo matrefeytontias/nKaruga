@@ -8,14 +8,13 @@ class Joint
 {
 public:
 	Joint();
-	~Joint();
-	void activate(Entity* target, int targetX, int targetY, int jointX, int jointY, int jointCX, int jointCY, unsigned short* timg, unsigned short* jimg);
-	void activate(Entity* target, int targetX, int targetY, int targetCX, int targetCY, int jointX, int jointY, int jointCX, int jointCY, unsigned short* timg, unsigned short* jimg);
-	Fixed getx();
-	Fixed gety();
-	Entity* target;
-	unsigned short* timg; // the target's image
-	unsigned short* jimg; // the jointed image
+	void activate(const Entity* target, int targetX, int targetY, int jointX, int jointY, int jointCX, int jointCY, const unsigned short* timg, const unsigned short* jimg);
+	void activate(const Entity* target, int targetX, int targetY, int targetCX, int targetCY, int jointX, int jointY, int jointCX, int jointCY, const unsigned short* timg, const unsigned short* jimg);
+	Fixed getx() const;
+	Fixed gety() const;
+	const Entity* target;
+	const unsigned short* timg; // the target's image
+	const unsigned short* jimg; // the jointed image
 	int targetX, targetY; // the connection point on the target
 	int targetCX, targetCY; // the target's rotation center if relevant
 	int jointX, jointY; // the connection point on the jointed image

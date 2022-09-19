@@ -10,11 +10,6 @@ EnemiesArray::EnemiesArray()
 	currentExplosion = 0;
 }
 
-EnemiesArray::~EnemiesArray()
-{
-	
-}
-
 Enemy* EnemiesArray::add(int x, int y, int HP, LUTs::BaseImageId shipImgId, LUTs::EnemyPatternId patternId, int waveIndex, bool polarity, bool hasRotation, int firebackAmount, bool ghost, Constants::EnemyType type)
 {
 	// Keep props active
@@ -68,7 +63,7 @@ void EnemiesArray::destroyAllEnemies()
 			data[i].damage(data[i].getPolarity(), 9999);
 }
 
-bool EnemiesArray::enemiesKilled()
+bool EnemiesArray::enemiesKilled() const
 {
 	for (int i = 0; i < Constants::MAX_ENEMY; i++)
 	{

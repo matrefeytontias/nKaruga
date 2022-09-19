@@ -8,12 +8,7 @@ DrawingCandidate::DrawingCandidate()
 	
 }
 
-DrawingCandidate::~DrawingCandidate()
-{
-	
-}
-
-void DrawingCandidate::activate(unsigned short *_img, Rect *_pos, bool _flash, Constants::CamRelation _camRel)
+void DrawingCandidate::activate(const unsigned short *_img, const Rect *_pos, bool _flash, Constants::CamRelation _camRel)
 {
 	img = _img;
 	pos.x = _pos->x - img[0] / 2;
@@ -24,7 +19,7 @@ void DrawingCandidate::activate(unsigned short *_img, Rect *_pos, bool _flash, C
 	flash = _flash;
 }
 
-void DrawingCandidate::activate(unsigned short *_img, Rect *_pos, Rect *_center, Fixed _angle, bool _flash, Constants::CamRelation _camRel)
+void DrawingCandidate::activate(const unsigned short *_img, const Rect *_pos, const Rect *_center, Fixed _angle, bool _flash, Constants::CamRelation _camRel)
 {
 	img = _img;
 	angle = _angle;

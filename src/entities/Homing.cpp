@@ -18,7 +18,7 @@ Homing::~Homing()
 	
 }
 
-void Homing::activate(Fixed _x, Fixed _y, Fixed initialAngle, Player *_target, bool _p)
+void Homing::activate(Fixed _x, Fixed _y, Fixed initialAngle, const Player *_target, bool _p)
 {
 	x = _x;
 	y = _y;
@@ -64,9 +64,9 @@ bool Homing::handle()
 	return (x + itofix(8) < itofix(-30) || x - itofix(8) > itofix(349) || y + itofix(8) < itofix(-30) || y - itofix(8) > itofix(279));
 }
 
-void Homing::draw()
+void Homing::draw() const
 {
-	static Rect r;
+	Rect r;
 	
 	r.x = fixtoi(x);
 	r.y = fixtoi(y);

@@ -10,22 +10,22 @@ class Entity
 public:
 	Entity();
 	virtual ~Entity() { }
-	virtual Fixed getx();
-	virtual Fixed gety();
+	virtual Fixed getx() const;
+	virtual Fixed gety() const;
 	void setx(Fixed);
 	void sety(Fixed);
 	void addx(Fixed);
-	void subx(Fixed);
 	void addy(Fixed);
+	void subx(Fixed);
 	void suby(Fixed);
-	bool isActive();
+	bool isActive() const;
 	void activate();
 	void deactivate();
-	Constants::CamRelation getCamRelation();
-	Fixed angleToEntity(Entity*);
-	Fixed angleToXY(Fixed x, Fixed y);
-	Fixed distance2ToEntity(Entity*);
-	Fixed distance2ToXY(Fixed x, Fixed y);
+	Constants::CamRelation getCamRelation() const;
+	Fixed angleToEntity(const Entity*) const;
+	Fixed angleToXY(Fixed x, Fixed y) const;
+	Fixed distance2ToEntity(const Entity*) const;
+	Fixed distance2ToXY(Fixed x, Fixed y) const;
 	bool isBoss;
 	bool isEnemy;
 	bool waitFrames(int frames);

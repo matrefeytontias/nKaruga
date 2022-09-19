@@ -15,9 +15,9 @@
 #include "level/patterns.h"
 #include "sfx/list.h"
 
-uint16_t* LUTs::image_entries[static_cast<int>(BaseImageId::COUNT)];
-uint16_t* LUTs::bossImage_entries[static_cast<int>(BossImageId::COUNT)];
-uint16_t* LUTs::bgImage_entries[static_cast<int>(BgImageId::COUNT)];
+const uint16_t* LUTs::image_entries[static_cast<int>(BaseImageId::COUNT)];
+const uint16_t* LUTs::bossImage_entries[static_cast<int>(BossImageId::COUNT)];
+const uint16_t* LUTs::bgImage_entries[static_cast<int>(BgImageId::COUNT)];
 Mix_Chunk* LUTs::sound_entries[static_cast<int>(SoundId::COUNT)];
 Mix_Music* LUTs::music_entries[static_cast<int>(MusicId::COUNT)];
 
@@ -237,19 +237,19 @@ void LUTs::freeGameLUTs()
 
 // LUT lookup functions
 
-uint16_t* LUTs::baseImage(BaseImageId entry)
+const uint16_t* LUTs::baseImage(BaseImageId entry)
 {
 	assert(initialized);
 	return image_entries[static_cast<int>(entry)];
 }
 
-uint16_t* LUTs::bossImage(BossImageId entry)
+const uint16_t* LUTs::bossImage(BossImageId entry)
 {
 	assert(initialized);
 	return bossImage_entries[static_cast<int>(entry)];
 }
 
-uint16_t* LUTs::backgroundImage(BgImageId entry)
+const uint16_t* LUTs::backgroundImage(BgImageId entry)
 {
 	assert(initialized);
 	return bgImage_entries[static_cast<int>(entry)];
@@ -318,17 +318,17 @@ LUTs::MusicId LUTs::offset(MusicId id, unsigned int add)
 }
 
 // Shortform offsetted lookup
-uint16_t* LUTs::baseImage(BaseImageId entry, unsigned int add)
+const uint16_t* LUTs::baseImage(BaseImageId entry, unsigned int add)
 {
 	return baseImage(offset(entry, add));
 }
 
-uint16_t* LUTs::bossImage(BossImageId entry, unsigned int add)
+const uint16_t* LUTs::bossImage(BossImageId entry, unsigned int add)
 {
 	return bossImage(offset(entry, add));
 }
 
-uint16_t* LUTs::backgroundImage(BgImageId entry, unsigned int add)
+const uint16_t* LUTs::backgroundImage(BgImageId entry, unsigned int add)
 {
 	return backgroundImage(offset(entry, add));
 }

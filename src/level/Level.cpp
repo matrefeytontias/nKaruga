@@ -121,7 +121,7 @@ void Level::advanceLevel()
 					else if (currentLevelByte == LVLSTR_NEWCAMERA)
 					{
 						// Follow a new camera path
-						GS->DC->loadCameraPath(levelStream[++counter]);
+						GS->DC->loadCameraPath(static_cast<LUTs::CamTravelingId>(levelStream[++counter]));
 						counter++;
 					}
 					else if (currentLevelByte == LVLSTR_WAIT)

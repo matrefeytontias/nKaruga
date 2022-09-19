@@ -26,12 +26,6 @@ ExpParticle::ExpParticle()
 
 }
 
-
-ExpParticle::~ExpParticle()
-{
-
-}
-
 void ExpParticle::activate(Fixed _x, Fixed _y, Fixed _dx, Fixed _dy, Fixed _g)
 {
 	x = itofix(_x);
@@ -48,7 +42,7 @@ void ExpParticle::deactivate()
 	active = false;
 }
 
-bool ExpParticle::isActive()
+bool ExpParticle::isActive() const
 {
 	return active;
 }

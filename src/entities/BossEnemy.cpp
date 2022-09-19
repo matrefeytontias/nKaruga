@@ -102,7 +102,7 @@ void BossEnemy::damage(int amount)
 }
 
 // Equivalent to BossEnemy::isActive()
-bool BossEnemy::isHurtable()
+bool BossEnemy::isHurtable() const
 {
 	return *hurtable;
 }
@@ -127,22 +127,22 @@ void BossEnemy::decInternal(int offset)
 	internal[offset]--;
 }
 
-int BossEnemy::getInternal(int offset)
+int BossEnemy::getInternal(int offset) const
 {
 	return internal[offset];
 }
 
-int BossEnemy::getTimeout()
+int BossEnemy::getTimeout() const
 {
 	return remainingTime;
 }
 
-Fixed BossEnemy::getDistance(PowerFragment *pf)
+Fixed BossEnemy::getDistance(const PowerFragment *pf) const
 {
 	return (distanceCallbacks[currentPattern])(this, pf);
 }
 
-Fixed BossEnemy::getAngle(PowerFragment *pf)
+Fixed BossEnemy::getAngle(const PowerFragment *pf) const
 {
 	return (angleCallbacks[currentPattern])(this, pf);
 }

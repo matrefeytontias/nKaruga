@@ -10,13 +10,15 @@
 #include "n2DLib/n2DLib.h"
 #include "n2DLib/n2DLib_math.h"
 
+// TODO : refactor this mess
+
 #define BOSS_NB 2
 #define MAX_PATTERNS_PER_BOSS 3
 
 // Colors for bosses' HP bars
 // from low to high HP
 // red (no HP), orange, yellow, green-yellow, dark green, green, cyan, navy, blue, purple, magenta, olive, dark gray, white
-unsigned short color_HPbars[] = { 0xf800, 0xfd20, 0xffe0, 0xafe5, 0x03e0, 0x07e0, 0x07ff, 0x000f, 0x001f, 0x780f, 0xf81f, 0x7be0, 0x7bef, 0xffff };
+constexpr unsigned short color_HPbars[] = { 0xf800, 0xfd20, 0xffe0, 0xafe5, 0x03e0, 0x07e0, 0x07ff, 0x000f, 0x001f, 0x780f, 0xf81f, 0x7be0, 0x7bef, 0xffff };
 
 // Case-specific enums
 
@@ -77,7 +79,7 @@ enum
  */
 
 // source(x, y) , destination(x, y)
-int boss1_jointData[NB_JOINT_BOSS1][4] = {
+constexpr int boss1_jointData[NB_JOINT_BOSS1][4] = {
 	{ 11, 4, 38, 22 },
 	{ 11, 8, 74, 22 },
 	{ 22, 8, 38, 23 },
@@ -85,7 +87,7 @@ int boss1_jointData[NB_JOINT_BOSS1][4] = {
 	{ 2, 8, 72, 22 }
 };
 
-int boss2_jointData[NB_JOINT_BOSS2][4] = {
+constexpr int boss2_jointData[NB_JOINT_BOSS2][4] = {
 	{ 35, 3, 19, 71 }, // left upper arm to body
 	{ 4, 3, 123, 72 }, // right upper arm to body
 	{ 46, 13, 8, 23 }, // left arm to left upper arm
@@ -99,16 +101,16 @@ int boss2_jointData[NB_JOINT_BOSS2][4] = {
 
 // General data
 
-int bossHPperBar[BOSS_NB] = { 400, 300 };
+constexpr int bossHPperBar[BOSS_NB] = { 400, 300 };
 
-int bossPatternsNb[BOSS_NB] = { 3, 1 };
+constexpr int bossPatternsNb[BOSS_NB] = { 3, 1 };
 
-int bossHPperPat[BOSS_NB][MAX_PATTERNS_PER_BOSS] = {
+constexpr int bossHPperPat[BOSS_NB][MAX_PATTERNS_PER_BOSS] = {
 	{ 400 * 3 / 4, 400, 400 * 3 },
 	{ 0, 0, 0 } // handled in the behaviour
 };
 
-int bossTimeoutPerPat[BOSS_NB][MAX_PATTERNS_PER_BOSS] = {
+constexpr int bossTimeoutPerPat[BOSS_NB][MAX_PATTERNS_PER_BOSS] = {
 	{ 120, 80, 40 },
 	{ 120, 0, 0 }
 };
@@ -120,7 +122,7 @@ int bossTimeoutPerPat[BOSS_NB][MAX_PATTERNS_PER_BOSS] = {
  * ####################
  */
 
-int getHPsum(int *a, int start, int end)
+int getHPsum(const int *a, int start, int end)
 {
 	int total = 0;
 	for(int i = start; i <= end; i++)
@@ -128,7 +130,7 @@ int getHPsum(int *a, int start, int end)
 	return total;
 }
 
-int getPatternID(BossEnemy *be)
+int getPatternID(const BossEnemy *be)
 {
 	int i;
 	int HPdone = -1, timeDone = -1;
@@ -154,7 +156,7 @@ int getPatternID(BossEnemy *be)
 // x, y = position of jointing point on-screen
 // w, h = position of jointing point in the jointed sprite
 // To use with rotating sprites
-Rect getJointPoint(BossEnemy *be, int data[][4], int offset)
+Rect getJointPoint(const BossEnemy *be, const int data[][4], int offset)
 {
 	Rect result;
 	result.x = fixtoi(be->getx()) - be->bodyImg[0] / 2 + data[offset][2];
@@ -166,7 +168,7 @@ Rect getJointPoint(BossEnemy *be, int data[][4], int offset)
 }
 
 // Gives the on-screen position of the image using the given joint info
-Rect getFullJointedPos(Entity *base, uint16_t *bossImg, uint16_t *img, int data[][4], int offset)
+Rect getFullJointedPos(const Entity *base, const uint16_t *bossImg, const uint16_t *img, const int data[][4], int offset)
 {
 	Rect result;
 	result.x = fixtoi(base->getx()) + data[offset][2] - bossImg[0] / 2; // calculate the base point first ; the joint point must be right on it on-screen
@@ -178,7 +180,7 @@ Rect getFullJointedPos(Entity *base, uint16_t *bossImg, uint16_t *img, int data[
 
 #define attached(x) be->attachedEnemies[x]
 
-void boss2_display(BossEnemy *be)
+void boss2_display(const BossEnemy *be)
 {
 	Rect pos, centerRot;
 
@@ -589,7 +591,7 @@ void boss1_cb(BossEnemy *be)
 	// Pattern 2
 	else if(be->currentPattern == 1)
 	{
-		unsigned short *img = LUTs::bossImage(LUTs::BossImageId::BOSS1_RIGHTARM_ARMED2);
+		const unsigned short *img = LUTs::bossImage(LUTs::BossImageId::BOSS1_RIGHTARM_ARMED2);
 		// Display things the exact same way as in pattern 1
 		be->setx(be->getx() - fixcos(be->getInternal(0) / 2) / 2);
 		be->angle = fixmul(12, fixsin(be->getInternal(0) / 2));
@@ -1005,7 +1007,7 @@ void boss2_cb(BossEnemy *be)
  */
 
 // Hitbox : sword
-int boss1_ccb1(BossEnemy *be, Bullet *b, int amount)
+int boss1_ccb1(const BossEnemy *be, const Bullet *b, int amount)
 {
 	Rect jointPos = getJointPoint(be, boss1_jointData, boss1_joint_leftarm_armed);
 	const unsigned short *img = LUTs::bossImage(LUTs::BossImageId::BOSS1_LEFTARM_ARMED);
@@ -1023,7 +1025,7 @@ int boss1_ccb1(BossEnemy *be, Bullet *b, int amount)
 }
 
 // Hitbox : shield
-int boss1_ccb2(BossEnemy *be, Bullet *b, int amount)
+int boss1_ccb2(const BossEnemy *be, const Bullet *b, int amount)
 {
 	Rect jointPos = getJointPoint(be, boss1_jointData, boss1_joint_rightarm_armed2);
 	const unsigned short *img = LUTs::bossImage(LUTs::BossImageId::BOSS1_RIGHTARM_ARMED2);
@@ -1041,7 +1043,7 @@ int boss1_ccb2(BossEnemy *be, Bullet *b, int amount)
 }
 
 // Hitbox : body
-int boss1_ccb3(BossEnemy *be, Bullet *b, int amount)
+int boss1_ccb3(const BossEnemy *be, const Bullet *b, int amount)
 {
 	const unsigned short *img = LUTs::bossImage(LUTs::BossImageId::BOSS1_BODY);
 	
@@ -1061,7 +1063,7 @@ int boss1_ccb3(BossEnemy *be, Bullet *b, int amount)
 #define attached(x) be->attachedEnemies[x]
 
 // Hitbox : shields (weak points are handled as normal enemies)
-int boss2_ccb(BossEnemy *be, Bullet *b, int amount)
+int boss2_ccb(const BossEnemy *be, const Bullet *b, int amount)
 {
 	Enemy *le = attached(boss2_ghost_leftShield), *re = attached(boss2_ghost_rightShield);
 	if (le->collide(b->getx(), b->gety()))
@@ -1090,19 +1092,19 @@ int boss2_ccb(BossEnemy *be, Bullet *b, int amount)
  */
 
 // Hitbox : sword + body
-bool boss1_pccb1(BossEnemy *be)
+bool boss1_pccb1(const BossEnemy *be)
 {
 	return false;
 }
 
 // Hitbox : shield + body
-bool boss1_pccb2(BossEnemy *be)
+bool boss1_pccb2(const BossEnemy *be)
 {
 	return false;
 }
 
 // Hitbox : body
-bool boss1_pccb3(BossEnemy *be)
+bool boss1_pccb3(const BossEnemy *be)
 {
 	return false;
 }
@@ -1112,7 +1114,7 @@ bool boss1_pccb3(BossEnemy *be)
  */
 
 // Hitbox : body
-bool boss2_pccb(BossEnemy *be)
+bool boss2_pccb(const BossEnemy *be)
 {
 	return Level::p->distance2ToXY(be->getx(), be->gety() - itofix(107 - 50)) <= itofix(64 * 64); // y - height/2 + 50 (y coordinate of the center of the ball ; see boss image)
 }
@@ -1128,7 +1130,7 @@ bool boss2_pccb(BossEnemy *be)
  */
 
 // Target point : center of sword
-Fixed boss1_dcb1(BossEnemy *be, PowerFragment *pf)
+Fixed boss1_dcb1(const BossEnemy *be, const PowerFragment *pf)
 {
 	Rect pos = getJointPoint(be, boss1_jointData, boss1_joint_leftarm_armed);
 	rotate(pos.x, pos.y, fixtoi(be->getx()), fixtoi(be->gety()), be->angle, &pos);
@@ -1137,7 +1139,7 @@ Fixed boss1_dcb1(BossEnemy *be, PowerFragment *pf)
 }
 
 // Target point : center of shield
-Fixed boss1_dcb2(BossEnemy *be, PowerFragment *pf)
+Fixed boss1_dcb2(const BossEnemy *be, const PowerFragment *pf)
 {
 	Rect pos = getJointPoint(be, boss1_jointData, boss1_joint_rightarm_armed2);
 	rotate(pos.x, pos.y, fixtoi(be->getx()), fixtoi(be->gety()), be->angle, &pos);
@@ -1145,7 +1147,7 @@ Fixed boss1_dcb2(BossEnemy *be, PowerFragment *pf)
 }
 
 // Target point : center of body
-Fixed boss1_dcb3(BossEnemy *be, PowerFragment *pf)
+Fixed boss1_dcb3(const BossEnemy *be, const PowerFragment *pf)
 {
 	return distance(fixtoi(be->getx()), fixtoi(be->gety()), fixtoi(pf->getx()), fixtoi(pf->gety()));
 }
@@ -1155,7 +1157,7 @@ Fixed boss1_dcb3(BossEnemy *be, PowerFragment *pf)
  */
 
 // Target points : weak points, handled as normal enemies
-Fixed boss2_dcb(BossEnemy *be, PowerFragment *pf)
+Fixed boss2_dcb(const BossEnemy *be, const PowerFragment *pf)
 {
 	return 0x7fffffff;
 }
@@ -1172,7 +1174,7 @@ Fixed boss2_dcb(BossEnemy *be, PowerFragment *pf)
  * Boss 1
  */
 
-Fixed boss1_acb1(BossEnemy *be, PowerFragment *pf)
+Fixed boss1_acb1(const BossEnemy *be, const PowerFragment *pf)
 {
 	Entity temp;
 	Rect pos = getJointPoint(be, boss1_jointData, boss1_joint_leftarm_armed);
@@ -1184,7 +1186,7 @@ Fixed boss1_acb1(BossEnemy *be, PowerFragment *pf)
 	return pf->angleToEntity(&temp);
 }
 
-Fixed boss1_acb2(BossEnemy *be, PowerFragment *pf)
+Fixed boss1_acb2(const BossEnemy *be, const PowerFragment *pf)
 {
 	Entity temp;
 	Rect pos = getJointPoint(be, boss1_jointData, boss1_joint_rightarm_armed2);
@@ -1195,7 +1197,7 @@ Fixed boss1_acb2(BossEnemy *be, PowerFragment *pf)
 	return pf->angleToEntity(&temp);
 }
 
-Fixed boss1_acb3(BossEnemy *be, PowerFragment *pf)
+Fixed boss1_acb3(const BossEnemy *be, const PowerFragment *pf)
 {
 	return pf->angleToEntity(be);
 }
@@ -1204,7 +1206,7 @@ Fixed boss1_acb3(BossEnemy *be, PowerFragment *pf)
  * Boss 2
  */
 
-Fixed boss2_acb(BossEnemy *be, PowerFragment *pf)
+Fixed boss2_acb(const BossEnemy *be, const PowerFragment *pf)
 {
 	return 0;
 }

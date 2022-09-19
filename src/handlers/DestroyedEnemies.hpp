@@ -10,8 +10,7 @@ class DestroyedEnemies
 {
 public:
 	DestroyedEnemies();
-	~DestroyedEnemies();
-	void activate(Enemy* origin, int offset);
+	void activate(const Enemy* origin, int offset);
 	void clear();
 	int x[Constants::MAX_ENEMY];
 	int y[Constants::MAX_ENEMY];

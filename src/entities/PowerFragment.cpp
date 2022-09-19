@@ -18,7 +18,7 @@ PowerFragment::~PowerFragment()
 	
 }
 
-void PowerFragment::activate(Fixed _x, Fixed _y, Fixed initialAngle, Player *_targetP, bool _p, bool _h)
+void PowerFragment::activate(Fixed _x, Fixed _y, Fixed initialAngle, const Player *_targetP, bool _p, bool _h)
 {
 	x = _x;
 	y = _y;
@@ -127,9 +127,9 @@ bool PowerFragment::handle()
 	return (x + itofix(4) < itofix(-30) || x > itofix(349) || y + itofix(4) < itofix(-30) || y > itofix(279));
 }
 
-void PowerFragment::draw()
+void PowerFragment::draw() const
 {
-	static Rect r;
+	Rect r;
 	
 	r.x = fixtoi(x);
 	r.y = fixtoi(y);

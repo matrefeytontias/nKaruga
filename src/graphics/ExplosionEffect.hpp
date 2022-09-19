@@ -6,10 +6,9 @@ class ExpParticle
 {
 public:
 	ExpParticle();
-	~ExpParticle();
 	void activate(Fixed x, Fixed y, Fixed dx, Fixed dy, Fixed gravity);
 	void deactivate();
-	bool isActive();
+	bool isActive() const;
 	void update();
 	Fixed x, y, dx, dy, gravity;
 private:

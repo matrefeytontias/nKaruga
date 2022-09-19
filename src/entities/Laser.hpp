@@ -10,15 +10,17 @@ class Laser : public Bullet
 public:
 	Laser();
 	~Laser();
-	void activate(Enemy* origin, bool polarity, Fixed angOffset);
+	void activate(const Enemy* origin, bool polarity, Fixed angOffset);
 	void handle();
-	void draw();
-	Rect* getVector();
-	void getSides(Rect* side1, Rect* side2);
-	int getAmplitude();
+	void draw() const;
+	// (x, y) is origin
+	// (w, h) are the vector's coordinates
+	void getVector(Rect* vector) const;
+	void getSides(Rect* side1, Rect* side2) const;
+	int getAmplitude() const;
 	void setAmplitude(int amp);
 	Fixed angle;
-	Enemy* origin;
+	const Enemy* origin;
 private:
 	// Lasers are not immediate, they grow
 	Fixed amplitude;

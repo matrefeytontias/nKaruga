@@ -13,7 +13,7 @@ Entity::Entity()
 	isBoss = false;
 }
 
-Fixed Entity::getx()
+Fixed Entity::getx() const
 {
 	return x;
 }
@@ -23,7 +23,7 @@ void Entity::setx(Fixed _x)
 	x = _x;
 }
 
-Fixed Entity::gety()
+Fixed Entity::gety() const
 {
 	return y;
 }
@@ -38,14 +38,14 @@ void Entity::addx(Fixed _x)
 	x += _x;
 }
 
-void Entity::subx(Fixed _x)
-{
-	x -= _x;
-}
-
 void Entity::addy(Fixed _y)
 {
 	y += _y;
+}
+
+void Entity::subx(Fixed _x)
+{
+	x -= _x;
 }
 
 void Entity::suby(Fixed _y)
@@ -53,7 +53,7 @@ void Entity::suby(Fixed _y)
 	y -= _y;
 }
 
-bool Entity::isActive()
+bool Entity::isActive() const
 {
 	return active;
 }
@@ -68,13 +68,13 @@ void Entity::deactivate()
 	active = false;
 }
 
-Constants::CamRelation Entity::getCamRelation()
+Constants::CamRelation Entity::getCamRelation() const
 {
 	return camRelation;
 }
 
 // TODO : figure out fixed-point versions ? not sure it's worth it
-Fixed Entity::angleToEntity(Entity *e)
+Fixed Entity::angleToEntity(const Entity *e) const
 {
 	int x1 = fToScreenX(getx(), getCamRelation()),
 		y1 = fToScreenY(gety(), getCamRelation()),
@@ -83,20 +83,20 @@ Fixed Entity::angleToEntity(Entity *e)
 	return e->isActive() ? (Fixed)(atan2f((float)(y2 - y1), (float)(x2 - x1)) * 128.f / M_PI) & 0xff : -1;
 }
 
-Fixed Entity::angleToXY(Fixed x, Fixed y)
+Fixed Entity::angleToXY(Fixed x, Fixed y) const
 {
 	int x1 = fToScreenX(getx(), getCamRelation()),
 		y1 = fToScreenY(gety(), getCamRelation());
 	return (Fixed)(atan2f((float)(y - y1), (float)(x - x1)) * 128.f / M_PI) & 0xff;
 }
 
-Fixed Entity::distance2ToEntity(Entity *e)
+Fixed Entity::distance2ToEntity(const Entity *e) const
 {
 	Fixed _x = e->getx() - getx(), _y = e->gety() - gety();
 	return fixmul(_x, _x) + fixmul(_y, _y);
 }
 
-Fixed Entity::distance2ToXY(Fixed _x, Fixed _y)
+Fixed Entity::distance2ToXY(Fixed _x, Fixed _y) const
 {
 	Fixed __x = _x - getx(), __y = _y - gety();
 	return fixmul(__x, __x) + fixmul(__y, __y);

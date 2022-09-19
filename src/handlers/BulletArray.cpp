@@ -17,10 +17,6 @@ BulletArray::BulletArray()
 	laserCount = 0;
 }
 
-BulletArray::~BulletArray()
-{
-}
-
 void BulletArray::handle()
 {
 	bool destroyBullet;
@@ -247,13 +243,13 @@ void BulletArray::handle()
 	// Lasers
 	for(int i = 0; i < Constants::MAX_LASER; i++)
 	{
-		Rect *r, r1, r2;
+		Rect r, r1, r2;
 		Laser *cl = &data_laser[i];
 		if(cl->isActive())
 		{
 			if(cl->origin->isActive())
 			{
-				r = cl->getVector();
+				cl->getVector(&r);
 				cl->getSides(&r1, &r2);
 				
 				if(Level::p->isHurtable())
@@ -261,17 +257,17 @@ void BulletArray::handle()
 					// Uses cartesian hitbox for checking collision with player
 					// First, see if the player is behind or in front of the origin of the laser using the dot product
 					// a . b = ||a|| ||b|| cos(angle(a, b)) ; if a . b < 0 then |angle| > 90°
-					if ((fixtoi(Level::p->getx()) - r->x) * r->w + (fixtoi(Level::p->gety()) - r->y) * r->h > 0)
+					if ((fixtoi(Level::p->getx()) - r.x) * r.w + (fixtoi(Level::p->gety()) - r.y) * r.h > 0)
 					{
 						// Then, see if the player is not too far
-						if(sq(fixtoi(Level::p->getx()) - r->x) + sq(fixtoi(Level::p->gety()) - r->y) <= sq(cl->getAmplitude()))
+						if(sq(fixtoi(Level::p->getx()) - r.x) + sq(fixtoi(Level::p->gety()) - r.y) <= sq(cl->getAmplitude()))
 						{
 							// if we're not too far, carry on collision checking
 							// calculate the laser's cartesian equation and apply it to each of its sides
 							// ax + by + c = 0
 							int a, b, c1, c2;
-							a = r->h;
-							b = -r->w;
+							a = r.h;
+							b = -r.w;
 							c1 = -(a * r1.x + b * r1.y);
 							c2 = -(a * r2.x + b * r2.y);
 						
@@ -291,7 +287,7 @@ void BulletArray::handle()
 								if(sign(temp1 + c1) != sign(temp1 + c2) || sign(temp2 + c1) != sign(temp2 + c2))
 								{
 									// Hit, but doesn't hurt
-									cl->setAmplitude((int)sqrt((float)sq(fixtoi(Level::p->getx()) - r->x) + sq(fixtoi(Level::p->gety()) - r->y)));
+									cl->setAmplitude((int)sqrt((float)sq(fixtoi(Level::p->getx()) - r.x) + sq(fixtoi(Level::p->gety()) - r.y)));
 									// Using GS->chapterTimer as a delay
 									if (!(GS->chapterTimer % 2))
 									{
@@ -344,7 +340,7 @@ void BulletArray::add(Fixed _x, Fixed _y, Fixed a, Fixed r, LUTs::BaseImageId im
 	}
 }
 
-void BulletArray::add_fragment(Fixed _x, Fixed _y, Fixed angle, Player* targetP, bool _p, bool _h)
+void BulletArray::add_fragment(Fixed _x, Fixed _y, Fixed angle, const Player* targetP, bool _p, bool _h)
 {
 	if(fragmentCount < Constants::MAX_FRAGMENT)
 	{
@@ -353,7 +349,7 @@ void BulletArray::add_fragment(Fixed _x, Fixed _y, Fixed angle, Player* targetP,
 	}
 }
 
-void BulletArray::add_homing(Fixed _x, Fixed _y, Fixed angle, Player* target, bool _p)
+void BulletArray::add_homing(Fixed _x, Fixed _y, Fixed angle, const Player* target, bool _p)
 {
 	if(homingCount < Constants::MAX_HOMING)
 	{
@@ -363,7 +359,7 @@ void BulletArray::add_homing(Fixed _x, Fixed _y, Fixed angle, Player* target, bo
 	}
 }
 
-void BulletArray::fire_laser(Enemy *e, bool _p, Fixed _a)
+void BulletArray::fire_laser(const Enemy *e, bool _p, Fixed _a)
 {
 	data_laser[laserCount].activate(e, _p, _a);
 	laserCount = (laserCount + 1) % Constants::MAX_LASER; // TODO : make sure that's right
@@ -398,7 +394,7 @@ void BulletArray::deactivate_homing(int n)
 }
 
 // TODO : one enemy can shoot several lasers, make sure they all stop
-void BulletArray::stop_laser(Enemy *e)
+void BulletArray::stop_laser(const Enemy *e)
 {
 	for(int i = 0; i < Constants::MAX_LASER; i++)
 	{

@@ -14,13 +14,12 @@ class BulletArray
 {
 public:
 	BulletArray();
-	~BulletArray();
 	void handle();
 	void add(Fixed x, Fixed y, Fixed a, Fixed r, LUTs::BaseImageId imgId, bool polarity, bool hurtsPlayer, Constants::CamRelation camRelation);
-	void add_fragment(Fixed x, Fixed y, Fixed initialAngle, Player* target, bool polarity, bool hurtsPlayer);
-	void add_homing(Fixed x, Fixed y, Fixed initialAngle, Player* target, bool polarity);
-	void fire_laser(Enemy* origin, bool polarity, Fixed angleOffset);
-	void stop_laser(Enemy* origin);
+	void add_fragment(Fixed x, Fixed y, Fixed initialAngle, const Player* target, bool polarity, bool hurtsPlayer);
+	void add_homing(Fixed x, Fixed y, Fixed initialAngle, const Player* target, bool polarity);
+	void fire_laser(const Enemy* origin, bool polarity, Fixed angleOffset);
+	void stop_laser(const Enemy* origin);
 	void clear();
 private:
 	void deactivate(int offset, bool playSound);

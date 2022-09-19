@@ -20,7 +20,7 @@ Laser::~Laser()
 	
 }
 
-void Laser::activate(Enemy *e, bool _p, Fixed _a)
+void Laser::activate(const Enemy *e, bool _p, Fixed _a)
 {
 	origin = e;
 	active = true;
@@ -46,7 +46,7 @@ inline unsigned short r5g6b5(uint8_t r, uint8_t g, uint8_t b)
 	return ((r >> 3) << 11) | ((g >> 2) << 5) | (b >> 3);
 }
 
-void Laser::draw() 
+void Laser::draw() const
 {
 	int j = (rand() % 4) + 1;
 	for(int i = 0; i < j; i++)
@@ -113,20 +113,15 @@ void Laser::draw()
 	}
 }
 
-Rect* Laser::getVector()
+void Laser::getVector(Rect* vector) const
 {
-	static Rect r;
-	// (x, y) is origin
-	// (w, h) are the vector's coordinates
-	r.x = x;
-	r.y = y;
-	r.w = fixtoi(fixcos(angle) * amplitude);
-	r.h = fixtoi(fixsin(angle) * amplitude);
-	
-	return &r;
+	vector->x = x;
+	vector->y = y;
+	vector->w = fixtoi(fixcos(angle) * amplitude);
+	vector->h = fixtoi(fixsin(angle) * amplitude);
 }
 
-void Laser::getSides(Rect* s1, Rect* s2)
+void Laser::getSides(Rect* s1, Rect* s2) const
 {
 	s1->x = x - fixtoi(fixsin(-angle) * Constants::LASER_THICKNESS / 2);
 	s1->y = y - fixtoi(fixcos(-angle) * Constants::LASER_THICKNESS / 2);
@@ -134,7 +129,7 @@ void Laser::getSides(Rect* s1, Rect* s2)
 	s2->y = y + fixtoi(fixcos(-angle) * Constants::LASER_THICKNESS / 2);
 }
 
-int Laser::getAmplitude()
+int Laser::getAmplitude() const
 {
 	return amplitude;
 }

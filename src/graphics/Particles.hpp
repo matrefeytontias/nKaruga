@@ -9,7 +9,6 @@ class Particles
 {
 public:
 	Particles();
-	~Particles();
 	void add(Fixed x, Fixed y, Fixed angle, Fixed r, bool polarity, int lifetime);
 	void pulse(Fixed x, Fixed y, bool polarity);
 	void handle();

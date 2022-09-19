@@ -354,7 +354,7 @@ void playGame()
 
 		// Draw remaining lives
 		{
-			uint16_t* livesImg = LUTs::baseImage(LUTs::BaseImageId::LIVES);
+			const uint16_t* livesImg = LUTs::baseImage(LUTs::BaseImageId::LIVES);
 
 			drawSprite(livesImg, 0, 224, 0, 0);
 			statsRect.x = livesImg[0] + 2;

@@ -10,11 +10,7 @@ DestroyedEnemies::DestroyedEnemies()
 	clear();
 }
 
-DestroyedEnemies::~DestroyedEnemies()
-{
-}
-
-void DestroyedEnemies::activate(Enemy *e, int c)
+void DestroyedEnemies::activate(const Enemy *e, int c)
 {
 	x[c] = iToScreenX(fixtoi(e->getx()), e->getCamRelation());
 	y[c] = iToScreenY(fixtoi(e->gety()), e->getCamRelation());

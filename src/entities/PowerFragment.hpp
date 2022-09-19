@@ -15,15 +15,15 @@ class PowerFragment : public Bullet
 public:
 	PowerFragment();
 	~PowerFragment();
-	void activate(Fixed x, Fixed y, Fixed initialAngle, Player* target, bool polarity, bool hurtsPlayer);
+	void activate(Fixed x, Fixed y, Fixed initialAngle, const Player* target, bool polarity, bool hurtsPlayer);
 	bool handle();
-	void draw();
+	void draw() const;
 	// Polar coordinates of speed
 	Fixed speed;
 	Fixed angle;
-	Enemy* targetE;
-	Player* targetP;
-	BossEnemy* targetB;
+	const Enemy* targetE;
+	const Player* targetP;
+	const BossEnemy* targetB;
 private:
 	Fixed previousX[FRAGMENT_TRAILING];
 	Fixed previousY[FRAGMENT_TRAILING];

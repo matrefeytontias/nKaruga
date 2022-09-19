@@ -7,9 +7,8 @@ class DrawingCandidate
 {
 public:
 	DrawingCandidate();
-	~DrawingCandidate();
-	void activate(unsigned short* img, Rect* pos, bool flash, Constants::CamRelation camRelation);
-	void activate(unsigned short* img, Rect* pos, Rect* center, Fixed angle, bool flash, Constants::CamRelation camRelation);
+	void activate(const unsigned short* img, const Rect* pos, bool flash, Constants::CamRelation camRelation);
+	void activate(const unsigned short* img, const Rect* pos, const Rect* center, Fixed angle, bool flash, Constants::CamRelation camRelation);
 	void deactivate();
 	void draw();
 private:
@@ -19,5 +18,5 @@ private:
 	// See the enum lower in the file
 	Constants::CamRelation camRelation;
 	Fixed angle;
-	unsigned short* img;
+	const unsigned short* img;
 };

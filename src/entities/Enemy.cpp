@@ -160,14 +160,14 @@ bool Enemy::damage(bool _pol, int amount)
 	return damageable;
 }
 
-void Enemy::joint(Entity *target, int targetX, int targetY, int jointX, int jointY, int jointCX, int jointCY, unsigned short *timg, unsigned short *jimg, bool _d)
+void Enemy::joint(const Entity *target, int targetX, int targetY, int jointX, int jointY, int jointCX, int jointCY, const unsigned short *timg, const unsigned short *jimg, bool _d)
 {
 	isJointed = true;
 	jointObj->activate(target, targetX, targetY, jointX, jointY, jointCX, jointCY, timg, jimg);
 	diesWithJoint = _d;
 }
 
-void Enemy::joint(Entity *target, int targetX, int targetY, int targetCX, int targetCY, int jointX, int jointY, int jointCX, int jointCY, unsigned short *timg, unsigned short *jimg, bool _d)
+void Enemy::joint(const Entity *target, int targetX, int targetY, int targetCX, int targetCY, int jointX, int jointY, int jointCX, int jointCY, const unsigned short *timg, const unsigned short *jimg, bool _d)
 {
 	isJointed = true;
 	jointObj->activate(target, targetX, targetY, targetCX, targetCY, jointX, jointY, jointCX, jointCY, timg, jimg);
@@ -183,7 +183,7 @@ bool Enemy::collide(Fixed _x, Fixed _y, Fixed _cx, Fixed _cy)
 	return temp.x < x + w / 2 && temp.x > x - w / 2 && temp.y < y + h / 2 && temp.y > y - h / 2;
 }
 
-Fixed Enemy::getRotation()
+Fixed Enemy::getRotation() const
 {
 	return rotationAngle;
 }
@@ -193,48 +193,48 @@ void Enemy::setRotation(Fixed a)
 	rotationAngle = a;
 }
 
-bool Enemy::getPolarity()
+bool Enemy::getPolarity() const
 {
 	return polarity;
 }
 
-int Enemy::getWaveIndex()
+int Enemy::getWaveIndex() const
 {
 	return waveIndex;
 }
 
-bool Enemy::isGhost()
+bool Enemy::isGhost() const
 {
 	return ghost;
 }
 
-bool Enemy::isDamageable()
+bool Enemy::isDamageable() const
 {
 	return damageable;
 }
 
-bool Enemy::isProp()
+bool Enemy::isProp() const
 {
 	return prop;
 }
 
-Fixed Enemy::rawx()
+Fixed Enemy::rawx() const
 {
 	return x;
 }
 
-Fixed Enemy::rawy()
+Fixed Enemy::rawy() const
 {
 	return y;
 }
 
 // TODO : make sure this works with non-relative camera relations
-Fixed Enemy::getx()
+Fixed Enemy::getx() const
 {
 	return isJointed ? rawx() + jointObj->getx() : rawx();
 }
 
-Fixed Enemy::gety()
+Fixed Enemy::gety() const
 {
 	return isJointed ? rawy() + jointObj->gety() : rawy();
 }

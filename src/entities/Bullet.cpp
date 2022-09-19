@@ -10,14 +10,6 @@ Bullet::Bullet() : Entity()
 {
 }
 
-Rect* Bullet::makeRect()
-{
-	static Rect r;
-	r.x = fixtoi(x);
-	r.y = fixtoi(y);
-	return &r;
-}
-
 void Bullet::activate(Fixed _x, Fixed _y, Fixed _a, Fixed _r, LUTs::BaseImageId imgId, bool _p, bool _h, Constants::CamRelation _camRel)
 {
 	polarity = _p;
@@ -32,12 +24,12 @@ void Bullet::activate(Fixed _x, Fixed _y, Fixed _a, Fixed _r, LUTs::BaseImageId 
 	Entity::activate();
 }
 
-bool Bullet::getPolarity()
+bool Bullet::getPolarity() const
 {
 	return polarity;
 }
 
-bool Bullet::hurtsPlayer()
+bool Bullet::hurtsPlayer() const
 {
 	return hurtPlayer;
 }
@@ -51,7 +43,7 @@ bool Bullet::handle()
 	return getx() + itofix(img[0] / 2) < itofix(-5) || getx() - itofix(img[0] / 2) > itofix(324) || gety() + itofix(img[1] / 2) < itofix(-5) || gety() - itofix(img[1] / 2) > itofix(244);
 }
 
-void Bullet::draw()
+void Bullet::draw() const
 {
 	static Rect br;
 	br.x = fixtoi(x);
@@ -59,12 +51,12 @@ void Bullet::draw()
 	GS->DC->add(img, &br, false, camRelation);
 }
 
-Fixed Bullet::getx()
+Fixed Bullet::getx() const
 {
 	return fToScreenX(Entity::getx(), camRelation);
 }
 
-Fixed Bullet::gety()
+Fixed Bullet::gety() const
 {
 	return fToScreenY(Entity::gety(), camRelation);
 }

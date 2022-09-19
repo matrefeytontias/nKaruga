@@ -38,7 +38,7 @@ void Player::reset()
 
 void Player::handle(KeyEvent kEv)
 {
-	static Rect r, temp;
+	Rect r, temp;
 	
 	if(active)
 	{
@@ -178,7 +178,7 @@ void Player::handle(KeyEvent kEv)
 	}
 }
 
-bool Player::getPolarity()
+bool Player::getPolarity() const
 {
 	return polarity;
 }
@@ -199,7 +199,7 @@ void Player::hurt()
 	GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::PLAYER_DEATH));
 }
 
-int Player::getLives()
+int Player::getLives() const
 {
 	return lives;
 }
@@ -209,7 +209,7 @@ void Player::setLives(int l)
 	lives = l;
 }
 
-bool Player::isHurtable()
+bool Player::isHurtable() const
 {
 	return active && !deathCounter;
 }

@@ -9,7 +9,7 @@
 
 #define VSPACE 9
 
-const static unsigned short image_cursor[] = { 5, 8, 1,
+constexpr static unsigned short image_cursor[] = { 5, 8, 1,
 0, 0, 1, 1, 1,
 1, 0, 0, 1, 1,
 1, 1, 0, 0, 1,

@@ -34,7 +34,7 @@ void SoundHandler::update()
 	}
 }
 
-int SoundHandler::quickPlaySFX(Mix_Chunk *sfx)
+int SoundHandler::quickPlaySFX(Mix_Chunk *sfx) const
 {
 	return Mix_PlayChannel(-1, sfx, 0);
 }
@@ -61,7 +61,7 @@ int SoundHandler::playBgMusic(Mix_Music *mainM, Mix_Music *loopM)
 	return r;
 }
 
-void SoundHandler::setPausedBgMusic(bool pause)
+void SoundHandler::setPausedBgMusic(bool pause) const
 {
 	if (pause)
 		Mix_PauseMusic();
@@ -69,19 +69,19 @@ void SoundHandler::setPausedBgMusic(bool pause)
 		Mix_ResumeMusic();
 }
 
-int SoundHandler::fadeOutMusic(int ms, void(*callback)())
+int SoundHandler::fadeOutMusic(int ms, void(*callback)()) const
 {
 	Mix_HookMusicFinished(callback);
 	return Mix_FadeOutMusic(ms);
 }
 
-int SoundHandler::stopBgMusic()
+int SoundHandler::stopBgMusic() const
 {
 	Mix_HookMusicFinished(NULL);
 	return Mix_HaltMusic();
 }
 
-bool SoundHandler::musicPlaying()
+bool SoundHandler::musicPlaying() const
 {
 	return Mix_PlayingMusic();
 }

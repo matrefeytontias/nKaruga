@@ -12,11 +12,6 @@ Particles::Particles()
 	counter = 0;
 }
 
-Particles::~Particles()
-{
-	
-}
-
 void Particles::add(Fixed _x, Fixed _y, Fixed _a, Fixed _r, bool _p, int lifetime)
 {
 	int ratio = (rand() % 256) - 128 + _r;
