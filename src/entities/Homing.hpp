@@ -21,5 +21,6 @@ private:
 	Fixed previousX[HOMING_TRAILING];
 	Fixed previousY[HOMING_TRAILING];
 	Fixed angle;
+	LUTs::BaseImageId cachedImg;
 	int aimTimer;
 };
