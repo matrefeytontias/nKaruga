@@ -95,16 +95,7 @@ set(SOURCES
     src/sfx/list.h
 )
 
-# Gather backend files depending on platform cache variable
-
-set(BACKEND_SOURCES src/backend/backends.h)
-
-if(${PLATFORM} STREQUAL "Windows")
-    set(BACKEND_SOURCES ${BACKEND_SOURCES} src/backend/backend_win.cpp)
-endif()
-
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src PREFIX "Source Files" FILES ${SOURCES})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src/backend PREFIX "Backend Files" FILES ${BACKEND_SOURCES})
 
 add_executable(nKaruga ${SOURCES} ${BACKEND_SOURCES} icon.rc)
 
@@ -117,6 +108,16 @@ set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT nKaruga)
 add_custom_target(CopyResources ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/sfx ${CMAKE_BINARY_DIR}/sfx
     DEPENDS nKaruga)
+
+# Gather backend files depending on platform cache variable
+
+set(BACKEND_SOURCES src/backend/backends.h)
+
+if(${PLATFORM} STREQUAL "Windows")
+    set(BACKEND_SOURCES ${BACKEND_SOURCES} src/backend/backend_win.cpp)
+endif()
+target_sources(nKaruga PRIVATE ${BACKEND_SOURCES})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src/backend PREFIX "Backend Files" FILES ${BACKEND_SOURCES})
 
 ### Third-party libraries
 
@@ -144,6 +145,10 @@ set(N2DLIB_SOURCES
 add_library(n2DLib STATIC ${N2DLIB_SOURCES})
 
 target_include_directories(n2DLib PUBLIC n2DLib-PC)
+
+if(${PLATFORM} STREQUAL "Windows")
+    target_compile_definitions(n2DLib PUBLIC PIXEL_TYPE_RGB565)
+endif()
 
 # Link it all
 

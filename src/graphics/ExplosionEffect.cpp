@@ -240,7 +240,7 @@ void renderExplosionEffect()
 				if(explosionBuffer[x][y])
 				{
 					colorRGB curC = palette[explosionBuffer[x][y]];
-					setPixelRGB(x, y, curC.r, curC.g, curC.b);
+					setPixel(x, y, rgbToPixel(curC.r, curC.g, curC.b));
 				}
 			}
 		}
