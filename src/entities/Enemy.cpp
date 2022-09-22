@@ -17,9 +17,6 @@ Enemy::Enemy() : Entity()
 	diedThisFrame = false;
 	isJointed = false;
 	rotationAngle = 0;
-	ax = NULL;
-	ay = NULL;
-	at = NULL;
 	prop = false;
 	damageable = false;
 	visible = true;
@@ -28,15 +25,6 @@ Enemy::Enemy() : Entity()
 	spawned = 0;
 	flash = false;
 	isEnemy = true;
-	jointObj = new Joint();
-}
-
-Enemy::~Enemy()
-{
-	if (ax) free(ax);
-	if (ay) free(ay);
-	if (at) free(at);
-	delete jointObj;
 }
 
 void Enemy::handle()
@@ -46,7 +34,7 @@ void Enemy::handle()
 	
 	if(active)
 	{
-		if(isJointed && diesWithJoint && !jointObj->target->isActive())
+		if(isJointed && diesWithJoint && !jointObj.target->isActive())
 			damage(!polarity, HP);
 		else
 		{
@@ -163,14 +151,14 @@ bool Enemy::damage(bool _pol, int amount)
 void Enemy::joint(const Entity *target, int targetX, int targetY, int jointX, int jointY, int jointCX, int jointCY, const unsigned short *timg, const unsigned short *jimg, bool _d)
 {
 	isJointed = true;
-	jointObj->activate(target, targetX, targetY, jointX, jointY, jointCX, jointCY, timg, jimg);
+	jointObj.activate(target, targetX, targetY, jointX, jointY, jointCX, jointCY, timg, jimg);
 	diesWithJoint = _d;
 }
 
 void Enemy::joint(const Entity *target, int targetX, int targetY, int targetCX, int targetCY, int jointX, int jointY, int jointCX, int jointCY, const unsigned short *timg, const unsigned short *jimg, bool _d)
 {
 	isJointed = true;
-	jointObj->activate(target, targetX, targetY, targetCX, targetCY, jointX, jointY, jointCX, jointCY, timg, jimg);
+	jointObj.activate(target, targetX, targetY, targetCX, targetCY, jointX, jointY, jointCX, jointCY, timg, jimg);
 	diesWithJoint = _d;
 }
 
@@ -231,53 +219,12 @@ Fixed Enemy::rawy() const
 // TODO : make sure this works with non-relative camera relations
 Fixed Enemy::getx() const
 {
-	return isJointed ? rawx() + jointObj->getx() : rawx();
+	return isJointed ? rawx() + jointObj.getx() : rawx();
 }
 
 Fixed Enemy::gety() const
 {
-	return isJointed ? rawy() + jointObj->gety() : rawy();
-}
-
-void Enemy::setAX(int nb, ...)
-{
-	va_list args;
-	if(ax) free(ax);
-	ax = (float*)malloc(nb * sizeof(float));
-	va_start(args, nb);
-	for (int i = 0; i < nb; i++)
-	{
-		// va_arg does not take float
-		// https://stackoverflow.com/questions/11270588/variadic-function-va-arg-doesnt-work-with-float
-		float f = static_cast<float>(va_arg(args, double));
-		ax[i] = f;
-	}
-	va_end(args);
-}
-
-void Enemy::setAY(int nb, ...)
-{
-	va_list args;
-	if (ay) free(ay);
-	ay = (float*)malloc(nb * sizeof(float));
-	va_start(args, nb);
-	for (int i = 0; i < nb; i++)
-	{
-		float f = static_cast<float>(va_arg(args, double));
-		ay[i] = f;
-	}
-	va_end(args);
-}
-
-void Enemy::setAT(int nb, ...)
-{
-	va_list args;
-	if (at) free(at);
-	at = (int*)malloc(nb * sizeof(int));
-	va_start(args, nb);
-	for (int i = 0; i < nb; i++)
-		at[i] = va_arg(args, int);
-	va_end(args);
+	return isJointed ? rawy() + jointObj.gety() : rawy();
 }
 
 // Automagic box handling routine

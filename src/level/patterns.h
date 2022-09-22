@@ -43,29 +43,30 @@ void cb_Pattern_1_2(cb_args)
 }
 void cb_Pattern_1_3(cb_args)
 {
-	Rect screenRect;
-	e->setAX(3, 320.0f, 160.0f + static_cast<float>(e->waveIndex * e->img[0]) / 2.0f, 320.0f);
-	e->setAY(3, 0.0f, 120.0f, 240.0f);
-	e->internal[1] = (5 - e->waveIndex) * 16 * 2 + 120;
-	e->setAT(3, 0, (5 - e->waveIndex) * 16 + 60, e->internal[1]);
-	e->internal[0] = interpolatePathFloat(e->internal[0], e->ax, e->ay, e->at, 3, &screenRect);
-	e->setx(itofix(screenRect.x));
-	e->sety(itofix(screenRect.y));
+	if (e->internal[1] == 0)
+		e->internal[1] = itofix((5 - e->waveIndex) * 12 * 2 + 120);
+
+	e->setx(itofix(320) -
+			fixsin(fixdiv(itofix(e->internal[0]) / 2, e->internal[1]))
+			* (320 - e->waveIndex * e->img[0]) / 2);
+	e->sety(fixlerp(itofix(0), itofix(240), fixdiv(itofix(e->internal[0]), e->internal[1])));
+
 	e->rotationAngle = e->internal[0];
+	e->internal[0]++;
 	if (e->internal[0] == e->internal[1]) e->deactivate();
 }
 
 void cb_Pattern_1_4(cb_args)
 {
-	Rect screenRect;
-	e->setAX(3, 0.0f, 160.0f - static_cast<float>((e->waveIndex - 6) * e->img[0]) / 2.0f, 0.0f);
-	e->setAY(3, 0.0f, 120.0f, 240.0f);
-	e->internal[1] = (5 - (e->waveIndex - 6)) * 16 * 2 + 120;
-	e->setAT(3, 0, (5 - (e->waveIndex - 6)) * 16 + 60, e->internal[1]);
-	e->internal[0] = interpolatePathFloat(e->internal[0], e->ax, e->ay, e->at, 3, &screenRect);
-	e->setx(itofix(screenRect.x));
-	e->sety(itofix(screenRect.y));
-	e->rotationAngle = e->internal[0] / 2;
+	if (e->internal[1] == 0)
+		e->internal[1] = itofix((5 - (e->waveIndex - 6)) * 12 * 2 + 120);
+
+	e->setx(fixsin(fixdiv(itofix(e->internal[0]) / 2, e->internal[1]))
+			* (320 - (e->waveIndex - 6) * e->img[0]) / 2);
+	e->sety(fixlerp(itofix(0), itofix(240), fixdiv(itofix(e->internal[0]), e->internal[1])));
+
+	e->rotationAngle = e->internal[0];
+	e->internal[0]++;
 	if (e->internal[0] == e->internal[1]) e->deactivate();
 }
 
