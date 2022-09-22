@@ -10,15 +10,15 @@ Bullet::Bullet() : Entity()
 {
 }
 
-void Bullet::activate(Fixed _x, Fixed _y, Fixed _a, Fixed _r, LUTs::BaseImageId imgId, bool _p, bool _h, Constants::CamRelation _camRel)
+void Bullet::activate(Fixed _x, Fixed _y, Fixed _dx, Fixed _dy, LUTs::BaseImageId imgId, bool _p, bool _h, Constants::CamRelation _camRel)
 {
 	polarity = _p;
 	hurtPlayer = _h;
 	camRelation = _camRel;
 	x = _x;
 	y = _y;
-	dx = fixmul(fixcos(_a), _r);
-	dy = fixmul(fixsin(_a), _r);
+	dx = _dx;
+	dy = _dy;
 	img = LUTs::baseImage(imgId, _p ? 1 : 0);
 
 	Entity::activate();

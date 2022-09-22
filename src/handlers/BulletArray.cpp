@@ -322,12 +322,11 @@ void BulletArray::handle()
 	}
 }
 
-// TODO : Add some particles each time a bullet is fired
-void BulletArray::add(Fixed _x, Fixed _y, Fixed a, Fixed r, LUTs::BaseImageId imgId, bool _p, bool _h, Constants::CamRelation camRelation)
+void BulletArray::addVectorial(Fixed _x, Fixed _y, Fixed _dx, Fixed _dy, LUTs::BaseImageId imgId, bool _p, bool _h, Constants::CamRelation camRelation)
 {
-	if(bulletCount < Constants::MAX_BULLET)
+	if (bulletCount < Constants::MAX_BULLET)
 	{
-		data[bulletCount].activate(_x, _y, a, r, static_cast<LUTs::BaseImageId>(imgId), _p, _h, camRelation);
+		data[bulletCount].activate(_x, _y, _dx, _dy, imgId, _p, _h, camRelation);
 		bulletCount++;
 		// Only handle sound for on-screen enemy bullets
 		if (_h && _x >= 0 && _x <= itofix(320) && _y >= 0 && _y <= itofix(240))
@@ -338,6 +337,11 @@ void BulletArray::add(Fixed _x, Fixed _y, Fixed a, Fixed r, LUTs::BaseImageId im
 			GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::BULLET_FIRE_ENEMY_0, d));
 		}
 	}
+}
+
+void BulletArray::addRadial(Fixed _x, Fixed _y, Fixed a, Fixed r, LUTs::BaseImageId imgId, bool _p, bool _h, Constants::CamRelation camRelation)
+{
+	addVectorial(_x, _y, fixmul(fixcos(a), r), fixmul(fixsin(a), r), imgId, _p, _h, camRelation);
 }
 
 void BulletArray::add_fragment(Fixed _x, Fixed _y, Fixed angle, const Player* targetP, bool _p, bool _h)

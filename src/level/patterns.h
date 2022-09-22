@@ -87,7 +87,7 @@ void cb_Pattern_1_6(cb_args)
 	angle = e->angleToEntity(Level::p);
 	if (!(e->internal[0] % 25))
 	{
-		Level::bArray->add(e->getx(), e->gety(), angle, itofix(1), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
+		Level::bArray->addRadial(e->getx(), e->gety(), angle, itofix(1), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
 	}
 	e->internal[0]++;
 	e->rotationAngle = ~angle + 64;
@@ -122,7 +122,7 @@ void cb_Pattern_1_8(cb_args)
 		if (e->internal[0] > 65 && e->internal[0] < 100)
 		{
 			if (!(Level::waveTimer % 8))
-				Level::bArray->add(e->getx(), e->gety(), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
+				Level::bArray->addRadial(e->getx(), e->gety(), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
 		}
 		else if (e->internal[0] > 164)
 		{
@@ -139,7 +139,7 @@ void cb_Pattern_1_9(cb_args)
 	e->addy(256);
 
 	if (!(Level::waveTimer % 4))
-		Level::bArray->add(e->getx(), e->gety(), 64, itofix(4), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
+		Level::bArray->addRadial(e->getx(), e->gety(), 64, itofix(4), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
 }
 
 void cb_Pattern_1_10(cb_args)
@@ -151,7 +151,7 @@ void cb_Pattern_1_10(cb_args)
 		if (abs(temp) > itofix(70))
 		{
 			if (!(Level::waveTimer % 8))
-				Level::bArray->add(e->getx(), e->gety(), 64, itofix(4), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
+				Level::bArray->addRadial(e->getx(), e->gety(), 64, itofix(4), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
 		}
 		e->addy(384);
 		e->internal[0]++;
@@ -186,7 +186,7 @@ void cb_Pattern_1_12(cb_args)
 				if (!(e->internal[1] % 256))
 				{
 					angle = e->angleToEntity(Level::p);
-					Level::bArray->add(e->getx(), e->gety(), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
+					Level::bArray->addRadial(e->getx(), e->gety(), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
 				}
 				e->internal[1] += 4;
 			}
@@ -220,7 +220,7 @@ void cb_Pattern_1_13(cb_args)
 				for (int i = 0; i < 4; i++)
 				{
 					int k = i * 8 - 20 + 48;
-					Level::bArray->add(fixcos(k + (e->internal[0] - 3) * 8) * e->img[0] / 2 + e->getx(), fixsin(k + (e->internal[0] - 3) * 8) * e->img[1] / 2 + e->gety(),
+					Level::bArray->addRadial(fixcos(k + (e->internal[0] - 3) * 8) * e->img[0] / 2 + e->getx(), fixsin(k + (e->internal[0] - 3) * 8) * e->img[1] / 2 + e->gety(),
 						k, (e->internal[0] - 2) * 64 + itofix(1), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
 				}
 				e->internal[0]++;
@@ -243,7 +243,7 @@ void cb_Pattern_1_13(cb_args)
 						for (int j = 0; j < 3; j++)
 						{
 
-							Level::bArray->add(fixcos(k) * e->img[0] / 2 + e->getx() - fixsin(k) * (j - 1) * 6, fixsin(k) * e->img[1] / 2 + e->gety() + fixcos(k) * (j - 1) * 6,
+							Level::bArray->addRadial(fixcos(k) * e->img[0] / 2 + e->getx() - fixsin(k) * (j - 1) * 6, fixsin(k) * e->img[1] / 2 + e->gety() + fixcos(k) * (j - 1) * 6,
 								k, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_2_LIGHT, e->polarity, true, e->getCamRelation());
 						}
 					}
@@ -272,7 +272,7 @@ void cb_Pattern_1_14(cb_args)
 				for (int i = 0; i < 4; i++)
 				{
 					int k = i * 8 - 20 + 80;
-					Level::bArray->add(fixcos(k - (e->internal[0] - 3) * 8) * e->img[0] / 2 + e->getx(), fixsin(k - (e->internal[0] - 3) * 8) * e->img[1] / 2 + e->gety(),
+					Level::bArray->addRadial(fixcos(k - (e->internal[0] - 3) * 8) * e->img[0] / 2 + e->getx(), fixsin(k - (e->internal[0] - 3) * 8) * e->img[1] / 2 + e->gety(),
 						k, (e->internal[0] - 2) * 64 + itofix(1), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
 				}
 				e->internal[0]++;
@@ -295,7 +295,7 @@ void cb_Pattern_1_14(cb_args)
 						for (int j = 0; j < 3; j++)
 						{
 
-							Level::bArray->add(fixcos(k) * e->img[0] / 2 + e->getx() - fixsin(k) * (j - 1) * 6, fixsin(k) * e->img[1] / 2 + e->gety() + fixcos(k) * (j - 1) * 6,
+							Level::bArray->addRadial(fixcos(k) * e->img[0] / 2 + e->getx() - fixsin(k) * (j - 1) * 6, fixsin(k) * e->img[1] / 2 + e->gety() + fixcos(k) * (j - 1) * 6,
 								k, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_2_LIGHT, e->polarity, true, e->getCamRelation());
 						}
 					}
@@ -318,7 +318,7 @@ void cb_Pattern_1_15(cb_args)
 		if (!(e->internal[0] % 128))
 		{
 			angle = e->angleToEntity(Level::p);
-			Level::bArray->add(e->getx(), e->gety(), angle, itofix(1), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
+			Level::bArray->addRadial(e->getx(), e->gety(), angle, itofix(1), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
 		}
 		e->internal[0]++;
 		e->rotationAngle = e->internal[0];
@@ -330,7 +330,7 @@ void cb_Pattern_1_16(cb_args)
 	if (e->gety() <= itofix(80))
 	{
 		if (!(Level::waveTimer % 16) && e->gety() < itofix(60))
-			Level::bArray->add(e->getx(), e->gety(), 64, itofix(3), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
+			Level::bArray->addRadial(e->getx(), e->gety(), 64, itofix(3), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
 		e->addy((256 - fixtoi(e->gety()) * 3) * 2);
 		e->addx(e->polarity ? -128 : 128);
 	}
@@ -435,7 +435,7 @@ void cb_Pattern_1_19(cb_args)
 void cb_Pattern_1_20(cb_args)
 {
 	if (!(Level::waveTimer % 16))
-		Level::bArray->add(e->getx(), e->gety(), (e->waveIndex + 1 % 2) * 128, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_2_LIGHT, e->polarity, true, e->getCamRelation());
+		Level::bArray->addRadial(e->getx(), e->gety(), (e->waveIndex + 1 % 2) * 128, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_2_LIGHT, e->polarity, true, e->getCamRelation());
 }
 
 void cb_Pattern_1_21(cb_args)
@@ -458,7 +458,7 @@ void cb_Pattern_1_boss(cb_args)
 		if (!(Level::waveTimer % 48))
 		{
 			angle = e->angleToEntity(Level::p);
-			Level::bArray->add(e->getx(), e->gety(), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
+			Level::bArray->addRadial(e->getx(), e->gety(), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
 		}
 	}
 }
@@ -496,7 +496,7 @@ void cb_Pattern_1_bossGrenade(cb_args)
 	if (e->internal[0] >= e->internal[3])
 	{
 		for (int i = 0; i < 32; i++)
-			Level::bArray->add(e->getx(), e->gety(), i * 8, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
+			Level::bArray->addRadial(e->getx(), e->gety(), i * 8, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
 		e->damageable = true; // force destruction
 		e->damage(!e->polarity, e->HP);
 	}
@@ -519,7 +519,7 @@ void cb_Pattern_2_1(cb_args)
 			if (abs(fixtoi(e->getx()) - 160) == 80)
 			{
 				Fixed angle = e->angleToEntity(Level::p);
-				Level::bArray->add(e->getx(), e->gety(), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
+				Level::bArray->addRadial(e->getx(), e->gety(), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
 			}
 		}
 		else
@@ -580,7 +580,7 @@ void cb_Pattern_2_2(cb_args)
 		if (fixtoi(e->getx()) == fixtoi(e->gety()) || 320 - fixtoi(e->getx()) == fixtoi(e->gety()))
 		{
 			Fixed angle = e->angleToEntity(Level::p);
-			Level::bArray->add(e->getx(), e->gety(), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
+			Level::bArray->addRadial(e->getx(), e->gety(), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
 		}
 	}
 	else if ((e->internal[1] & 0xff) != (e->internal[3] ? 224 : 160))
@@ -618,7 +618,7 @@ void cb_Pattern_2_3(cb_args)
 		if (fixtoi(e->getx()) == fixtoi(e->gety()) || 320 - fixtoi(e->getx()) == fixtoi(e->gety()))
 		{
 			Fixed angle = e->angleToEntity(Level::p);
-			Level::bArray->add(e->getx(), e->gety(), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
+			Level::bArray->addRadial(e->getx(), e->gety(), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
 		}
 	}
 	else if (!e->internal[4])
@@ -855,7 +855,7 @@ void cb_Pattern_2_15(cb_args)
 	e->internal[1] = 0;
 	e->beAbox();
 	if (!(Level::waveTimer % 16))
-		Level::bArray->add(e->getx(), e->gety() + itofix(24), 64, itofix(1), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, !e->polarity, true, e->getCamRelation());
+		Level::bArray->addRadial(e->getx(), e->gety() + itofix(24), 64, itofix(1), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, !e->polarity, true, e->getCamRelation());
 }
 
 void cb_Pattern_2_16(cb_args)
@@ -938,7 +938,7 @@ void cb_Pattern_2_21(cb_args)
 		for (int i = 0; i < 4; i++)
 		{
 			rotate(itofix(24), 0, 0, 0, e->rotationAngle + i * 64, &temp);
-			Level::bArray->add(e->getx() + temp.x, e->gety() + temp.y, -(e->rotationAngle + i * 64), 256, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, i % 2 ? Constants::SHADOW : Constants::LIGHT, true, e->getCamRelation());
+			Level::bArray->addRadial(e->getx() + temp.x, e->gety() + temp.y, -(e->rotationAngle + i * 64), 256, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, i % 2 ? Constants::SHADOW : Constants::LIGHT, true, e->getCamRelation());
 		}
 	}
 	e->beAprop();
@@ -1040,7 +1040,7 @@ void cb_Pattern_2_29(cb_args)
 		for (int i = 0; i < 4; i++)
 		{
 			rotate(itofix(24), 0, 0, 0, e->rotationAngle + i * 64, &temp);
-			Level::bArray->add(e->getx() + temp.x, e->gety() + temp.y, -(e->rotationAngle + i * 64), 256, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
+			Level::bArray->addRadial(e->getx() + temp.x, e->gety() + temp.y, -(e->rotationAngle + i * 64), 256, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, e->polarity, true, e->getCamRelation());
 		}
 	}
 	e->beAprop();
@@ -1154,7 +1154,7 @@ void cb_Pattern_2_36(cb_args)
 	e->sety(fixsin(e->rotationAngle) * 30);
 	int t = e->internal[0] % 100;
 	if (!(t & 3) && t / 4 < 3)
-		Level::bArray->add(e->getx(), e->gety(), 64, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
+		Level::bArray->addRadial(e->getx(), e->gety(), 64, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, e->polarity, true, e->getCamRelation());
 }
 
 void cb_Pattern_2_wall(cb_args)

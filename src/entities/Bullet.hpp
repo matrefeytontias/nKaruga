@@ -9,7 +9,7 @@ class Bullet : public Entity
 {
 public:
 	Bullet();
-	void activate(Fixed x, Fixed y, Fixed a, Fixed r, LUTs::BaseImageId imageID, bool polarity, bool hurtsPlayer, Constants::CamRelation camRelation);
+	void activate(Fixed x, Fixed y, Fixed dx, Fixed dy, LUTs::BaseImageId imageID, bool polarity, bool hurtsPlayer, Constants::CamRelation camRelation);
 	bool getPolarity() const;
 	bool hurtsPlayer() const;
 	bool handle();

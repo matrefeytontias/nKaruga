@@ -575,7 +575,7 @@ void boss1_cb(BossEnemy *be)
 				for(int i = 0; i < 3; i++)
 				{
 					Fixed angle = 64 - be->angle - (i - 1) * 32;
-					Level::bArray->add(itofix(pos.x), itofix(pos.y), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, Constants::LIGHT, true, Constants::CamRelation::DEFAULT);
+					Level::bArray->addRadial(itofix(pos.x), itofix(pos.y), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, Constants::LIGHT, true, Constants::CamRelation::DEFAULT);
 				}
 			}
 			else
@@ -583,7 +583,7 @@ void boss1_cb(BossEnemy *be)
 				for(int i = 0; i < 2; i++)
 				{
 					Fixed angle = 64 - be->angle - (i * 32 - 16);
-					Level::bArray->add(itofix(pos.x), itofix(pos.y), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, Constants::LIGHT, true, Constants::CamRelation::DEFAULT);
+					Level::bArray->addRadial(itofix(pos.x), itofix(pos.y), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, Constants::LIGHT, true, Constants::CamRelation::DEFAULT);
 				}
 			}
 		}
@@ -623,7 +623,7 @@ void boss1_cb(BossEnemy *be)
 					Fixed angle = j * 6 + 16 - be->angle;
 					for(int i = 0; i < 4; i++)
 					{
-						Level::bArray->add(itofix(pos.x), itofix(pos.y), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, Constants::SHADOW, true, Constants::CamRelation::DEFAULT);
+						Level::bArray->addRadial(itofix(pos.x), itofix(pos.y), angle, itofix(2), LUTs::BaseImageId::ENEMY_BULLET_1_LIGHT, Constants::SHADOW, true, Constants::CamRelation::DEFAULT);
 						angle += 21;
 					}
 					bulletFired[j]++;
@@ -721,9 +721,9 @@ void boss2_cb(BossEnemy *be)
 	// Continuously fire bullets from the two top points (21, 54) and (118, 55)
 	Fixed ox = itofix(be->bodyImg[0] / 2 - 21), oy = itofix(-be->bodyImg[1] / 2 + 54);
 	if (!(GS->chapterTimer % 20))
-		Level::bArray->add(be->getx() - ox, be->gety() + oy, 128 + Level::p->angleToXY(be->getx() - ox, be->gety() + oy) + ((rand() % 32) - 16), 192, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::LIGHT, true, be->getCamRelation());
+		Level::bArray->addRadial(be->getx() - ox, be->gety() + oy, 128 + Level::p->angleToXY(be->getx() - ox, be->gety() + oy) + ((rand() % 32) - 16), 192, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::LIGHT, true, be->getCamRelation());
 	else if (!((GS->chapterTimer + 10) % 20))
-		Level::bArray->add(be->getx() + ox, be->gety() + oy, 128 + Level::p->angleToXY(be->getx() + ox, be->gety() + oy) + ((rand() % 32) - 16), 192, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::SHADOW, true, be->getCamRelation());
+		Level::bArray->addRadial(be->getx() + ox, be->gety() + oy, 128 + Level::p->angleToXY(be->getx() + ox, be->gety() + oy) + ((rand() % 32) - 16), 192, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::SHADOW, true, be->getCamRelation());
 
 	/* Pattern handling
 	 * 0 : wait for 512 frames
@@ -778,9 +778,9 @@ void boss2_cb(BossEnemy *be)
 					{
 						Fixed angle = be->getInternal(3) + 64 * i;
 						if (be->getInternal(4) & 1)
-							Level::bArray->add(centerX + offset + fixcos(angle) * 15, centerY + fixsin(angle) * 15, angle + 64, 128 + be->getInternal(2) * 32, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::SHADOW, true, Constants::CamRelation::DEFAULT);
+							Level::bArray->addRadial(centerX + offset + fixcos(angle) * 15, centerY + fixsin(angle) * 15, angle + 64, 128 + be->getInternal(2) * 32, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::SHADOW, true, Constants::CamRelation::DEFAULT);
 						else
-							Level::bArray->add(centerX - offset + fixcos(-angle) * 15, centerY + fixsin(-angle) * 15, -angle - 64, 128 + be->getInternal(2) * 32, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::LIGHT, true, Constants::CamRelation::DEFAULT);
+							Level::bArray->addRadial(centerX - offset + fixcos(-angle) * 15, centerY + fixsin(-angle) * 15, -angle - 64, 128 + be->getInternal(2) * 32, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::LIGHT, true, Constants::CamRelation::DEFAULT);
 					}
 					be->incInternal(2);
 					be->setInternal(3, be->getInternal(3) + 4);
@@ -838,7 +838,7 @@ void boss2_cb(BossEnemy *be)
 					dir.h -= itofix(LUTs::bossImage(LUTs::BossImageId::BOSS2_LEFTARM)[1]) / 2;
 					for (int k = 0; k < 6; k++)
 					{
-						Level::bArray->add(dir.w + itofix(odd ? LUTs::bossImage(LUTs::BossImageId::BOSS2_RIGHTARM)[0] - positions[k*2] : positions[k*2]),
+						Level::bArray->addRadial(dir.w + itofix(odd ? LUTs::bossImage(LUTs::BossImageId::BOSS2_RIGHTARM)[0] - positions[k*2] : positions[k*2]),
 								dir.h + itofix(positions[k*2+1]), a + (rand() % 32) - 16,
 								192 + (rand() % 192), LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, be->getInternal(4) & 1, true, Constants::CamRelation::DEFAULT);
 					}
@@ -909,7 +909,7 @@ void boss2_cb(BossEnemy *be)
 							offsetX = LUTs::bossImage(LUTs::BossImageId::BOSS2_RIGHTWING)[0] - positions[i * 2] - pos.w;
 							offsetY = positions[i * 2 + 1] - pos.h;
 							rotate(pos.x + offsetX, pos.y + offsetY, pos.x, pos.y, be->getInternal(1), &pos);
-							Level::bArray->add(itofix(pos.x), itofix(pos.y), -be->getInternal(1) + 64, 384, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::SHADOW, true, Constants::CamRelation::DEFAULT);
+							Level::bArray->addRadial(itofix(pos.x), itofix(pos.y), -be->getInternal(1) + 64, 384, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::SHADOW, true, Constants::CamRelation::DEFAULT);
 						}
 						else
 						{
@@ -917,7 +917,7 @@ void boss2_cb(BossEnemy *be)
 							offsetX = positions[i * 2] - pos.w;
 							offsetY = positions[i * 2 + 1] - pos.h;
 							rotate(pos.x + offsetX, pos.y + offsetY, pos.x, pos.y, be->getInternal(0), &pos);
-							Level::bArray->add(itofix(pos.x), itofix(pos.y), -be->getInternal(0) + 64, 384, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::LIGHT, true, Constants::CamRelation::DEFAULT);
+							Level::bArray->addRadial(itofix(pos.x), itofix(pos.y), -be->getInternal(0) + 64, 384, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::LIGHT, true, Constants::CamRelation::DEFAULT);
 						}
 					}
 					be->incInternal(2);
@@ -956,12 +956,12 @@ void boss2_cb(BossEnemy *be)
 					int offsetX = LUTs::bossImage(LUTs::BossImageId::BOSS2_RIGHTWING)[0] - positions[i * 2] - pos.w;
 					int offsetY = positions[i * 2 + 1] - pos.h;
 					rotate(pos.x + offsetX, pos.y + offsetY, pos.x, pos.y, be->getInternal(1), &pos);
-					Level::bArray->add(itofix(pos.x), itofix(pos.y), -be->getInternal(1) + 64, 384, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::SHADOW, true, Constants::CamRelation::DEFAULT);
+					Level::bArray->addRadial(itofix(pos.x), itofix(pos.y), -be->getInternal(1) + 64, 384, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::SHADOW, true, Constants::CamRelation::DEFAULT);
 					pos = getJointPoint(be, boss2_jointData, boss2_joint_leftWing);
 					offsetX = positions[i * 2] - pos.w;
 					offsetY = positions[i * 2 + 1] - pos.h;
 					rotate(pos.x + offsetX, pos.y + offsetY, pos.x, pos.y, be->getInternal(0), &pos);
-					Level::bArray->add(itofix(pos.x), itofix(pos.y), -be->getInternal(0) + 64, 384, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::LIGHT, true, Constants::CamRelation::DEFAULT);
+					Level::bArray->addRadial(itofix(pos.x), itofix(pos.y), -be->getInternal(0) + 64, 384, LUTs::BaseImageId::ENEMY_BULLET_0_LIGHT, Constants::LIGHT, true, Constants::CamRelation::DEFAULT);
 				}
 				be->incInternal(2);
 			}
