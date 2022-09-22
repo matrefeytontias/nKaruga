@@ -287,7 +287,7 @@ void BulletArray::handle()
 								if(sign(temp1 + c1) != sign(temp1 + c2) || sign(temp2 + c1) != sign(temp2 + c2))
 								{
 									// Hit, but doesn't hurt
-									cl->setAmplitude((int)sqrt((float)sq(fixtoi(Level::p->getx()) - r.x) + sq(fixtoi(Level::p->gety()) - r.y)));
+									cl->setAmplitude(isqrt(sq(fixtoi(Level::p->getx()) - r.x) + sq(fixtoi(Level::p->gety()) - r.y)));
 									// Using GS->chapterTimer as a delay
 									if (!(GS->chapterTimer % 2))
 									{
