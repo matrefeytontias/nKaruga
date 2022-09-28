@@ -78,6 +78,6 @@ void Homing::draw() const
 	{
 		r.x = fixtoi(previousX[i]);
 		r.y = fixtoi(previousY[i]);
-		fillCircle(r.x, r.y, 8 - i / 2, polarity ? 0xfb0c : 0x65bf);
+		n2D_fillCircle(r.x, r.y, 8 - i / 2, polarity ? 0xfb0c : 0x65bf);
 	}
 }

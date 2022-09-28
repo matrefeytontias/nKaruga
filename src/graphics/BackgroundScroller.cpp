@@ -33,7 +33,7 @@ void BackgroundScroller::draw() const
 		{
 			unsigned short c = img[fixtoi(sourceY) * w + fixtoi(sourceX)];
 			if (c != colorKey)
-				setPixelUnsafe(sx, sy, c);
+				n2D_setPixelUnsafe(sx, sy, c);
 		}
 	}
 }

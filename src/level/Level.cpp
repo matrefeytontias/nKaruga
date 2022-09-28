@@ -209,11 +209,11 @@ void Level::advanceLevel()
 						GS->chainStatus = 0;
 						GS->inChainCount = 0;
 						GS->power = 0;
-						clearBufferB();
-						updateScreen();
+						n2D_clearBufferB();
+						n2D_updateScreen();
 						// Wait for one second
-						timer_load(0, 1000);
-						while (timer_read(0));
+						n2D_timerLoad(0, 1000);
+						while (n2D_timerRead(0));
 
 						counter++;
 						// Reset all camera position
@@ -293,12 +293,12 @@ void Level::advanceLevel()
 				// TEMPORARY
 				// #########
 				// Display the "end of demo" screen for 5 seconds and return to main menu
-				clearBufferB();
-				drawSprite(image_end_of_demo, 0, 0, 0, 0);
-				updateScreen();
+				n2D_clearBufferB();
+				n2D_drawSprite(image_end_of_demo, 0, 0, 0, 0);
+				n2D_updateScreen();
 				// Wait for 5 seconds
-				timer_load(0, 5000);
-				while (timer_read(0));
+				n2D_timerLoad(0, 5000);
+				while (n2D_timerRead(0));
 
 				gameEnded = true;
 				continueParsing = false;
@@ -344,7 +344,7 @@ static unsigned short *levelKanjis[2] = { image_kanji_1, image_kanji_2 };
 void Level::intro1()
 {
 	static int dX = 0, dY = 0;
-	fillRect(0, 0, currentW, 240, 0);
+	n2D_fillRect(0, 0, currentW, 240, 0);
 	if(!currentW)
 	{
 		#define TRANSLATE 120
@@ -361,8 +361,8 @@ void Level::intro1()
 		if (GS->chapterTimer == currentW + 1) GS->particles->pulse(p->getx(), p->gety(), p->getPolarity());
 		int x = 30;
 		int y = 60;
-		drawString(&x, &y, x, levelStrs[chapterNum], 0xffff, 0);
-		drawSprite(levelKanjis[chapterNum], 30, 80, 0, 0);
+		n2D_drawString(&x, &y, x, levelStrs[chapterNum], 0xffff, 0);
+		n2D_drawSprite(levelKanjis[chapterNum], 30, 80, 0, 0);
 	}
 	if(GS->chapterTimer > 384)
 	{

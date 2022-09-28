@@ -68,8 +68,8 @@ int BossEnemy::handle()
 		int color = mHP / HPperBar + 1;
 		mHP %= HPperBar;
 		int limit = 240 - mHP * 240 / HPperBar;
-		fillRect(316, 0, 4, limit, color_HPbars[color - 1]);
-		fillRect(316, limit, 4, 239 - limit, color_HPbars[color]);
+		n2D_fillRect(316, 0, 4, limit, color_HPbars[color - 1]);
+		n2D_fillRect(316, limit, 4, 239 - limit, color_HPbars[color]);
 		
 		*hurtable = true;
 		(callback)(this);
@@ -78,10 +78,10 @@ int BossEnemy::handle()
 			Level::p->hurt();
 
 		// Timer 1 counts the second
-		if(!timer_read(1))
+		if(!n2D_timerRead(1))
 		{
 			remainingTime--;
-			timer_load(1, 1000);
+			n2D_timerLoad(1, 1000);
 		}
 		if(!remainingTime)
 			HP = 0;

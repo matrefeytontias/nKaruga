@@ -24,7 +24,7 @@ constexpr static unsigned short image_cursor[] = { 5, 8, 1,
 // MenuItem
 //
 
-MenuItem::MenuItem(const char* text) : text(text), textWidth(stringWidth(text)) { }
+MenuItem::MenuItem(const char* text) : text(text), textWidth(n2D_stringWidth(text)) { }
 
 //
 // BoolMenuItem
@@ -32,7 +32,7 @@ MenuItem::MenuItem(const char* text) : text(text), textWidth(stringWidth(text)) 
 
 unsigned int BoolMenuItem::getMaxOptionTextWidth() const
 {
-	return max(stringWidth(yesText), stringWidth(noText));
+	return max(n2D_stringWidth(yesText), n2D_stringWidth(noText));
 }
 
 //
@@ -43,7 +43,7 @@ unsigned int IntMenuItem::getMaxOptionTextWidth() const
 {
 	int maxWidth = 0;
 	for (int i = 0; i < maxValue; i++)
-		maxWidth = max(maxWidth, stringWidth(options[i]));
+		maxWidth = max(maxWidth, n2D_stringWidth(options[i]));
 	return maxWidth;
 }
 
@@ -62,8 +62,8 @@ pressed()
 
 bool Menu::run(KeyEvent k)
 {
-	fillRect((320 - width) / 2, (240 - height) / 2, width, height, 0);
-	fillRect((320 - width) / 2 + 1, (240 - height) / 2 + 1, width - 2, height - 2, 0xffff);
+	n2D_fillRect((320 - width) / 2, (240 - height) / 2, width, height, 0);
+	n2D_fillRect((320 - width) / 2 + 1, (240 - height) / 2 + 1, width - 2, height - 2, 0xffff);
 
 	int cursorX = 0, cursorY = 0;
 
@@ -72,7 +72,7 @@ bool Menu::run(KeyEvent k)
 	{
 		MenuItem* item = items[i];
 		const char* optionText = item->getOptionText();
-		int x = (320 - item->getTextWidth() - (optionText != nullptr ? stringWidth(optionText) : 0)) / 2;
+		int x = (320 - item->getTextWidth() - (optionText != nullptr ? n2D_stringWidth(optionText) : 0)) / 2;
 		int y = 120 + (i * 2 - numItems) * VSPACE / 2;
 		if (i == cursorPosition)
 		{
@@ -80,12 +80,12 @@ bool Menu::run(KeyEvent k)
 			cursorY = y;
 		}
 
-		drawString(&x, &y, 0, item->text, 0xffff, 0);
+		n2D_drawString(&x, &y, 0, item->text, 0xffff, 0);
 		if(item->getOptionText())
-			drawString(&x, &y, 0, item->getOptionText(), 0xffff, 0);
+			n2D_drawString(&x, &y, 0, item->getOptionText(), 0xffff, 0);
 	}
 
-	drawSprite(image_cursor, cursorX, cursorY, 0, 0);
+	n2D_drawSprite(image_cursor, cursorX, cursorY, 0, 0);
 
 	// Process input
 	if (KDOWN(k))

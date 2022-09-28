@@ -22,10 +22,10 @@ void ChainNotif::handle()
 	if(maxChain)
 	{
 		y -= 8;
-		drawString(&x, &y, x, "max chain\n", 0xffff, 0);
+		n2D_drawString(&x, &y, x, "max chain\n", 0xffff, 0);
 	}
 	int tempX = x;
-	drawDecimal(&tempX, &y, value, 0xfbe0, 0xf800);
+	n2D_drawDecimal(&tempX, &y, value, 0xfbe0, 0xf800);
 	untilDeath--;
 
 	if (!untilDeath)

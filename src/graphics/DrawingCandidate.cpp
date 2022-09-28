@@ -57,9 +57,9 @@ void DrawingCandidate::draw()
 				center.x = iToScreenX(center.x, camRelation);
 				center.y = iToScreenY(center.y, camRelation);
 			}
-			drawSpriteRotated(img, &pos, centered ? NULL : &center, angle, flash, 0xffff);
+			n2D_drawSpriteRotated(img, &pos, centered ? NULL : &center, angle, flash, 0xffff);
 		}
 		else
-			drawSprite(img, pos.x, pos.y, flash, 0xffff);
+			n2D_drawSprite(img, pos.x, pos.y, flash, 0xffff);
 	}
 }

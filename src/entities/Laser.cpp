@@ -56,7 +56,7 @@ void Laser::draw() const
 	}
 	
 	// A laser has an up-to 8-pixels core radius with an up-to 12-pixels aura radius (ie a laser is up to 24 pixels thick)
-	// I use n2DLib's drawLine algorithm (by pierrotdu18), but drawing rotated laser slices instead of pixels
+	// I use n2DLib's n2D_drawLine algorithm (by pierrotdu18), but drawing rotated laser slices instead of pixels
 	int x1 = x;
 	int y1 = y;
 	int x2 = fixtoi(fixcos(angle) * amplitude) + x1;
@@ -85,13 +85,13 @@ void Laser::draw() const
 		{
 			if(abs(i - 12) <= fixtoi(coreR)) // Core pixel
 			{
-				setPixel(fixtoi(sxp), fixtoi(syp), coreColor);
-				setPixel(fixtoi(sxp) + 1, fixtoi(syp), coreColor);
-				setPixel(fixtoi(sxp), fixtoi(syp) + 1, coreColor);
-				setPixel(fixtoi(sxp) + 1, fixtoi(syp) + 1, coreColor);
+				n2D_setPixel(fixtoi(sxp), fixtoi(syp), coreColor);
+				n2D_setPixel(fixtoi(sxp) + 1, fixtoi(syp), coreColor);
+				n2D_setPixel(fixtoi(sxp), fixtoi(syp) + 1, coreColor);
+				n2D_setPixel(fixtoi(sxp) + 1, fixtoi(syp) + 1, coreColor);
 			}
 			else if(abs(i - 12) <= fixtoi(auraR)) // Aura pixel
-				setPixel(fixtoi(sxp), fixtoi(syp),
+				n2D_setPixel(fixtoi(sxp), fixtoi(syp),
 					polarity ?
 						0xf800
 						: r5g6b5(abs(fixtoi(auraR) - abs(i - 12)) * 256 / fixtoi(auraR), abs(fixtoi(auraR) - abs(i - 12)) * 128 / fixtoi(auraR) + 128, 255));

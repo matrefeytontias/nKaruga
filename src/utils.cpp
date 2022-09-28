@@ -51,16 +51,16 @@ KeyEvent getk(void)
 
 #define setbit(pos, val) k |= val << pos
 
-	setbit(0, isKeyPressed(GP->keys.down));
-	setbit(1, isKeyPressed(GP->keys.left));
-	setbit(2, isKeyPressed(GP->keys.right));
-	setbit(3, isKeyPressed(GP->keys.up));
-	setbit(4, isKeyPressed(GP->keys.fire));
-	setbit(5, isKeyPressed(GP->keys.polarity));
-	setbit(6, isKeyPressed(GP->keys.fragment));
+	setbit(0, n2D_isKeyPressed(GP->keys.down));
+	setbit(1, n2D_isKeyPressed(GP->keys.left));
+	setbit(2, n2D_isKeyPressed(GP->keys.right));
+	setbit(3, n2D_isKeyPressed(GP->keys.up));
+	setbit(4, n2D_isKeyPressed(GP->keys.fire));
+	setbit(5, n2D_isKeyPressed(GP->keys.polarity));
+	setbit(6, n2D_isKeyPressed(GP->keys.fragment));
 	// TODO : get rid of this
-	setbit(7, isKeyPressed(SDL_SCANCODE_ESCAPE));
-	setbit(8, isKeyPressed(GP->keys.pause));
+	setbit(7, n2D_isKeyPressed(SDL_SCANCODE_ESCAPE));
+	setbit(8, n2D_isKeyPressed(GP->keys.pause));
 
 #undef setbit
 

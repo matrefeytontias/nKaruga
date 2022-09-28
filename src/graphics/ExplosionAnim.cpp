@@ -27,7 +27,7 @@ void ExplosionAnim::activate(int _x, int _y, bool _p)
 void ExplosionAnim::handle()
 {
 	// Isn't a drawing candidate
-	drawSprite(LUTs::baseImage(polarity ? LUTs::BaseImageId::EXPLOSION_SHADOW_0 : LUTs::BaseImageId::EXPLOSION_LIGHT_0,
+	n2D_drawSprite(LUTs::baseImage(polarity ? LUTs::BaseImageId::EXPLOSION_SHADOW_0 : LUTs::BaseImageId::EXPLOSION_LIGHT_0,
 								(6 * FRAME_DELAY - counter) / FRAME_DELAY),
 				x, y, 0, 0);
 	counter--;

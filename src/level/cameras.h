@@ -42,8 +42,8 @@ void cthChap2_2(Camera* cam)
 	}
 	GS->minX += GS->minX < 60;
 	GS->maxX = 320 - GS->minX;
-	fillRect(0, 0, GS->minX, 240, 0);
-	fillRect(GS->maxX, 0, 320 - GS->maxX, 240, 0);
+	n2D_fillRect(0, 0, GS->minX, 240, 0);
+	n2D_fillRect(GS->maxX, 0, 320 - GS->maxX, 240, 0);
 }
 
 void cthChap2_boss(Camera* cam)
@@ -52,8 +52,8 @@ void cthChap2_boss(Camera* cam)
 	GS->maxX = 320 - GS->minX;
 	if (GS->minX > 0)
 	{
-		fillRect(0, 0, GS->minX, 240, 0);
-		fillRect(GS->maxX, 0, 320 - GS->maxX, 240, 0);
+		n2D_fillRect(0, 0, GS->minX, 240, 0);
+		n2D_fillRect(GS->maxX, 0, 320 - GS->maxX, 240, 0);
 	}
 }
 

@@ -43,7 +43,7 @@ void Particles::handle()
 			x[i] += dx[i];
 			y[i] += dy[i];
 			
-			fillCircle(fixtoi(x[i]), fixtoi(y[i]), time[i] / dt[i], polarity[i] ? 0 : 0xffff);
+			n2D_fillCircle(fixtoi(x[i]), fixtoi(y[i]), time[i] / dt[i], polarity[i] ? 0 : 0xffff);
 		}
 	}
 }
