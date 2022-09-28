@@ -1,6 +1,5 @@
-#include <SDL2/SDL.h>
-
 #include "n2DLib/n2DLib.h"
+#include "n2DLib/n2DLib_math.h"
 
 #include "GameSystems.hpp"
 #include "utils.hpp"
@@ -8,11 +7,9 @@
 #include "graphics/ExplosionEffect.hpp"
 #include "graphics/Particles.hpp"
 #include "handlers/DrawingCandidates.hpp"
-#include "handlers/SoundHandler.hpp"
 #include "helpers/Constants.hpp"
 #include "level/Level.hpp"
 #include "menu/Menu.hpp"
-#include "n2DLib/n2DLib_math.h"
 
 #include "gfx/kanji.h"
 
@@ -72,9 +69,17 @@ int main(int argc, char** argv)
 	DeepMenuItem startGameItem(Constants::TITLE_MENU_OPTIONS[0], gameStarted);
 	IntMenuItem difficultyItem(Constants::TITLE_MENU_OPTIONS[1], *reinterpret_cast<int*>(&GP->difficulty), static_cast<int>(Constants::DifficultySetting::HARD), Constants::DIFFICULTIES_NAMES);
 	DeepMenuItem bindControlsItem(Constants::TITLE_MENU_OPTIONS[2], configuringControls);
-	MenuItem* mainMenuItems[] = { &startGameItem, &difficultyItem, &bindControlsItem };
+	DeepMenuItem quitItem(Constants::TITLE_MENU_OPTIONS[3], donePlaying);
+	MenuItem* mainMenuItems[Constants::TITLE_OPTIONS] = { &startGameItem, &difficultyItem, nullptr, nullptr };
 
-	Menu mainMenu = Menu(Backend::canBindControls() ? Constants::TITLE_OPTIONS : Constants::TITLE_OPTIONS - 1, mainMenuItems);
+	int nbOptions = 2;
+
+	if (Backend::canBindControls())
+		mainMenuItems[nbOptions++] = &bindControlsItem;
+	if (Backend::canExitGame())
+		mainMenuItems[nbOptions++] = &quitItem;
+
+	Menu mainMenu = Menu(nbOptions, mainMenuItems);
 
 	while(!donePlaying)
 	{
@@ -97,7 +102,8 @@ int main(int argc, char** argv)
 		}
 		else
 		{
-			donePlaying = mainMenu.run(k);
+			if (mainMenu.run(k))
+				donePlaying = true;
 
 			// Bind keys to controls
 			if (configuringControls)
@@ -123,7 +129,8 @@ int main(int argc, char** argv)
 				GS->soundSystem->quickPlaySFX(LUTs::sound(LUTs::SoundId::MENU_START));
 				n2D_clearBufferB();
 				n2D_updateScreen();
-				SDL_Delay(1000);
+				n2D_timerLoad(0, 1000);
+				while (n2D_timerRead(0));
 				GP->hardMode = GP->difficulty == Constants::DifficultySetting::HARD;
 				GP->fireback = GP->difficulty == Constants::DifficultySetting::NORMAL || GP->hardMode;
 				playGame();
@@ -132,9 +139,6 @@ int main(int argc, char** argv)
 			}
 		}
 		n2D_updateScreen();
-		
-		if(n2D_isKeyPressed(SDL_SCANCODE_ESCAPE))
-			donePlaying = true;
 	}
 	
 	LUTs::freeGameLUTs();
@@ -284,7 +288,7 @@ void playGame()
 			while(!hasPressed)
 			{
 				n2D_updateKeys();
-				if(n2D_isKeyPressed(SDL_SCANCODE_RETURN))
+				if(n2D_isKeyPressed(GP->keys.fire))
 				{
 					hasPressed = true;
 					// - initialise a new ship
@@ -301,11 +305,11 @@ void playGame()
 					GS->maxChain = 0; // I know that this one hurts but it has to be done ;_;
 					// - DO NOT RESET DOT EATER ACHIEVEMENT
 				}
-				else if(n2D_isKeyPressed(SDL_SCANCODE_ESCAPE))
+				else if(n2D_isKeyPressed(GP->keys.polarity))
 				{
 					hasPressed = true;
 					Level::gameEnded = 1;
-					n2D_waitNoKeyPressed(SDL_SCANCODE_ESCAPE);
+					n2D_waitNoKeyPressed(GP->keys.polarity);
 				}
 			}
 		}
@@ -452,7 +456,7 @@ void playGame()
 				{
 					n2D_updateKeys();
 					n2D_constrainFrameRate(10);
-					if (n2D_isKeyPressed(SDL_SCANCODE_ESCAPE))
+					if (n2D_isKeyPressed(GP->keys.polarity))
 					{
 						kEv = 128; // KQUIT
 						break;

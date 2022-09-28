@@ -22,3 +22,8 @@ bool Backend::canBindControls()
 {
 	return true;
 }
+
+bool Backend::canExitGame()
+{
+	return true;
+}

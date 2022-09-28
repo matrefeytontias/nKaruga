@@ -94,11 +94,12 @@ struct Constants
 
 	// Menu items
 	static constexpr const char* BOOLEAN_STRINGS[] = { "no", "yes" };
-	static constexpr int TITLE_OPTIONS = 3;
+	static constexpr int TITLE_OPTIONS = 4;
 	static constexpr const char* TITLE_MENU_OPTIONS[TITLE_OPTIONS] = {
 		"Play",
 		"Difficulty:",
-		"Configure controls"
+		"Configure controls",
+		"Quit"
 	};
 
 	static constexpr int KEYS_TO_BIND = 8;
