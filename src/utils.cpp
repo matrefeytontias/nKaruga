@@ -1,12 +1,11 @@
 #include "utils.hpp"
 
-#include <SDL2/SDL.h>
+#include <n2DLib/n2DLib.h>
+#include <n2DLib/n2DLib_math.h>
 
 #include "GameSystems.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "level/Level.hpp"
-#include "n2DLib/n2DLib.h"
-#include "n2DLib/n2DLib_math.h"
 
 unsigned int distance(int x1, int y1, int x2, int y2)
 {
@@ -59,7 +58,7 @@ KeyEvent getk(void)
 	setbit(5, n2D_isKeyPressed(GP->keys.polarity));
 	setbit(6, n2D_isKeyPressed(GP->keys.fragment));
 	// TODO : get rid of this
-	setbit(7, n2D_isKeyPressed(SDL_SCANCODE_ESCAPE));
+	setbit(7, 0);
 	setbit(8, n2D_isKeyPressed(GP->keys.pause));
 
 #undef setbit

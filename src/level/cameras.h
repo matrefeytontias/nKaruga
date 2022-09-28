@@ -1,12 +1,13 @@
 #pragma once
 
+#include <n2DLib/n2DLib.h>
+#include <n2DLib/n2DLib_math.h>
+
 #include "GameSystems.hpp"
 #include "types.h"
 #include "utils.hpp"
 #include "graphics/BackgroundScroller.hpp"
 #include "graphics/Camera.hpp"
-#include "n2DLib/n2DLib.h"
-#include "n2DLib/n2DLib_math.h"
 
 // Camera travelings
 

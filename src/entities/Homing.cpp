@@ -1,11 +1,12 @@
 #include "entities/Homing.hpp"
 
+#include <n2DLib/n2DLib.h>
+#include <n2DLib/n2DLib_math.h>
+
 #include "GameSystems.hpp"
 #include "entities/Player.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "helpers/Constants.hpp"
-#include "n2DLib/n2DLib.h"
-#include "n2DLib/n2DLib_math.h"
 
 Homing::Homing() : Bullet()
 {

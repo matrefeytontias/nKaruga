@@ -2,8 +2,8 @@
 
 #include <cstdlib>
 
-#include "n2DLib/n2DLib.h"
-#include "n2DLib/n2DLib_math.h"
+#include <n2DLib/n2DLib.h>
+#include <n2DLib/n2DLib_math.h>
 
 typedef struct
 {
@@ -49,13 +49,14 @@ bool ExpParticle::isActive() const
 
 void ExpParticle::update()
 {
-	if(fixtoi(x) > 0 && fixtoi(x) < 319 && fixtoi(y) > 0 && fixtoi(y) < 239)
+	int ix = fixtoi(x), iy = fixtoi(y);
+	if(ix > 0 && ix < 319 && iy > 0 && iy < 239)
 	{
-		explosionBuffer[fixtoi(x)][fixtoi(y)] = cIndex;
-		explosionBuffer[fixtoi(x) - 1][fixtoi(y)] = cIndex;
-		explosionBuffer[fixtoi(x) + 1][fixtoi(y)] = cIndex;
-		explosionBuffer[fixtoi(x)][fixtoi(y) - 1] = cIndex;
-		explosionBuffer[fixtoi(x)][fixtoi(y) + 1] = cIndex;
+		explosionBuffer[ix][iy] = cIndex;
+		explosionBuffer[ix - 1][iy] = cIndex;
+		explosionBuffer[ix + 1][iy] = cIndex;
+		explosionBuffer[ix][iy - 1] = cIndex;
+		explosionBuffer[ix][iy + 1] = cIndex;
 
 		if(cIndex != 0)
 			cIndex -= 2;

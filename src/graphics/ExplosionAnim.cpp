@@ -1,8 +1,9 @@
 #include "graphics/ExplosionAnim.hpp"
 
+#include <n2DLib/n2DLib.h>
+
 #include "GameSystems.hpp"
 #include "helpers/Constants.hpp"
-#include "n2DLib/n2DLib.h"
 
 #define FRAME_DELAY 4
 // TODO : cache this once and for all

@@ -1,5 +1,5 @@
-#include "n2DLib/n2DLib.h"
-#include "n2DLib/n2DLib_math.h"
+#include <n2DLib/n2DLib.h>
+#include <n2DLib/n2DLib_math.h>
 
 #include "GameSystems.hpp"
 #include "utils.hpp"
@@ -7,6 +7,7 @@
 #include "graphics/ExplosionEffect.hpp"
 #include "graphics/Particles.hpp"
 #include "handlers/DrawingCandidates.hpp"
+#include "handlers/SoundHandler.hpp"
 #include "helpers/Constants.hpp"
 #include "level/Level.hpp"
 #include "menu/Menu.hpp"

@@ -1,15 +1,14 @@
 #include "entities/Enemy.hpp"
 
-#include <cstdlib>
+#include <n2DLib/n2DLib_math.h>
 
+#include "GameSystems.hpp"
 #include "types.h"
+#include "utils.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "handlers/SoundHandler.hpp"
 #include "helpers/Joint.hpp"
-#include "n2DLib/n2DLib_math.h"
 #include "level/Level.hpp"
-#include "GameSystems.hpp"
-#include "utils.hpp"
 
 Enemy::Enemy() : Entity()
 {

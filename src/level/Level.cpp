@@ -1,20 +1,21 @@
 #include "level/Level.hpp"
 
+#include <n2DLib/n2DLib.h>
+#include <n2DLib/n2DLib_math.h>
+
 #include "utils.hpp"
 #include "entities/BossEnemy.hpp"
 #include "entities/Player.hpp"
 #include "graphics/BackgroundScroller.hpp"
 #include "graphics/Particles.hpp"
 #include "handlers/BulletArray.hpp"
-#include "handlers/EnemiesArray.hpp"
 #include "handlers/DrawingCandidates.hpp"
+#include "handlers/EnemiesArray.hpp"
 #include "handlers/SoundHandler.hpp"
 #include "helpers/Constants.hpp"
-#include "n2DLib/n2DLib.h"
-#include "n2DLib/n2DLib_math.h"
 
-#include "gfx/kanji.h"
 #include "gfx/end_of_demo.h"
+#include "gfx/kanji.h"
 #include "level/levels.h"
 
 void (*Level::executeIntro)() = NULL;

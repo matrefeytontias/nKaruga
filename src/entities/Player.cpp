@@ -1,13 +1,14 @@
 #include "entities/Player.hpp"
 
+#include <n2DLib/n2DLib_math.h>
+
 #include "GameSystems.hpp"
+#include "utils.hpp"
 #include "graphics/Particles.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "handlers/SoundHandler.hpp"
 #include "helpers/Constants.hpp"
 #include "level/Level.hpp"
-#include "n2DLib/n2DLib_math.h"
-#include "utils.hpp"
 
 Player::Player() : Entity()
 {

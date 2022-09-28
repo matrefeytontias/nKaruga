@@ -1,11 +1,11 @@
 #include "menu/Menu.hpp"
 
+#include <n2DLib/n2DLib.h>
+
 #include "utils.hpp"
-#include "level/Level.hpp"
 #include "handlers/SoundHandler.hpp"
 #include "helpers/Constants.hpp"
-#include "n2DLib/n2DLib.h"
-#include "n2DLib/n2DLib_math.h"
+#include "level/Level.hpp"
 
 #define VSPACE 9
 

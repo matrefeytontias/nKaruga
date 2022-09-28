@@ -1,7 +1,7 @@
 #include "graphics/BackgroundScroller.hpp"
 
-#include "n2DLib/n2DLib.h"
-#include "n2DLib/n2DLib_math.h"
+#include <n2DLib/n2DLib.h>
+#include <n2DLib/n2DLib_math.h>
 
 BackgroundScroller::BackgroundScroller(const unsigned short *bg, Fixed _x, Fixed _y, Fixed sscale, Fixed dscale, LUTs::BgTravelingId bgTravelingId)
 {

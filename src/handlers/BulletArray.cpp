@@ -1,12 +1,13 @@
 #include "handlers/BulletArray.hpp"
 
+#include <n2DLib/n2DLib.h>
+#include <n2DLib/n2DLib_math.h>
+
 #include "utils.hpp"
 #include "graphics/Particles.hpp"
 #include "handlers/SoundHandler.hpp"
-#include "level/Level.hpp"
 #include "helpers/Constants.hpp"
-#include "n2DLib/n2DLib.h"
-#include "n2DLib/n2DLib_math.h"
+#include "level/Level.hpp"
 
 BulletArray::BulletArray()
 {

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "entities/Enemy.hpp"
+#include "graphics/ExplosionAnim.hpp"
 #include "handlers/DestroyedEnemies.hpp"
 #include "helpers/Constants.hpp"
-#include "graphics/ExplosionAnim.hpp"
 
 class EnemiesArray
 {

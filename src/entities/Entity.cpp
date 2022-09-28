@@ -1,8 +1,9 @@
 #include "entities/Entity.hpp"
 
+#include <n2DLib/n2DLib_math.h>
+
 #include "GameSystems.hpp"
 #include "utils.hpp"
-#include "n2DLib/n2DLib_math.h"
 
 Entity::Entity()
 {

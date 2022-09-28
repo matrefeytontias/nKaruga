@@ -9,7 +9,6 @@ class Laser : public Bullet
 {
 public:
 	Laser();
-	~Laser();
 	void activate(const Enemy* origin, bool polarity, Fixed angOffset);
 	void handle();
 	void draw() const;

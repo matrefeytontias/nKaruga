@@ -1,8 +1,8 @@
 #pragma once
 
 #include "utils.hpp"
-#include "level/Level.hpp"
 #include "helpers/Constants.hpp"
+#include "level/Level.hpp"
 
 #define cb_args Enemy *e
 

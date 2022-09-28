@@ -1,9 +1,10 @@
 #include "handlers/DestroyedEnemies.hpp"
 
+#include <n2DLib/n2DLib_math.h>
+
 #include "utils.hpp"
 #include "entities/Enemy.hpp"
 #include "helpers/Constants.hpp"
-#include "n2DLib/n2DLib_math.h"
 
 DestroyedEnemies::DestroyedEnemies()
 {

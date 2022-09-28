@@ -1,9 +1,9 @@
 ﻿#pragma once
 
+#include "types.h"
 #include "graphics/Camera.hpp"
 #include "graphics/DrawingCandidate.hpp"
 #include "helpers/Constants.hpp"
-#include "types.h"
 
 #define MAX_DISPLAYABLE 2000
 

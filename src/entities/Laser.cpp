@@ -1,23 +1,17 @@
 #include "entities/Laser.hpp"
 
-#include <cstdlib>
+#include <n2DLib/n2DLib.h>
+#include <n2DLib/n2DLib_math.h>
 
 #include "GameSystems.hpp"
 #include "entities/Enemy.hpp"
 #include "graphics/Particles.hpp"
 #include "helpers/Constants.hpp"
-#include "n2DLib/n2DLib.h"
-#include "n2DLib/n2DLib_math.h"
 
 Laser::Laser() : Bullet()
 {
 	active = false;
 	hurtPlayer = true;
-}
-
-Laser::~Laser()
-{
-	
 }
 
 void Laser::activate(const Enemy *e, bool _p, Fixed _a)

@@ -1,10 +1,11 @@
 #pragma once
 
 #include <cstdint>
+
+#include <n2DLib/n2DLib_math.h>
 #include <SDL2/SDL_mixer.h>
 
 #include "types.h"
-#include "n2DLib/n2DLib_math.h"
 
 struct Constants
 {

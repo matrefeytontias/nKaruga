@@ -1,7 +1,6 @@
 #pragma once
 
-// Pull in types from n2DLib as well
-#include "n2DLib/n2DLib_types.h"
+#include <n2DLib/n2DLib_types.h>
 
 typedef int16_t KeyEvent;
 

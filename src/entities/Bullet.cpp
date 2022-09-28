@@ -1,10 +1,11 @@
 #include "entities/Bullet.hpp"
 
+#include <n2DLib/n2DLib_math.h>
+
 #include "GameSystems.hpp"
 #include "utils.hpp"
 #include "handlers/DrawingCandidates.hpp"
 #include "helpers/Constants.hpp"
-#include "n2DLib/n2DLib_math.h"
 
 Bullet::Bullet() : Entity()
 {

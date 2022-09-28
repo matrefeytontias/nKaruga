@@ -1,8 +1,9 @@
 #include "handlers/EnemiesArray.hpp"
 
+#include <n2DLib/n2DLib_math.h>
+
 #include "utils.hpp"
 #include "helpers/Constants.hpp"
-#include "n2DLib/n2DLib_math.h"
 
 EnemiesArray::EnemiesArray()
 {

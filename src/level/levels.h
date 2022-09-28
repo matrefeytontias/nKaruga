@@ -1,9 +1,10 @@
 #pragma once
 
+#include <n2DLib/n2DLib_math.h>
+
 #include "types.h"
 #include "helpers/Constants.hpp"
 #include "level/level_cmds.h"
-#include "n2DLib/n2DLib_math.h"
 
 const static int levelStream[] = {
 	cmd_newChapter(0),

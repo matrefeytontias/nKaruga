@@ -15,7 +15,7 @@ SoundHandler::SoundHandler()
 		exit(1);
 	}
 	Mix_AllocateChannels(32);
-	loop = NULL;
+	loop = nullptr;
 	launchLoop = false;
 }
 
@@ -29,7 +29,7 @@ void SoundHandler::update()
 	if (launchLoop)
 	{
 		launchLoop = false;
-		Mix_HookMusicFinished(NULL);
+		Mix_HookMusicFinished(nullptr);
 		Mix_PlayMusic(loop, -1);
 	}
 }

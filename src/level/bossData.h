@@ -1,14 +1,14 @@
 #pragma once
 
+#include <n2DLib/n2DLib_math.h>
+
 #include "GameSystems.hpp"
 #include "utils.hpp"
 #include "entities/BossEnemy.hpp"
 #include "graphics/ExplosionEffect.hpp"
 #include "handlers/DrawingCandidates.hpp"
-#include "level/Level.hpp"
 #include "helpers/Constants.hpp"
-#include "n2DLib/n2DLib.h"
-#include "n2DLib/n2DLib_math.h"
+#include "level/Level.hpp"
 
 // TODO : refactor this mess
 
