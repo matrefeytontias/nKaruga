@@ -50,16 +50,16 @@ KeyEvent getk(void)
 
 #define setbit(pos, val) k |= val << pos
 
-	setbit(0, n2D_isKeyPressed(GP->keys.down));
-	setbit(1, n2D_isKeyPressed(GP->keys.left));
-	setbit(2, n2D_isKeyPressed(GP->keys.right));
-	setbit(3, n2D_isKeyPressed(GP->keys.up));
-	setbit(4, n2D_isKeyPressed(GP->keys.fire));
-	setbit(5, n2D_isKeyPressed(GP->keys.polarity));
-	setbit(6, n2D_isKeyPressed(GP->keys.fragment));
+	setbit(0, Backend::isKeyPressed(GP->keys.down));
+	setbit(1, Backend::isKeyPressed(GP->keys.left));
+	setbit(2, Backend::isKeyPressed(GP->keys.right));
+	setbit(3, Backend::isKeyPressed(GP->keys.up));
+	setbit(4, Backend::isKeyPressed(GP->keys.fire));
+	setbit(5, Backend::isKeyPressed(GP->keys.polarity));
+	setbit(6, Backend::isKeyPressed(GP->keys.fragment));
 	// TODO : get rid of this
 	setbit(7, 0);
-	setbit(8, n2D_isKeyPressed(GP->keys.pause));
+	setbit(8, Backend::isKeyPressed(GP->keys.pause));
 
 #undef setbit
 

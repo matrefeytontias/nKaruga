@@ -6,6 +6,49 @@
 // Windows backend, backed by SDL2.
 //
 
+const Uint8* keysArray = nullptr;
+int numKeys = 0;
+
+void Backend::init()
+{
+	keysArray = SDL_GetKeyboardState(&numKeys);
+}
+
+void Backend::updateKeys()
+{
+	SDL_PumpEvents();
+}
+
+bool Backend::isKeyPressed(key_t k)
+{
+	return !!keysArray[k];
+}
+
+void Backend::waitNoKeyPressed(key_t k)
+{
+	for (int i = 0; i < numKeys; i++)
+	{
+		if (keysArray[i])
+		{
+			i = 0;
+			updateKeys();
+		}
+	}
+}
+
+bool Backend::getKeyPressed(key_t& outk)
+{
+	for (int i = 0; i < numKeys; i++)
+	{
+		if (keysArray[i])
+		{
+			outk = static_cast<key_t>(i);
+			return true;
+		}
+	}
+	return false;
+}
+
 void Backend::getDefaultKeyBindings(KeyBindings& keys)
 {
 	keys.down = SDL_SCANCODE_S;

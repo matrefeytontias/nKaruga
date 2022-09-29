@@ -2,7 +2,10 @@
 
 #include <n2DLib/n2DLib_types.h>
 
-typedef int16_t KeyEvent;
+using key_t = uint8_t;
+
+// Bitfield ; see `getk` in utils.hpp
+using KeyEvent = uint16_t;
 
 class Enemy;
 class BackgroundScroller;

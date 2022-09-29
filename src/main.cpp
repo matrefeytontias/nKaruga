@@ -54,7 +54,7 @@ int main(int argc, char** argv)
 	int blink = 0;
 	bool donePlaying = false, openedMenu = false;
 	// Custom keys vars accessed all in order.
-	t_key* customKeys = &GP->keys.down;
+	key_t* customKeys = &GP->keys.down;
 	
 	GP->loadSettings();
 
@@ -94,10 +94,10 @@ int main(int argc, char** argv)
 			if(blink % 1024 < 512)
 				n2D_drawString(&x, &y, x, Constants::TITLE_STRING, 0, 0xffff);
 			blink++;
-			t_key firstKey;
-			if(n2D_getKeyPressed(&firstKey))
+			key_t firstKey;
+			if(Backend::getKeyPressed(firstKey))
 			{
-				n2D_waitNoKeyPressed(firstKey);
+				Backend::waitNoKeyPressed(firstKey);
 				openedMenu = true;
 			}
 		}
@@ -109,7 +109,7 @@ int main(int argc, char** argv)
 			// Bind keys to controls
 			if (configuringControls)
 			{
-				n2D_waitNoKeyPressed(GP->keys.fire);
+				Backend::waitNoKeyPressed(GP->keys.fire);
 				n2D_clearBufferB();
 				int x = 0, y = 0;
 				n2D_drawString(&x, &y, 0, "Press the key you want to bind to this\naction.\n\n", 0xffff, 0);
@@ -118,8 +118,8 @@ int main(int argc, char** argv)
 				{
 					n2D_drawString(&x, &y, 0, Constants::KEYBINDINGS_NAMES[i], 0xffff, 0);
 					n2D_updateScreen();
-					while (!n2D_getKeyPressed(customKeys + i)) n2D_updateKeys();
-					n2D_waitNoKeyPressed(customKeys[i]);
+					while (!Backend::getKeyPressed(customKeys[i])) Backend::updateKeys();
+					Backend::waitNoKeyPressed(customKeys[i]);
 				}
 				GP->saveSettings();
 				configuringControls = false;
@@ -140,6 +140,7 @@ int main(int argc, char** argv)
 			}
 		}
 		n2D_updateScreen();
+		GS->update();
 	}
 	
 	LUTs::freeGameLUTs();
@@ -286,10 +287,11 @@ void playGame()
 			int y = 120;
 			n2D_drawString(&x, &y, x, Constants::CONTINUE_TEXT, 0xffff, 0x0000);
 			n2D_updateScreen();
+			GS->update();
 			while(!hasPressed)
 			{
-				n2D_updateKeys();
-				if(n2D_isKeyPressed(GP->keys.fire))
+				Backend::updateKeys();
+				if(Backend::isKeyPressed(GP->keys.fire))
 				{
 					hasPressed = true;
 					// - initialise a new ship
@@ -306,11 +308,11 @@ void playGame()
 					GS->maxChain = 0; // I know that this one hurts but it has to be done ;_;
 					// - DO NOT RESET DOT EATER ACHIEVEMENT
 				}
-				else if(n2D_isKeyPressed(GP->keys.polarity))
+				else if(Backend::isKeyPressed(GP->keys.polarity))
 				{
 					hasPressed = true;
 					Level::gameEnded = 1;
-					n2D_waitNoKeyPressed(GP->keys.polarity);
+					Backend::waitNoKeyPressed(GP->keys.polarity);
 				}
 			}
 		}
@@ -441,7 +443,7 @@ void playGame()
 			{
 				GS->soundSystem->setPausedBgMusic(true);
 				// Pause the game until another pauseKey is pressed
-				n2D_waitNoKeyPressed(GP->keys.pause);
+				Backend::waitNoKeyPressed(GP->keys.pause);
 
 				// Display a "paused" box. It will be cleared in the next frame.
 				int x = (320 - n2D_stringWidth("Paused")) / 2, y = 116;
@@ -453,17 +455,17 @@ void playGame()
 				n2D_drawString(&x, &y, 0, "Paused", 0, 0xffff);
 				n2D_updateScreen();
 
-				while (!n2D_isKeyPressed(GP->keys.pause))
+				while (!Backend::isKeyPressed(GP->keys.pause))
 				{
-					n2D_updateKeys();
+					Backend::updateKeys();
 					n2D_constrainFrameRate(10);
-					if (n2D_isKeyPressed(GP->keys.polarity))
+					if (Backend::isKeyPressed(GP->keys.polarity))
 					{
 						kEv = 128; // KQUIT
 						break;
 					}
 				}
-				n2D_waitNoKeyPressed(GP->keys.pause);
+				Backend::waitNoKeyPressed(GP->keys.pause);
 				pauseTimer = 5;
 				GS->soundSystem->setPausedBgMusic(false);
 			}
@@ -474,6 +476,7 @@ void playGame()
 		renderExplosionEffect();
 
 		n2D_updateScreen();
+		GS->update();
 
 		// The background is dispayed after to keep the enemies(power slots, player Level::p ...) 
 		// on the screen when pausing the game

@@ -13,6 +13,7 @@ std::unique_ptr<GameParameters> GP;
 void GameSystems::init()
 {
 	assert(GS == nullptr);
+	Backend::init();
 	GS = std::unique_ptr<GameSystems>(new GameSystems);
 }
 
@@ -22,6 +23,11 @@ inChainCount(0), maxChain(0), score(0), power(0), hasFiredOnce(false), bossIntro
 	DC = std::make_unique<DrawingCandidates>();
 	particles = std::make_unique<Particles>();
 	soundSystem = std::make_unique<SoundHandler>();
+}
+
+void GameSystems::update()
+{
+	Backend::updateKeys();
 }
 
 void GameSystems::setPlayAreaSize(int _x1, int _x2)

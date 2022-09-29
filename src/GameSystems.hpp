@@ -18,6 +18,8 @@ class GameSystems
 public:
 	static void init();
 
+	void update();
+
 	std::unique_ptr<DrawingCandidates> DC;
 	std::unique_ptr<Particles> particles;
 	std::unique_ptr<SoundHandler> soundSystem;
