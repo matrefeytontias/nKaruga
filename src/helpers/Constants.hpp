@@ -3,7 +3,7 @@
 #include <cstdint>
 
 #include <n2DLib/n2DLib_math.h>
-#include <SDL2/SDL_mixer.h>
+#include <SDL_mixer.h>
 
 #include "types.h"
 

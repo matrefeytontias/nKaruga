@@ -4,8 +4,6 @@
 #include <cassert>
 #include <cstdio>
 
-#include <SDL2/SDL_mixer.h>
-
 #include "gfx/titleScreen.h"
 #include "gfx/gfx.h"
 #include "gfx/bossgfx.h"

@@ -1,3 +1,9 @@
 [submodule "n2DLib-PC"]
 	path = n2DLib-PC
 	url = https://github.com/matrefeytontias/n2DLib-PC
+[submodule "SDL"]
+	path = SDL
+	url = https://github.com/libsdl-org/SDL
+[submodule "SDL_mixer"]
+	path = SDL_mixer
+	url = https://github.com/libsdl-org/SDL_mixer

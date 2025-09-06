@@ -123,13 +123,11 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src/backend PREFIX "Backend Files"
 
 # SDL2 dev binaries
 
-set(SDL2_DIR ${CMAKE_CURRENT_LIST_DIR}/SDL2-2.24.0/cmake)
-find_package(SDL2 REQUIRED)
+add_subdirectory(SDL EXCLUDE_FROM_ALL)
 
 # SDL2_mixer dev binaries
 
-set(SDL2_mixer_DIR ${CMAKE_CURRENT_LIST_DIR}/SDL2_mixer-2.6.2/cmake)
-find_package(SDL2_mixer REQUIRED)
+add_subdirectory(SDL_mixer EXCLUDE_FROM_ALL)
 
 # n2DLib
 
@@ -152,7 +150,11 @@ endif()
 
 # Link it all
 
-target_link_libraries(nKaruga n2DLib SDL2::SDL2 SDL2::SDL2main SDL2_mixer::SDL2_mixer)
+if(TARGET SDL2::SDL2main)
+    target_link_libraries(nKaruga PRIVATE SDL2::SDL2main)
+endif()
+
+target_link_libraries(nKaruga PRIVATE n2DLib SDL2::SDL2 SDL2_mixer::SDL2_mixer)
 
 # n2DLib needs SDL2 currently
 
